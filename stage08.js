@@ -1,5 +1,5 @@
 var CHAR_SAILENE = './assets/image/god_of_sailene_statue.png';
-var SOUND_SAILENE_00 = './assets/sound/MetalD_at_11.wav';
+var SOUND_SAILENE_00 = './assets/sound/MetalD_at_11.mp3';
 
 var MAP_DATA = "" +
 "----------------------------------------------------------------------------------------------------------------------" + "\n" +

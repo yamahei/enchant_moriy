@@ -2,10 +2,10 @@
 //var CHAR_GIANT = 'monster_giant_blue.png';
 //var CHAR_CHIKEN = 'char_chiken_white.png';
 //var CHAR_EAGLE = 'char_eagle_brown.png';
-//var SOUND_CHIKEN_00 = 'CockM_at_11.wav';
-//var SOUND_EAGLE_00 = 'ClothD_at_16.wav';
+//var SOUND_CHIKEN_00 = 'CockM_at_11.mp3';
+//var SOUND_EAGLE_00 = 'ClothD_at_16.mp3';
 //var CHAR_SAILENE = 'god_of_sailene_statue.png';
-//var SOUND_SAILENE_00 = 'MetalD_at_11.wav';
+//var SOUND_SAILENE_00 = 'MetalD_at_11.mp3';
 //var CHAR_DARK = 'god_of_what_dark.png';
 //var CHAR_BRIGHT = 'god_of_what_bright.png';
 

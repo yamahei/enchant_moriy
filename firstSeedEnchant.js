@@ -6,17 +6,17 @@ GAME_HEIGHT = Math.floor((400 / screen.width) * screen.height);
 
 var SCREEN_TITILE = './index.html';
 var SCREEN_SELECT = './select.html';
-var SOUND_CORRECT =  './assets/sound/BellE_at_11.wav';
-var SOUND_SWITCH_00 = './assets/sound/SwitchF00_at_11.wav';
-var SOUND_SWITCH_01 = './assets/sound/SwitchC_at_11.wav';
-var SOUND_OPEN_00 = './assets/sound/DoorOpenD_at_16.wav';
-var SOUND_CLOSE_00 = './assets/sound/DoorCloseD_at_16.wav';
-var SOUND_OPEN_01 = './assets/sound/DoorOpenB_at_11.wav';
-var SOUND_CLOSE_01 = './assets/sound/DoorCloseB_at_11.wav';
-var SOUND_LAMP = './assets/sound/fire_on_wax_FireB_at_11.wav';
+var SOUND_CORRECT =  './assets/sound/BellE_at_11.mp3';
+var SOUND_SWITCH_00 = './assets/sound/SwitchF00_at_11.mp3';
+var SOUND_SWITCH_01 = './assets/sound/SwitchC_at_11.mp3';
+var SOUND_OPEN_00 = './assets/sound/DoorOpenD_at_16.mp3';
+var SOUND_CLOSE_00 = './assets/sound/DoorCloseD_at_16.mp3';
+var SOUND_OPEN_01 = './assets/sound/DoorOpenB_at_11.mp3';
+var SOUND_CLOSE_01 = './assets/sound/DoorCloseB_at_11.mp3';
+var SOUND_LAMP = './assets/sound/fire_on_wax_FireB_at_11.mp3';
 
-var SOUND_GAMEOVER = './assets/sound/gameover.wav';
-var SOUND_JUMP = './assets/sound/jump.wav';
+var SOUND_GAMEOVER = './assets/sound/gameover.mp3';
+var SOUND_JUMP = './assets/sound/jump.mp3';
 
 var CHAR_HERO = './assets/image/hero_c1_dash.gif';
 var CHAR_DOOR = './assets/image/doors.png';

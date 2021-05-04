@@ -2,8 +2,8 @@
 //var CHAR_GIANT = 'monster_giant_blue.png';
 var CHAR_CHIKEN = './assets/image/char_chiken_white.png';
 var CHAR_EAGLE = './assets/image/char_eagle_brown.png';
-var SOUND_CHIKEN_00 = './assets/sound/CockM_at_11.wav';
-var SOUND_EAGLE_00 = './assets/sound/ClothD_at_16.wav';
+var SOUND_CHIKEN_00 = './assets/sound/CockM_at_11.mp3';
+var SOUND_EAGLE_00 = './assets/sound/ClothD_at_16.mp3';
 var MAP_DATA = "" +
 "--------------------------------------------------------------------------------*U----------*L--------------------------------------*R------*D----" + "\n" +
 "--------------------------------------------------------------------------------------------------------------------------------------------------" + "\n" +
