@@ -22,11 +22,14 @@
  game.start();
 
  */
+ var START_IMG = './assets/image/GameMsg_Start.png';//var START_IMG = '_start.png';
+ var OVER_IMG = './assets/image/GameMsg_Oops.png';//var OVER_IMG = '_end.png';
 
 (function () {
 
 //enchant.nineleap = { assets: ['_start.png', '_end.png'] };
-enchant.nineleap = { assets: ['GameMsg_Start.png', 'GameMsg_Oops.png'] };
+// enchant.nineleap = { assets: ['GameMsg_Start.png', 'GameMsg_Oops.png'] };
+enchant.nineleap = { assets: [START_IMG, OVER_IMG] };
 
 /**
  * @scope enchant.nineleap.Game.prototype
@@ -44,7 +47,7 @@ enchant.nineleap.Game = enchant.Class.create(enchant.Game, {
             this.startScene = new SplashScene();
             this.startScene._element.style.zIndex = 10;
             //this.startScene.image = this.assets['_start.png'];
-            this.startScene.image = this.assets['GameMsg_Start.png'];
+            this.startScene.image = this.assets[START_IMG];
             this.startScene.addEventListener('touchend', function() {
                 if (game.started == false) {
                     if (game.onstart != null) game.onstart();
@@ -66,7 +69,7 @@ enchant.nineleap.Game = enchant.Class.create(enchant.Game, {
             this.pushScene(this.startScene);
 
             this.endScene = new SplashScene();
-            this.endScene.image = this.assets['GameMsg_Oops.png'];
+            this.endScene.image = this.assets[OVER_IMG];
         });
         this.scoreQueue = false;
         this.started = false;
@@ -161,7 +164,7 @@ enchant.nineleap.Game = enchant.Class.create(enchant.Game, {
         this.pushScene(this.endScene);
         if (location.hostname == 'r.jsgames.jp') {
             var submit = function() {
-                var id = location.pathname.match(/^\/games\/(\d+)/)[1]; 
+                var id = location.pathname.match(/^\/games\/(\d+)/)[1];
                 location.replace([
                     'http://9leap.net/games/', id, '/result',
                     '?score=', encodeURIComponent(score),

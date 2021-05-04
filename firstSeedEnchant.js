@@ -6,24 +6,28 @@ GAME_HEIGHT = Math.floor((400 / screen.width) * screen.height);
 
 var SCREEN_TITILE = './index.html';
 var SCREEN_SELECT = './select.html';
-var SOUND_CORRECT =  'BellE_at_11.wav';
-var SOUND_SWITCH_00 = 'SwitchF00_at_11.wav';
-var SOUND_SWITCH_01 = 'SwitchC_at_11.wav';
-var SOUND_OPEN_00 = 'DoorOpenD_at_16.wav';
-var SOUND_CLOSE_00 = 'DoorCloseD_at_16.wav';
-var SOUND_OPEN_01 = 'DoorOpenB_at_11.wav';
-var SOUND_CLOSE_01 = 'DoorCloseB_at_11.wav';
-var SOUND_LAMP = 'fire_on_wax_FireB_at_11.wav';
-var CHAR_HERO = 'hero_c1_dash.gif';
-var CHAR_DOOR = 'doors.png';
-var CHAR_EFFECT = 'effects.png';
-var START_IMG = 'GameMsg_Start.png';//var START_IMG = '_start.png';
-var CLEAR_IMG = 'GameMsg_Clear.png';//var CLEAR_IMG = '_clear.png';
-var OVER_IMG = 'GameMsg_Oops.png';//var OVER_IMG = '_end.png';
-var PAD_IMG_LRU = 'GamePadUR-L.png';//var PAD_IMG_LRU = '_myPad.png';
-var DUMMY_IMG = 'dummy.gif';
-var MAP_TILE = 'mapChipOriginal.gif';
-var MAP_LIKE_OBJ = 'mapLikeObject.gif';
+var SOUND_CORRECT =  './assets/sound/BellE_at_11.wav';
+var SOUND_SWITCH_00 = './assets/sound/SwitchF00_at_11.wav';
+var SOUND_SWITCH_01 = './assets/sound/SwitchC_at_11.wav';
+var SOUND_OPEN_00 = './assets/sound/DoorOpenD_at_16.wav';
+var SOUND_CLOSE_00 = './assets/sound/DoorCloseD_at_16.wav';
+var SOUND_OPEN_01 = './assets/sound/DoorOpenB_at_11.wav';
+var SOUND_CLOSE_01 = './assets/sound/DoorCloseB_at_11.wav';
+var SOUND_LAMP = './assets/sound/fire_on_wax_FireB_at_11.wav';
+
+var SOUND_GAMEOVER = './assets/sound/gameover.wav';
+var SOUND_JUMP = './assets/sound/jump.wav';
+
+var CHAR_HERO = './assets/image/hero_c1_dash.gif';
+var CHAR_DOOR = './assets/image/doors.png';
+var CHAR_EFFECT = './assets/image/effects.png';
+var START_IMG = './assets/image/GameMsg_Start.png';//var START_IMG = '_start.png';
+var CLEAR_IMG = './assets/image/GameMsg_Clear.png';//var CLEAR_IMG = '_clear.png';
+var OVER_IMG = './assets/image/GameMsg_Oops.png';//var OVER_IMG = '_end.png';
+var PAD_IMG_LRU = './assets/image/GamePadUR-L.png';//var PAD_IMG_LRU = '_myPad.png';
+var DUMMY_IMG = './assets/image/dummy.gif';
+var MAP_TILE = './assets/image/mapChipOriginal.gif';
+var MAP_LIKE_OBJ = './assets/image/mapLikeObject.gif';
 
 /* ************************** */
 /* Extra functiuon for Monaca */
@@ -116,22 +120,22 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
         object.input = { up: false, left: false, right: false };
         object.addEventListener('touchstart', function(e) {
             padImage._startPadFadeAction(e.x, e.y, 0.5);
-            this._updateInput(this._detectInput(e.localX, e.localY)); 
+            this._updateInput(this._detectInput(e.localX, e.localY));
         });
-        object.addEventListener('touchend', function(e) { 
+        object.addEventListener('touchend', function(e) {
             padImage._startPadFadeAction(e.x, e.y, 0.0);
-            this._updateInput({ up: false, left: false, right: false }); 
+            this._updateInput({ up: false, left: false, right: false });
         });
         object.addEventListener('touchmove', function(e) { this._updateInput(this._detectInput(e.localX, e.localY)); });
         object._detectInput = function(x, y) {
             var width = this.width; var height = this.height;
-            
+
             var cx = padImage.centerX; var cy = padImage.centerY;// center of pad
             var px = this.x + x; var py = this.y + y;// pointed point
             var vx = px - cx; var vy = py - cy;
             var degree = (Math.floor(Math.atan2(vy, vx) * 180 / Math.PI) + 360) % 360;// bottom:0,
             var dist = Math.sqrt( vx * vx + vy * vy);
-            
+
             var area = Math.floor(degree / 30);
             if (dist <= 12) area = -1;
             switch(area){
@@ -141,11 +145,11 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
                     return { up: true,  left: false, right: true };
                 case 11: case 0: case 1:
                     return { up: false, left: false, right: true };
-                case 4: case 5: case 6: 
+                case 4: case 5: case 6:
                     return { up: false, left: true,  right: false };
                 case 7:
                     return { up: true,  left: true,  right: false };
-                default: 
+                default:
                     return { up: false, left: false, right: false };
             }
         };
@@ -180,7 +184,7 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
             if(!this.visible){ this.visible = true; this.centerX = _centerX; this.centerY = _centerY; }
             this.opacityDirection = opacityTo;
         };
-        
+
         return object;
     },
     dummy: function(){}
@@ -196,17 +200,17 @@ var MapDataPerser = enchant.Class.create({
     var foreMap = []; var backMap = []; var collisionMap = []; this.mapChip = [];
     this.startX = -1; this.startY = -1;
     this.doors = []; this.objects = []; this.monitors = []; this.chars = [];
-    
+
     var colsData; var foreCols; var backCols; var collisionCols; var rowChips;
     var f; var b; var c; var cu; var cl;
     for(var j=0; j<rows; j++){
       colsData = maprows[j].split("");
       foreCols = []; backCols = []; collisionCols = []; rowChips = [];
-      
+
       for(var i=0; i<cols; i++){
         cu = colsData.shift(); cl = colsData.shift();
         f = -1; b = -1; c = 0;
-        
+
         switch(cu){
           case undefined: case "-": case "@": case "*":
             if (cu == "@") {// @ is character
@@ -244,7 +248,7 @@ var MapDataPerser = enchant.Class.create({
     if (collisionFlg) m.collisionData = this._collisionMap;
     return m;
   }
-  
+
 });
 
 /* manage map-monitor object */
@@ -301,12 +305,12 @@ var SpriteObjTypes = {
 };
 var SpriteObj = enchant.Class.create(enchant.Sprite, {
   initialize: function(_gameObj, _mapObj, _heroObj, _eventObj, mapX, mapY, type, value){
-    this._gameObj = _gameObj; this._mapObj = _mapObj; this._heroObj = _heroObj; this._eventObj = _eventObj; 
+    this._gameObj = _gameObj; this._mapObj = _mapObj; this._heroObj = _heroObj; this._eventObj = _eventObj;
     this.mapX = mapX; this.mapY = mapY;
     enchant.Sprite.call(this, 24, 32); this.image = this._gameObj.assets[MAP_LIKE_OBJ];
     this.x = (this.mapX * this._mapObj.tileWidth) - 4;
     this.y = (this.mapY * this._mapObj.tileHeight) - 16;
-    this.type = type[0]; this.soundON = type[5]; this.soundOFF = type[6]; 
+    this.type = type[0]; this.soundON = type[5]; this.soundOFF = type[6];
     this.offsetL = type[1]; this.offsetR = type[2]; this.offsetU = type[3]; this.offsetB = type[4];
     this.value = value; this.prevValue = value;
     this.expect = (this.value ? 2 : 0); this.current = this.expect;
@@ -394,20 +398,20 @@ var SpriteObjDoors = {
 }
 var SpriteDoor = enchant.Class.create( enchant.Sprite, {
   initialize: function(_gameObj, _mapObj, _charObj, _eventObj, mapX, mapY, type, isOpen){
-    this._gameObj = _gameObj; this._mapObj = _mapObj; this._charObj = _charObj; this._eventObj = _eventObj; 
+    this._gameObj = _gameObj; this._mapObj = _mapObj; this._charObj = _charObj; this._eventObj = _eventObj;
     enchant.Sprite.call(this, 24, 32); this.image = this._gameObj.assets[CHAR_DOOR];
     this.mapX = mapX; this.mapY = mapY;
     this.x = (this.mapX * this._mapObj.tileWidth) - 4;
     this.y = (this.mapY * this._mapObj.tileHeight) - 16;
     this.hitLX = this.x; this.hitRX = this.x + 23;
     this.hitUY = this.y; this.hitBY = this.y + 31;
-    this.pair = undefined; this.type = type[0]; this.soundOpen = type[1]; this.soundClose = type[2]; 
+    this.pair = undefined; this.type = type[0]; this.soundOpen = type[1]; this.soundClose = type[2];
     this.isOpen = isOpen; this.touch = this.isTouch; this.prevTouch = this.touch;
     this.addEventListener('enterframe', function(e) { this.enterFrame(e); });
     this.expect = (this.isOpen ? 0 : 3); this.current = this.expect;
     this.addEventListener('enterframe', function(e) { this.enterFrame(e); });
     this.setFrame();
-  }, 
+  },
   setPair: function(door){
     if (!door) return;
     this.pair = door; door.pair = this;
@@ -418,7 +422,7 @@ var SpriteDoor = enchant.Class.create( enchant.Sprite, {
   },
   into: function(){
     if(!this.pair) throw new Error('pair of door is not.');
-    this.touch = false; this.pair.touch = true; 
+    this.touch = false; this.pair.touch = true;
     this.prevTouch = false; this.pair.prevTouch = true;
     this._charObj.mapX = this.pair.mapX; this._charObj.mapY = this.pair.mapY;
     this._charObj.speedX = 0;
@@ -430,10 +434,10 @@ var SpriteDoor = enchant.Class.create( enchant.Sprite, {
     if(this.current <  this.expect) this.current++;
     if(this.current == this.expect){
       if (this.current === 0 && !this.isOpen) {
-        this.isOpen = true; this.eventChange(); this.eventOpen(); 
+        this.isOpen = true; this.eventChange(); this.eventOpen();
       }
       if (this.current == 3 &&  this.isOpen) {
-        this.isOpen = false; this.eventChange(); this.eventClose(); 
+        this.isOpen = false; this.eventChange(); this.eventClose();
       }
     }
 
@@ -498,15 +502,15 @@ var Anime = enchant.Class.create({
     dummy: function(){}
 });
 
-/* manage character object */  
+/* manage character object */
 var SpriteChar = enchant.Class.create(enchant.Sprite, {
   initialize: function(
     _gameObj, _mapObj, x, y, width, height, image, offsetH, offsetU, offsetB
   ){
-    this._gameObj = _gameObj; this._mapObj = _mapObj; 
+    this._gameObj = _gameObj; this._mapObj = _mapObj;
     enchant.Sprite.call(this, width, height);
-    this.image = this._gameObj.assets[image]; 
-    this.frame = 0; this.x = x; this.y = y; 
+    this.image = this._gameObj.assets[image];
+    this.frame = 0; this.x = x; this.y = y;
     this.offsetH = offsetH; this.offsetU = offsetU; this.offsetB = offsetB;
     this.addEventListener('enterframe', function(e) { this.enterFrame(e); });
   },
@@ -533,28 +537,28 @@ var SpriteChar = enchant.Class.create(enchant.Sprite, {
   mapX: {
     get: function() { return Math.floor((this.x + (this.width / 2)) / this._mapObj.tileWidth); },
     set: function(v) { this.x = (v * this._mapObj.tileWidth) - this.offsetH; }
-  }, 
+  },
   mapY: {
     get: function() {
       var h = (this.height - (this.offsetU + this.offsetB)) / 2;
-      return Math.floor((this.y + this.offsetU + h)  / this._mapObj.tileHeight); 
+      return Math.floor((this.y + this.offsetU + h)  / this._mapObj.tileHeight);
     },
     set: function(v) { this.y = (((v + 1) * this._mapObj.tileHeight) - 1) - this.height + this.offsetB; }
-  }, 
+  },
   dummy: function(){}
 });
 
 
 /* manage character of effect object */
 var SpriteObjEffect = {
-  "ColdBling": 0, "ColdTwinkle": 1, 
-  "WarmTwinkle": 2, "WarmBling": 3, 
+  "ColdBling": 0, "ColdTwinkle": 1,
+  "WarmTwinkle": 2, "WarmBling": 3,
   "Sleeping": 4,
   indexes: "ColdBling ColdTwinkle WarmTwinkle WarmBling Sleeping".split(/\s+/)
 };
 var CharEffect = enchant.Class.create( SpriteChar, {
   initialize: function(_gameObj, _mapObj, _charObj, type){
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, _charObj.x, _charObj.y, 24/* width */, 32/* height */,
       CHAR_EFFECT/* image */, 0/* offsetH */, 0/* offsetU */, 0 /* offsetB */
     );
@@ -578,13 +582,13 @@ var CharHero = enchant.Class.create( SpriteChar, {
     var offsetH = 3; var offsetB = 0;
     var startX = (mapX * _mapObj.tileWidth) - offsetH;
     var startY = (mapY * _mapObj.tileHeight) - 16 - offsetB;
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, startX, startY, 24/* width */, 32/* height */,
       CHAR_HERO/* image */, offsetH, 5/* offsetU */, offsetB
     );
-    this.jump = 10; this.speedX = 0; this.speedY = 0; this.maxspeed = 8; this.accel = 1; 
+    this.jump = 10; this.speedX = 0; this.speedY = 0; this.maxspeed = 8; this.accel = 1;
     this.heading = false; this.grounding = false; this.jumpCancelable = false;
-    this._autoMode = false; 
+    this._autoMode = false;
     this.a = new Anime();
     this.a.setAction(this.a.stand); this.a.setDirection(this.a.fore);
     this.frame = this.a.getNumber();
@@ -612,9 +616,9 @@ var CharHero = enchant.Class.create( SpriteChar, {
       if (gi.up) {
         this.speedY = -this.jump;
         if(typeof(monaca) !== 'undefined'){
-            monaca_sound_play('jump.wav');
+            monaca_sound_play(SOUND_JUMP);
         }else{
-            this._gameObj.assets['jump.wav'].clone().play();
+            this._gameObj.assets[SOUND_JUMP].clone().play();
         }
         this.jumpCancelable = true;
       }
@@ -656,7 +660,7 @@ var CharHero = enchant.Class.create( SpriteChar, {
         if(protY !== 0) { protY -= tileH; this.heading = true; }
       }
     }
-    
+
     this.x += (_speedX - protX); this.y += (_speedY - protY);
     if (this.speedY < 0) { this.grounding = false; }
     else {
@@ -666,7 +670,7 @@ var CharHero = enchant.Class.create( SpriteChar, {
     this.frame = this.a.getNumber();
 
   },
-  
+
   setEffect: function(effect){},//todo:
   dummy: function(){}
 });

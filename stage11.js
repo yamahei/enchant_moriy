@@ -1,4 +1,4 @@
-var MAP_DATA = "" + 
+var MAP_DATA = "" +
 "--------------------------E4--------------------------------------------------------" + "\n" +
 "------------------------------------------------------------------------------------" + "\n" +
 "------------------------------------------------------------------------------------" + "\n" +
@@ -58,7 +58,7 @@ var EventStage = enchant.Class.create({
     initialize: function(_gameObj) {
       this._gameObj =_gameObj;
       this.isClear = false; this.clearCounter = 0;
-      this.message = undefined; 
+      this.message = undefined;
       this.map = undefined; this.lamp = undefined;
       this.hero = undefined; this.booCounter = 0;
     },
@@ -73,7 +73,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       var fore = _map.foreMap;
       var map = _map.backMap;
@@ -84,8 +84,8 @@ var initMoriy = function() {//---
       events.hero = hero;
 
       var stage = new Group();
-      
-      
+
+
       var monitors = _map.monitors;
       var dooTemp; var booTemp; var checkTemp;
       var i;
@@ -132,7 +132,7 @@ var initMoriy = function() {//---
         stage.addChild(monitor);
       }
 
-      
+
       stage.addChild(map);//background
 
       var objects = _map.objects;
@@ -143,7 +143,7 @@ var initMoriy = function() {//---
         var obj = new SpriteObj(game, map, hero, {}, o.mapX, o.mapY, setting, o.default);
         obj._eventObj = events;
         switch(type){
-          case "messageBoard": 
+          case "messageBoard":
             obj.eventTouch = function(){ events.message.setText('Up up up! '); };
             obj.eventLeave = function(){ events.message.setText(''); };
           break;
@@ -199,7 +199,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -207,14 +207,14 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
   }
 
   game.start();
-    
+
 };//---
 

@@ -1,32 +1,32 @@
-var CHAR_BAT = 'monster_bat_darkgreen.png';
-var CHAR_GIANT = 'monster_giant_blue.png';
+var CHAR_BAT = './assets/image/monster_bat_darkgreen.png';
+var CHAR_GIANT = './assets/image/monster_giant_blue.png';
 
-var MAP_DATA = "" + 
-"707070707070707070707070707070707070707070707070707070707070" + "\n" + 
-"----------------------------------------------------------@B" + "\n" + 
-"----------------------------------*B--E4--*BE4--*BE4------@B" + "\n" + 
-"--------------------------------------------------------E1@B" + "\n" + 
-"------@0------E2----------------*B--*B--*B--*B--*B--*B----@B" + "\n" + 
-"404040404040404040404040----------40404040404040404040404040" + "\n" + 
-"6060606060606060607070----------4060606060606060606060606060" + "\n" + 
-"606060606060607070------------406060606060606070707060606060" + "\n" + 
-"60606060607070--------------406060606060606070------70606070" + "\n" + 
-"6060707070----------------406060606060606070----E1----7070--" + "\n" + 
-"6070--------------------406060606060607070------------------" + "\n" + 
-"60--------------------4060606060607070--*0----------------*1" + "\n" + 
-"60------------F5----40607070707070--------E4----E4----E4----" + "\n" + 
-"60------4040404040406060------------------------------------" + "\n" + 
-"60------989999999999999A------------------------------------" + "\n" + 
-"60------A8A9A9A9A9A9A9AA------------------------@G----------" + "\n" + 
-"6040----B8B9B9B9B9B9B9BA----------------404040404040404050--" + "\n" + 
-"707070707070707070707070------------40407070------706070----" + "\n" + 
-"--------------------------------40407070*2----E1----70----*3" + "\n" + 
-"----------------------------70707070------------------------" + "\n" + 
-"----------------------------------------E4----E4----E4------" + "\n" + 
-"------------------------*4--------------------------------*5" + "\n" + 
-"----4040----4040----4040------------------------------------" + "\n" + 
-"----989A----989A----989A----------------------@G------------" + "\n" + 
-"----989A----989A----989A*6--------------------D5----------*7" + "\n" + 
+var MAP_DATA = "" +
+"707070707070707070707070707070707070707070707070707070707070" + "\n" +
+"----------------------------------------------------------@B" + "\n" +
+"----------------------------------*B--E4--*BE4--*BE4------@B" + "\n" +
+"--------------------------------------------------------E1@B" + "\n" +
+"------@0------E2----------------*B--*B--*B--*B--*B--*B----@B" + "\n" +
+"404040404040404040404040----------40404040404040404040404040" + "\n" +
+"6060606060606060607070----------4060606060606060606060606060" + "\n" +
+"606060606060607070------------406060606060606070707060606060" + "\n" +
+"60606060607070--------------406060606060606070------70606070" + "\n" +
+"6060707070----------------406060606060606070----E1----7070--" + "\n" +
+"6070--------------------406060606060607070------------------" + "\n" +
+"60--------------------4060606060607070--*0----------------*1" + "\n" +
+"60------------F5----40607070707070--------E4----E4----E4----" + "\n" +
+"60------4040404040406060------------------------------------" + "\n" +
+"60------989999999999999A------------------------------------" + "\n" +
+"60------A8A9A9A9A9A9A9AA------------------------@G----------" + "\n" +
+"6040----B8B9B9B9B9B9B9BA----------------404040404040404050--" + "\n" +
+"707070707070707070707070------------40407070------706070----" + "\n" +
+"--------------------------------40407070*2----E1----70----*3" + "\n" +
+"----------------------------70707070------------------------" + "\n" +
+"----------------------------------------E4----E4----E4------" + "\n" +
+"------------------------*4--------------------------------*5" + "\n" +
+"----4040----4040----4040------------------------------------" + "\n" +
+"----989A----989A----989A----------------------@G------------" + "\n" +
+"----989A----989A----989A*6--------------------D5----------*7" + "\n" +
 "4040B8BA4040B8BA4040B8BA404040404040404040404040404040404040" ;
 
 /* manage character of bat object */
@@ -35,7 +35,7 @@ var CharBat = enchant.Class.create( SpriteChar, {
     var offsetH = 6; var offsetU = 10; var offsetB = 14;
     var startX = (mapX * _mapObj.tileWidth) - offsetH;
     var startY = (mapY * _mapObj.tileHeight) + 8 - offsetB;
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, startX, startY, 24/* width */, 32/* height */,
       CHAR_BAT/* image */, offsetH, offsetU, offsetB
     );
@@ -78,7 +78,7 @@ var CharGiant = enchant.Class.create( SpriteChar, {
     var startY = (mapY * _mapObj.tileHeight) - 16 - offsetB;
     this.walkMinX = 0; this.walkMaxX = 0; this.chaseMinX = 0; this.chaseMaxX = 0;
     this.index = -1; this.speedX = 0; this.speedY = 0; this.maxspeed = 7; this.lastTargetInRange = false;
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, this.startX, startY, 24/* width */, 32/* height */,
       CHAR_GIANT/* image */, offsetH, offsetU, offsetB
     );
@@ -150,7 +150,7 @@ var CharGiant = enchant.Class.create( SpriteChar, {
       }
     }
 
-    
+
     if (input.left) { this.speedX -= 1; this.a.setDirection(this.a.left); }
     if (input.right) { this.speedX += 1; this.a.setDirection(this.a.right); }
     if(!input.left && !input.right){
@@ -166,7 +166,7 @@ var CharGiant = enchant.Class.create( SpriteChar, {
       if(this.hitLX <= minX){ this.x = minX + xGapL + 1; this.speedX = 0; }
       if(maxX <= this.hitRX){ this.x = maxX - xGapR - 1; this.speedX = 0; }
     }
-    
+
     var protY = 0; var tileW = this._mapObj.tileWidth; var tileH = this._mapObj.tileHeight;
     if (!this.grounding) this.speedY += (this.speedY < tileH) ? 1 : 0;
     protY = this.hitTestY(this.hitLX, this.hitRX, this.hitBY + this.speedY, tileW, tileH);
@@ -175,14 +175,14 @@ var CharGiant = enchant.Class.create( SpriteChar, {
     var ms = this.chase ? this.maxspeed : Math.floor(this.maxspeed / 2);
     if(this.speedX <-ms){ this.speedX =-ms; }
     if(this.speedX > ms){ this.speedX = ms; }
-    
-    
+
+
     this.grounding = (this.hitTestY(this.hitLX, this.hitRX, this.hitBY + 1, tileW, tileH) !== 0);
     if (!this.grounding){ this.a.setAction(this.a.jump); }
     else { this.speedY = 0; }
 
     for(var i=0; i<this.targets.length; i++){
-      if(this.hitCorrect(this.targets[i])){ 
+      if(this.hitCorrect(this.targets[i])){
         this.currentTarget = i;
         if(i === 0){ this._eventObj.isClear = false; this.targets[i].autoMode = false; }
       }
@@ -204,7 +204,7 @@ var CharGiant = enchant.Class.create( SpriteChar, {
     if(this.hitUY < char.hitUY && char.hitUY < this.hitBY) protY += (char.hitUY - this.hitBY);
     if(this.hitUY < char.hitBY && char.hitBY < this.hitBY) protY += (this.hitUY - char.hitBY);
     if(protX === 0 && protY===0) return false;
-  
+
     if(this.hitLX-6<char.hitLX && char.hitRX<this.hitRX+6){
       if(char.hitBY < this.hitUY + 12 ){
         this.speedY = 0;
@@ -221,7 +221,7 @@ var CharGiant = enchant.Class.create( SpriteChar, {
       this.speedX -= (this.sleep ? 0 : protX);
       char.speedX += (char.sleep ? 0 : protX);
     }
-  
+
     return true;
   },
   dummy: function(){}
@@ -232,7 +232,7 @@ var EventStage = enchant.Class.create({
     initialize: function(_gameObj) {
       this._gameObj =_gameObj;
       this.isClear = false; this.clearCounter = 0;
-      this.door = undefined; this.switches = []; this.lamps = []; 
+      this.door = undefined; this.switches = []; this.lamps = [];
       this.bats = []; this.giants = [];
       this.batFlg = false; this.range = [[0,0,0,0], [0,0,0,0]];
     },
@@ -265,7 +265,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       var fore = _map.foreMap;
       var map = _map.backMap;
@@ -276,7 +276,7 @@ var initMoriy = function() {//---
       var hero = new CharHero(game, map, _map.startX, _map.startY);
 
       var stage = new Group();
-      
+
       var i;
       var effects = [];
       var giantLamps = [[3, 4, 5], [6, 7, 8]];
@@ -368,7 +368,7 @@ var initMoriy = function() {//---
         var obj = new SpriteObj(game, map, hero, {}, o.mapX, o.mapY, settinge, o.default);
         obj._eventObj = events;
         switch(typee){
-          case "messageBoard": 
+          case "messageBoard":
             obj.eventTouch = function(){ this._eventObj.message.setText('Find correct steps.'); };
             obj.eventLeave = function(){ this._eventObj.message.setText(''); };
           break;
@@ -398,7 +398,7 @@ var initMoriy = function() {//---
       };
       events.switches[3].eventOn  = function(){ this._eventObj.setLamps([0, 1, 2], true); };
       events.switches[3].eventOff = function(){ this._eventObj.setLamps([0, 1, 2], false); };
-      
+
       stage.addChild(hero);
       for(i=0; i<events.giants.length; i++) stage.addChild(events.giants[i]);
       for(i=0; i<events.bats.length; i++) stage.addChild(events.bats[i]);
@@ -415,7 +415,7 @@ var initMoriy = function() {//---
         if (this.y < game.height - map.height) { this.y = game.height - map.height; }
       };
       stage.addEventListener('enterframe', function(e) {
-      
+
         if(events.batFlg) {
           for(var i=0; i<events.bats.length; i++){
             var bat = events.bats[i];
@@ -423,7 +423,7 @@ var initMoriy = function() {//---
           }
           events.batFlg = false;
         }
-      
+
         this._scroll();
         if(hero.y > map.height + (hero.height * 1)){ game.end(false); }
         if (events.isClear) {
@@ -440,7 +440,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -448,16 +448,16 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
     /* this stage only ? */
     ,CHAR_BAT,CHAR_GIANT
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
   }
 
   game.start();
-    
+
 };//---
 

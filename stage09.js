@@ -1,29 +1,29 @@
 
-var CHAR_DARK = 'god_of_what_dark.png';
-var CHAR_BRIGHT = 'god_of_what_bright.png';
+var CHAR_DARK = './assets/image/god_of_what_dark.png';
+var CHAR_BRIGHT = './assets/image/god_of_what_bright.png';
 
-var MAP_DATA = "" + 
-"404040404040404040404040404040----------4040--404040404040404040404040------40404040404040404040404040404040" + "\n" + 
-"60*B------------------------------------------------@D--------------60------60----------------------------60" + "\n" + 
-"60------------------------------------40----------------------------60------60----------------------------60" + "\n" + 
-"60----------------E4------------------60----------------------------60------20----------F4--------2D------60" + "\n" + 
-"60------------------------------------60----------------------------60------------------------------------60" + "\n" + 
-"60----------------------------40------60----------------------------4040----------------------------------60" + "\n" + 
-"60----------------------------60------60--------*0--------*1--------60----------------------------*T------60" + "\n" + 
-"60404040404040404040404040404040----4040----------------------------60------40404040404040404040404040404040" + "\n" + 
-"60----------------------------60------60----------------------------70------60----------------------------60" + "\n" + 
-"60----------------------------60------60----------*C----------------20----4040----------------------------60" + "\n" + 
-"70----------E4----------------4040----60--*2--------0B0C--------*3--20------20----------------F4----------60" + "\n" + 
-"------------------------------60------60------------1B1C------------20------------------------------------60" + "\n" + 
-"60----------------------------60----7070----------------------------4040----------------------------------60" + "\n" + 
-"------------------------------60------20----------------------------60------------E0--E0--E0--E0------F5--60" + "\n" + 
-"----60--404040404040404040404040------20--------*4--------*5--------60------40404040404040404040404040404040" + "\n" + 
-"------------------------------60------20----------------------------70------60----------------------------60" + "\n" + 
-"60----------------------------70----4040------------------------------------60----------------------------60" + "\n" + 
-"------------------E4----------20------60----------------------------------4040----------F4----------------60" + "\n" + 
-"60E1--------------------------20------60------------------------------------------------------------------60" + "\n" + 
-"------------------------------4040----60--------------------------------------------------------------------" + "\n" + 
-"------------------------------60------60----------------------------4040------------------------@0----F5----" + "\n" + 
+var MAP_DATA = "" +
+"404040404040404040404040404040----------4040--404040404040404040404040------40404040404040404040404040404040" + "\n" +
+"60*B------------------------------------------------@D--------------60------60----------------------------60" + "\n" +
+"60------------------------------------40----------------------------60------60----------------------------60" + "\n" +
+"60----------------E4------------------60----------------------------60------20----------F4--------2D------60" + "\n" +
+"60------------------------------------60----------------------------60------------------------------------60" + "\n" +
+"60----------------------------40------60----------------------------4040----------------------------------60" + "\n" +
+"60----------------------------60------60--------*0--------*1--------60----------------------------*T------60" + "\n" +
+"60404040404040404040404040404040----4040----------------------------60------40404040404040404040404040404040" + "\n" +
+"60----------------------------60------60----------------------------70------60----------------------------60" + "\n" +
+"60----------------------------60------60----------*C----------------20----4040----------------------------60" + "\n" +
+"70----------E4----------------4040----60--*2--------0B0C--------*3--20------20----------------F4----------60" + "\n" +
+"------------------------------60------60------------1B1C------------20------------------------------------60" + "\n" +
+"60----------------------------60----7070----------------------------4040----------------------------------60" + "\n" +
+"------------------------------60------20----------------------------60------------E0--E0--E0--E0------F5--60" + "\n" +
+"----60--404040404040404040404040------20--------*4--------*5--------60------40404040404040404040404040404040" + "\n" +
+"------------------------------60------20----------------------------70------60----------------------------60" + "\n" +
+"60----------------------------70----4040------------------------------------60----------------------------60" + "\n" +
+"------------------E4----------20------60----------------------------------4040----------F4----------------60" + "\n" +
+"60E1--------------------------20------60------------------------------------------------------------------60" + "\n" +
+"------------------------------4040----60--------------------------------------------------------------------" + "\n" +
+"------------------------------60------60----------------------------4040------------------------@0----F5----" + "\n" +
 "------56--4040404040404040404040------404040404040404040404040404040606040--40404040404040404040404040404040" ;
 
 /* manage character of dark object */
@@ -32,7 +32,7 @@ var CharDark = enchant.Class.create( SpriteChar, {
     this.offsetH = 1; var offsetU = 4; this.offsetB = 0;
     var startX = (mapX * _mapObj.tileWidth) - 4;
     var startY = (mapY * _mapObj.tileHeight) -16 + this.offsetB;
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, startX, startY, 24/* width */, 32/* height */,
       CHAR_DARK/* image */, this.offsetH, offsetU, this.offsetB
     );
@@ -61,7 +61,7 @@ var CharDark = enchant.Class.create( SpriteChar, {
     set: function(v){ if(v) this.state = this.states.flash; }
   },
   enterFrame: function(e){
-    var game = enchant.Game.instance; 
+    var game = enchant.Game.instance;
     var tileW = this._mapObj.tileWidth; var tileH = this._mapObj.tileHeight;
     var targetIndex = this.event.darkTriangles[this.targetPoint];
     var pairIndex = this.event.getTargetsPair(targetIndex);
@@ -72,9 +72,9 @@ var CharDark = enchant.Class.create( SpriteChar, {
     var targetY = (targetAnchor.mapY * tileH) -16;
     var maxSpeed = 12; this.speedX = 0;
     this.event.darkFlashing = (this.flash);
-    
+
     if(this.fall){
-      var protY = 0; 
+      var protY = 0;
       if (!this.grounding) this.speedY += (this.speedY < tileH) ? 1 : 0;
       protY = this.hitTestY(this.hitLX, this.hitRX, this.hitBY + this.speedY, tileW, tileH);
       this.y += (this.speedY - protY);
@@ -126,7 +126,7 @@ var CharDark = enchant.Class.create( SpriteChar, {
     }
     this.frame = this.a.getNumber();
     this.bright.frame = this.frame;
-    
+
     var forceBy = [this]; if(this.event.isHitCore) forceBy.push(this.bright);
     var forceVol = [this.event.countLampIsOff()]; if(this.event.isHitCore) forceVol.push(6 - forceVol[0]);
     while(forceBy.length > 0){
@@ -141,7 +141,7 @@ var CharDark = enchant.Class.create( SpriteChar, {
         this.hero.jumpCancelable = false;
       }
     }
-    
+
   },
   dummy: function(){}
 });
@@ -154,7 +154,7 @@ var EventStage = enchant.Class.create({
       this.triangles = []; this.darkTriangles = [1,2,5]; this.darkFlashing = false;
       this.lamps = []; this.isHitCore = false;
       this.switchCrystals = []; this.bbsHintLamp1 = undefined;
-      this.answerLamp1 = this.makeAnswerLamp1(); 
+      this.answerLamp1 = this.makeAnswerLamp1();
       this.recordLamp1 = [];
     },
     checkCollect: function(playSound){
@@ -221,7 +221,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       var fore = _map.foreMap;
       var map = _map.backMap;
@@ -232,7 +232,7 @@ var initMoriy = function() {//---
       var coreCenter = {x: 0, y: 0};
 
       var stage = new Group();
-      
+
       var i;
       var monitors = _map.monitors;
       for(i=0; i<monitors.length; i++){
@@ -288,7 +288,7 @@ var initMoriy = function() {//---
         stage.addChild(monitor);
       }
 
-      
+
       stage.addChild(map);//background
 
       var objects = _map.objects;
@@ -300,7 +300,7 @@ var initMoriy = function() {//---
         var obj = new SpriteObj(game, map, hero, {}, o.mapX, o.mapY, setting, o.default);
         obj._eventObj = events;
         switch(type){
-          case "messageBoard": 
+          case "messageBoard":
             if(!events.bbsHintLamp1){
               events.bbsHintLamp1 = obj;
               obj.eventTouch = function(){ events.message.setText(events.hintLamp1()); };
@@ -337,7 +337,7 @@ var initMoriy = function() {//---
       }
       events.lamps[5].eventTouch = function(){this.switchValue(); };
 
-      
+
       var bright = new Sprite(24, 32);
       bright.image = game.assets[CHAR_BRIGHT];
       bright.frame = 7; bright.visible = false;
@@ -352,7 +352,7 @@ var initMoriy = function() {//---
         stage.addChild(dark);
         stage.addChild(bright);
       }
-      
+
 
       stage.addChild(hero);
       var effect = new CharEffect(game, map, hero, SpriteObjEffect.ColdBling);
@@ -396,7 +396,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -404,16 +404,16 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
     /* this stage only ? */
     , CHAR_DARK, CHAR_BRIGHT /*, CHAR_SAILENE, SOUND_SAILENE_00 , CHAR_CHIKEN, SOUND_CHIKEN_00, CHAR_EAGLE, SOUND_EAGLE_00,CHAR_BAT,CHAR_GIANT */
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
   }
 
   game.start();
-    
+
 };//---
 

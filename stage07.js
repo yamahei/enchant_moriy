@@ -1,26 +1,26 @@
 //var CHAR_BAT = 'monster_bat_darkgreen.png';
 //var CHAR_GIANT = 'monster_giant_blue.png';
-var CHAR_CHIKEN = 'char_chiken_white.png';
-var CHAR_EAGLE = 'char_eagle_brown.png';
-var SOUND_CHIKEN_00 = 'CockM_at_11.wav';
-var SOUND_EAGLE_00 = 'ClothD_at_16.wav';
-var MAP_DATA = "" + 
-"--------------------------------------------------------------------------------*U----------*L--------------------------------------*R------*D----" + "\n" + 
-"--------------------------------------------------------------------------------------------------------------------------------------------------" + "\n" + 
-"--------------------------------------------------------------------------------------------------------------------------------------------------" + "\n" + 
-"--------------------------------------------------------------------------------------------------------------------------------------------------" + "\n" + 
-"------------------------------------------------------------------------------------------------------------------------------------------------@E" + "\n" + 
-"------------------------------------------------------------------------------------------------------------------------------------------42------" + "\n" + 
-"------------------------------------------------------------------------------------------------------------------------------------------62------" + "\n" + 
-"------------------------------------------------------------------------------------------------------------------------------------------62------" + "\n" + 
-"--------------------------------------------------------------------------------------------------------------------------------**--------72------" + "\n" + 
-"----------------------------------03430343034303--034303430343034303430343034303--03430343034303--034343------------------------2B--------42------" + "\n" + 
-"----------------------------------13931393139313A4139313931393139313931393139313--13931393139313A4139313A4--------------------------------62------" + "\n" + 
-"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A423A323A323A323A323A323A3--------------------------------62------" + "\n" + 
-"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3------------------@C@C@C@C@C----72--D4--" + "\n" + 
-"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3----------------414141414141414141414141" + "\n" + 
-"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3----------414141616161616161616161616161" + "\n" + 
-"------------@0------F5------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3----414141616161616161616161616161616161" + "\n" + 
+var CHAR_CHIKEN = './assets/image/char_chiken_white.png';
+var CHAR_EAGLE = './assets/image/char_eagle_brown.png';
+var SOUND_CHIKEN_00 = './assets/sound/CockM_at_11.wav';
+var SOUND_EAGLE_00 = './assets/sound/ClothD_at_16.wav';
+var MAP_DATA = "" +
+"--------------------------------------------------------------------------------*U----------*L--------------------------------------*R------*D----" + "\n" +
+"--------------------------------------------------------------------------------------------------------------------------------------------------" + "\n" +
+"--------------------------------------------------------------------------------------------------------------------------------------------------" + "\n" +
+"--------------------------------------------------------------------------------------------------------------------------------------------------" + "\n" +
+"------------------------------------------------------------------------------------------------------------------------------------------------@E" + "\n" +
+"------------------------------------------------------------------------------------------------------------------------------------------42------" + "\n" +
+"------------------------------------------------------------------------------------------------------------------------------------------62------" + "\n" +
+"------------------------------------------------------------------------------------------------------------------------------------------62------" + "\n" +
+"--------------------------------------------------------------------------------------------------------------------------------**--------72------" + "\n" +
+"----------------------------------03430343034303--034303430343034303430343034303--03430343034303--034343------------------------2B--------42------" + "\n" +
+"----------------------------------13931393139313A4139313931393139313931393139313--13931393139313A4139313A4--------------------------------62------" + "\n" +
+"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A423A323A323A323A323A323A3--------------------------------62------" + "\n" +
+"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3------------------@C@C@C@C@C----72--D4--" + "\n" +
+"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3----------------414141414141414141414141" + "\n" +
+"----------------------------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3----------414141616161616161616161616161" + "\n" +
+"------------@0------F5------------23A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A323A3----414141616161616161616161616161616161" + "\n" +
 "40404040404040404040404040404040404073407340734073407340734073407340734073407340734073407340734073407340734040404040404040404040404040404040404040" ;
 
 
@@ -30,7 +30,7 @@ var CharChiken = enchant.Class.create( SpriteChar, {
     var offsetH = 6; var offsetU = 20; var offsetB = 1;
     var startX = (mapX * _mapObj.tileWidth) - 4;
     var startY = (mapY * _mapObj.tileHeight) - 16;
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, startX, startY, 24/* width */, 32/* height */,
       CHAR_CHIKEN/* image */, offsetH, offsetU, offsetB
     );
@@ -52,7 +52,7 @@ var CharChiken = enchant.Class.create( SpriteChar, {
   run: {
     get: function(){ return (this.state == this.states.run); },
     set: function(v){ if(v){
-        this.state = this.states.run; this.stateCounter = 30; 
+        this.state = this.states.run; this.stateCounter = 30;
         if(typeof(monaca) !== 'undefined'){
             monaca_sound_play(SOUND_CHIKEN_00);
         }else{
@@ -69,7 +69,7 @@ var CharChiken = enchant.Class.create( SpriteChar, {
     var game = enchant.Game.instance;
     var hero = this._charObj;
     var ms = 3; var height = 32 - (this.offsetU + this.offsetB);
-    
+
     if(this.stand){
       if(this.speedX === 0 && this.grounding) {
         this.a.setAction(this.a.stand);
@@ -81,7 +81,7 @@ var CharChiken = enchant.Class.create( SpriteChar, {
     }else if(this.walk){
       this.a.setAction(this.a.walk);
       if(this.walkX < this.x) this.speedX -= 1;
-      if(this.walkX > this.x) this.speedX += 1; 
+      if(this.walkX > this.x) this.speedX += 1;
       if(Math.abs(this.x - hero.x) < 60) {
         if(!this._eventObj.eagle.carry) this.run = true;
       }
@@ -96,7 +96,7 @@ var CharChiken = enchant.Class.create( SpriteChar, {
       this.a.setAction(this.a.walk);
       if(this.grounding && this.speedY >= 0) this.stand = true;
     }
-    
+
     if(this.speedX < -ms){ this.speedX = -ms; }
     if(this.speedX > ms){ this.speedX = ms; }
     if(this.speedY > 8){ this.speedY = 8; }
@@ -116,7 +116,7 @@ var CharChiken = enchant.Class.create( SpriteChar, {
     if(this.speedX === 0){this.a.setDirection(this.a.fore);}
     else{this.a.setDirection((this.speedX < 0) ? this.a.left : this.a.right);}
     this.frame = this.a.getNumber();
-    
+
     this.x += (this.speedX - protX); if(this.x < 0) this.x = 0;
     this.y += (this.speedY - protY);
   },
@@ -137,11 +137,11 @@ var CharChiken = enchant.Class.create( SpriteChar, {
     if(this.hitUY < char.hitUY && char.hitUY < this.hitBY) protY += (char.hitUY - this.hitBY);
     if(this.hitUY < char.hitBY && char.hitBY < this.hitBY) protY += (this.hitUY - char.hitBY);
     if(protX===0 && protY===0) return false;
-    
+
     if(!this.grounding &&  this.flap) char.grounding = true;
     if( this.grounding && !this.flap) this.speedY -= 4;
     if(Math.random()*10 <= 1) this.speedX *= -1;
-  
+
   },
   dummy: function(){}
 });
@@ -152,7 +152,7 @@ var CharEagle = enchant.Class.create( SpriteChar, {
     var offsetH = 4; var offsetU = 5; var offsetB = 16;
     var startX = (mapX * _mapObj.tileWidth) - 4;
     this.startY = (mapY * _mapObj.tileHeight) - 16;
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, startX, this.startY, 24/* width */, 32/* height */,
       CHAR_EAGLE/* image */, offsetH, offsetU, offsetB
     );
@@ -164,7 +164,7 @@ var CharEagle = enchant.Class.create( SpriteChar, {
   },
   enterFrame: function(e){
     if(!this.visible) return;
-    
+
     var game = enchant.Game.instance;
     var hero = this._charObj;
     var map = this._mapObj;
@@ -187,7 +187,7 @@ var CharEagle = enchant.Class.create( SpriteChar, {
     }
     this.x += this.speedX;
     if(this.x > map.width) this.visible = false;
-    
+
     if(this.carry){
       hero._autoMode = true;
       hero.x = this.x;
@@ -201,7 +201,7 @@ var CharEagle = enchant.Class.create( SpriteChar, {
     }else{
       if(this.x < this._eventObj.dropX) this.hitCorrect(hero);
     }
-    
+
   },
   ready: function(){
     this.x = 0 - this.width; this.y = this.startY;
@@ -222,7 +222,7 @@ var CharEagle = enchant.Class.create( SpriteChar, {
     if(this.hitUY < char.hitUY && char.hitUY < this.hitBY) protY += (char.hitUY - this.hitBY);
     if(this.hitUY < char.hitBY && char.hitBY < this.hitBY) protY += (this.hitUY - char.hitBY);
     if(protX===0 && protY===0) return false;
-    
+
     this.carry = true;
     return true;
   },
@@ -236,7 +236,7 @@ var EventStage = enchant.Class.create({
       this.message = undefined;
       this.chikens = []; this.eagle = undefined;
       this.hoverX = undefined; this.dropX = undefined;
-      this.rangeL = undefined; this.rangeR = undefined; 
+      this.rangeL = undefined; this.rangeR = undefined;
       this.isClear = false; this.clearCounter = 0;
     },
     flap: function(){
@@ -253,7 +253,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       var fore = _map.foreMap;
       var map = _map.backMap;
@@ -310,14 +310,14 @@ var initMoriy = function() {//---
         var obje = new SpriteObj(game, map, hero, {}, o.mapX, o.mapY, settinge, o.default);
         obje._eventObj = events;
         switch(typee){
-          case "messageBoard": 
+          case "messageBoard":
             obje.eventTouch = function(){ this._eventObj.message.setText('ATTENTION: Due to a known bug, do not quit the application in sound reproduction.'); };
             obje.eventLeave = function(){ this._eventObj.message.setText(''); };
           break;
         }
         stage.addChild(obje);
       }
-      
+
       for(i=0; i<enemies.length; i++){
         enemy = enemies[i];
         var char;
@@ -360,7 +360,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -368,16 +368,16 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
     /* this stage only ? */
     , CHAR_CHIKEN, SOUND_CHIKEN_00, CHAR_EAGLE, SOUND_EAGLE_00 /*,CHAR_BAT,CHAR_GIANT */
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01, SOUND_CHIKEN_00, SOUND_EAGLE_00]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01, SOUND_CHIKEN_00, SOUND_EAGLE_00]);
   }
 
   game.start();
-    
+
 };//---
 

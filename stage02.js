@@ -1,19 +1,19 @@
 
-var MAP_DATA = "" + 
-"61616161616161616161616161616161616161616161616161616161" + "\n" + 
-"61616171717171----------717171----------71717171------71" + "\n" + 
-"616161------------------------------------0F------------" + "\n" + 
-"6161--------------------------------------1F------------" + "\n" + 
-"6161------414141--0F--4141414141--0F--414141414141------" + "\n" + 
-"61------41616161--1F--6161616161--1F--6161616161--------" + "\n" + 
-"61--0F--616161------6161------------616161------------41" + "\n" + 
-"61--1F--6161--------------------------0F----------@0--61" + "\n" + 
-"61----416161----------C4--------------1F----------414161" + "\n" + 
-"61----6161--0F--4141414141--0F--414141414141------616161" + "\n" + 
-"61------61--1F--6161516161--1F--6161516161------41616161" + "\n" + 
-"61------61----6161616161------6161616161--------61616161" + "\n" + 
-"6141------------------------------0F----------4161616161" + "\n" + 
-"6161--------------E5--------------1F--------416161616161" + "\n" + 
+var MAP_DATA = "" +
+"61616161616161616161616161616161616161616161616161616161" + "\n" +
+"61616171717171----------717171----------71717171------71" + "\n" +
+"616161------------------------------------0F------------" + "\n" +
+"6161--------------------------------------1F------------" + "\n" +
+"6161------414141--0F--4141414141--0F--414141414141------" + "\n" +
+"61------41616161--1F--6161616161--1F--6161616161--------" + "\n" +
+"61--0F--616161------6161------------616161------------41" + "\n" +
+"61--1F--6161--------------------------0F----------@0--61" + "\n" +
+"61----416161----------C4--------------1F----------414161" + "\n" +
+"61----6161--0F--4141414141--0F--414141414141------616161" + "\n" +
+"61------61--1F--6161516161--1F--6161516161------41616161" + "\n" +
+"61------61----6161616161------6161616161--------61616161" + "\n" +
+"6141------------------------------0F----------4161616161" + "\n" +
+"6161--------------E5--------------1F--------416161616161" + "\n" +
 "61616161616161616161616161616161616161616161616161616161" ;
 
 
@@ -30,7 +30,7 @@ var EventStage = enchant.Class.create({
       else if ( this.flags[this.flags.length - 1] != key ) { this.flags.push(key); }
       while ( this.flags.length > 8 ) { this.flags.shift(); }
       var way = this.flags.join("").split("").sort().join("");
-      if ( way == "ABCDEFGH" ) { if(!this.door.isOpen) this.door.open(); } 
+      if ( way == "ABCDEFGH" ) { if(!this.door.isOpen) this.door.open(); }
       else { if( this.door.isOpen) this.door.close(); }
     },
     dummy: function(){}
@@ -43,7 +43,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       //var objects = _map.objects;
       var fore = _map.foreMap;
@@ -55,7 +55,7 @@ var initMoriy = function() {//---
       var hero = new CharHero(game, map, _map.startX, _map.startY);
 
       var stage = new Group();
-      
+
       var keys="ABCDEFGH".split("");
       for(var j=0; j<chips.length; j++){// monitor object
         for(var i=0; i<chips[j].length; i++){
@@ -67,7 +67,7 @@ var initMoriy = function() {//---
         }
       }
       stage.addChild(map);//background
-      
+
       //message boad
       var o = _map.objects[0];
       var typem = SpriteObjTypes.indexes[o.type];
@@ -76,7 +76,7 @@ var initMoriy = function() {//---
       objm.eventTouch = function(){ this._eventObj.message.setText("Banners will lead you to the entrance."); };
       objm.eventLeave = function(){ this._eventObj.message.setText(''); };
       stage.addChild(objm);
-      
+
       // door
       var d = _map.doors[0];
       var typed = SpriteObjDoors.indexes[d.type];
@@ -84,7 +84,7 @@ var initMoriy = function() {//---
       var objd = new SpriteDoor(game, map, hero, events, d.mapX, d.mapY, settingd, d.isOpen);
       events.door = objd;
       objd.eventTouch = function(){ if( this.isOpen ) this._eventObj.isClear = true; };
-      objd.eventOpen = function(){ 
+      objd.eventOpen = function(){
         if(typeof(monaca) !== 'undefined'){
             monaca_sound_play(SOUND_CORRECT);
         }else{
@@ -123,7 +123,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -131,14 +131,14 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
   }
 
   game.start();
-    
+
 };//---
 

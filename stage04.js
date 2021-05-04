@@ -1,21 +1,21 @@
 
-var MAP_DATA = "" + 
-  "------404040404040404040404040------404040404040404040404040----------**" + "\n" + 
-  "--E1--20--------------------------------------------------60------------" + "\n" + 
-  "------20--------------------------------------------------60F3----------" + "\n" + 
-  "40404040------------------------E4------------------------60404040------" + "\n" + 
-  "60--------------------------------------------------------------20------" + "\n" + 
-  "60--------------------------E4------E4--------------------------20------" + "\n" + 
-  "60--------------------------------------------------------------4040----" + "\n" + 
-  "60----------------------E4------E4------E4----------------------60------" + "\n" + 
-  "60------404040--------------------------------------404040------60------" + "\n" + 
-  "60--------------------------E4------E4--------------------------60------" + "\n" + 
-  "60--E5------------------------------------------------------E5--60------" + "\n" + 
-  "604040--------------------------E4--------------------------404060------" + "\n" + 
-  "60----------40E0--40E0--40E0----------E040--E040--E040------------------" + "\n" + 
-  "60----------606060606060606060------606060606060606060------------@0----" + "\n" + 
-  "60404040--------------------------------------------------404040404040--" + "\n" + 
-  "60606060------------------------D3------------------------60606060606040" + "\n" + 
+var MAP_DATA = "" +
+  "------404040404040404040404040------404040404040404040404040----------**" + "\n" +
+  "--E1--20--------------------------------------------------60------------" + "\n" +
+  "------20--------------------------------------------------60F3----------" + "\n" +
+  "40404040------------------------E4------------------------60404040------" + "\n" +
+  "60--------------------------------------------------------------20------" + "\n" +
+  "60--------------------------E4------E4--------------------------20------" + "\n" +
+  "60--------------------------------------------------------------4040----" + "\n" +
+  "60----------------------E4------E4------E4----------------------60------" + "\n" +
+  "60------404040--------------------------------------404040------60------" + "\n" +
+  "60--------------------------E4------E4--------------------------60------" + "\n" +
+  "60--E5------------------------------------------------------E5--60------" + "\n" +
+  "604040--------------------------E4--------------------------404060------" + "\n" +
+  "60----------40E0--40E0--40E0----------E040--E040--E040------------------" + "\n" +
+  "60----------606060606060606060------606060606060606060------------@0----" + "\n" +
+  "60404040--------------------------------------------------404040404040--" + "\n" +
+  "60606060------------------------D3------------------------60606060606040" + "\n" +
   "606060604040404040404040404040404040404040404040404040404060606060606060" ;
 
 
@@ -95,7 +95,7 @@ var EventStage = enchant.Class.create({
     lampCount: function(direction, states){
       var count = 0; var lampBox =  this.lampBoxes()[direction];
       for(var i=0; i<lampBox.length; i++){
-        count += ((states[lampBox[i]] === (this.switchFB.currentValue ? 1 : 0)) ? 1 : 0); 
+        count += ((states[lampBox[i]] === (this.switchFB.currentValue ? 1 : 0)) ? 1 : 0);
       }
       return count;
     },
@@ -111,7 +111,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       var objects = _map.objects;
       var doors = _map.doors;
@@ -144,10 +144,10 @@ var initMoriy = function() {//---
       events.door = new SpriteDoor(game, map, hero, events, _door.mapX, _door.mapY, setting, _door.isOpen);
       events.door.eventTouch = function(){ if( this.isOpen ) this._eventObj.isClear = true; };
       stage.addChild(events.door);
-      
+
       var bbscount = 0;
       var lampLines = events.lampLines();
-      
+
       for(var i=0; i<objects.length; i++){// event object
         var o = objects[i];
         var typee = SpriteObjTypes.indexes[o.type];
@@ -155,7 +155,7 @@ var initMoriy = function() {//---
         var obj = new SpriteObj(game, map, hero, {}, o.mapX, o.mapY, settinge, o.default);
         obj.eventObj = events;
         switch(typee){
-          case "messageBoard": 
+          case "messageBoard":
             obj.eventLeave = function(){ this._eventObj.message.setText(''); };
             if(bbscount++ === 0){
               obj.eventTouch = function(){
@@ -164,7 +164,7 @@ var initMoriy = function() {//---
             }else{
               obj.eventTouch = function(){
                 if(this._eventObj.switchUD.currentValue){
-                  this._eventObj.message.setText( this._eventObj.getHint() ); 
+                  this._eventObj.message.setText( this._eventObj.getHint() );
                 } else {
                   this._eventObj.message.setText( 'Turn on the main power, first.' );
                 }
@@ -186,7 +186,7 @@ var initMoriy = function() {//---
             obj.lampLines = lampLines.shift();
             obj.eventTouch = function(){ if(this._eventObj.switchUD.currentValue) this.setValue(true); };
             obj.eventLeave = function(){ if(this._eventObj.switchUD.currentValue) this.setValue(false); };
-            obj.eventOn = function(){ 
+            obj.eventOn = function(){
               for(var j=0; j<this.lampLines.length; j++){
                 this._eventObj.lamps[this.lampLines[j]].switchValue();
               }
@@ -200,7 +200,7 @@ var initMoriy = function() {//---
         }
         stage.addChild(obj);
       }
-      
+
       stage.addChild(hero);
       stage.addChild(fore);
       //stage.addChild(effect);
@@ -235,7 +235,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -243,14 +243,14 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01]);
   }
 
   game.start();
-    
+
 };//---
 

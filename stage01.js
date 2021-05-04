@@ -1,22 +1,22 @@
 
-var MAP_DATA = "" + 
-  "606060606060606060606060------------------------------------60" + "\n" + 
-  "606060606060606060606060------------------------------------60" + "\n" + 
-  "606060606060606060606070--------------------F4--------------60" + "\n" + 
-  "6060606060606060606070--------------------------------------60" + "\n" + 
-  "70707070707070707070----------------F4--------------F4------60" + "\n" + 
-  "------------------------------6060606060----**--------------60" + "\n" + 
-  "----------------------------------------0F------0F----------60" + "\n" + 
-  "40404040404040--F5----------------------1F------1F----------60" + "\n" + 
-  "606060606060604040404040--------F4----------------------F4--60" + "\n" + 
-  "60606060606060606060606040----------------------------------60" + "\n" + 
-  "6060606060606060606070----------------------42--------------60" + "\n" + 
-  "60606060606060606070------------------------62--------------60" + "\n" + 
-  "607070707070707070----------6060----F4------72------F4------60" + "\n" + 
-  "60----------------------------------------404040------------60" + "\n" + 
-  "60------------------------------------------F4--------------60" + "\n" + 
-  "60----@0--E0----------------------4040----------------------60" + "\n" + 
-  "60404040404040404040404040404040406060404040404040404040404060" + "\n" + 
+var MAP_DATA = "" +
+  "606060606060606060606060------------------------------------60" + "\n" +
+  "606060606060606060606060------------------------------------60" + "\n" +
+  "606060606060606060606070--------------------F4--------------60" + "\n" +
+  "6060606060606060606070--------------------------------------60" + "\n" +
+  "70707070707070707070----------------F4--------------F4------60" + "\n" +
+  "------------------------------6060606060----**--------------60" + "\n" +
+  "----------------------------------------0F------0F----------60" + "\n" +
+  "40404040404040--F5----------------------1F------1F----------60" + "\n" +
+  "606060606060604040404040--------F4----------------------F4--60" + "\n" +
+  "60606060606060606060606040----------------------------------60" + "\n" +
+  "6060606060606060606070----------------------42--------------60" + "\n" +
+  "60606060606060606070------------------------62--------------60" + "\n" +
+  "607070707070707070----------6060----F4------72------F4------60" + "\n" +
+  "60----------------------------------------404040------------60" + "\n" +
+  "60------------------------------------------F4--------------60" + "\n" +
+  "60----@0--E0----------------------4040----------------------60" + "\n" +
+  "60404040404040404040404040404040406060404040404040404040404060" + "\n" +
   "60606060606060606060606060606060606060606060606060606060606060" ;
 
 
@@ -44,7 +44,7 @@ var EventStage = enchant.Class.create({
     allLampOFF: function(){
       for(var i=0; i<this._lamps.length; i++){ this._lamps[i].setValue(false); }
     },
-    arrive: function(){ if(this.isLampAllON) this.isClear = true; }, 
+    arrive: function(){ if(this.isLampAllON) this.isClear = true; },
     dummy: function(){}
 });
 
@@ -55,7 +55,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       var objects = _map.objects;
       var position = _map.monitors[0];
@@ -73,14 +73,14 @@ var initMoriy = function() {//---
       var stage = new Group();
       stage.addChild(monitor);//clear monitor
       stage.addChild(map);//background
-      
+
       for(var i=0; i<objects.length; i++){// event object
         var o = objects[i];
         var type = SpriteObjTypes.indexes[o.type];
         var setting = SpriteObjTypes[type];
         var obj = new SpriteObj(game, map, hero, {}, o.mapX, o.mapY, setting, o.default);
         switch(type){
-          case "messageBoard": 
+          case "messageBoard":
             obj.eventObj = events;
             obj.eventTouch = function(){ this._eventObj.message.setText('Bright you up.'); };
             obj.eventLeave = function(){ this._eventObj.message.setText(''); };
@@ -142,7 +142,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -150,14 +150,14 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP]);
   }
 
   game.start();
-    
+
 };//---
 

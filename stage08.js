@@ -1,22 +1,22 @@
-var CHAR_SAILENE = 'god_of_sailene_statue.png';
-var SOUND_SAILENE_00 = 'MetalD_at_11.wav';
+var CHAR_SAILENE = './assets/image/god_of_sailene_statue.png';
+var SOUND_SAILENE_00 = './assets/sound/MetalD_at_11.wav';
 
-var MAP_DATA = "" + 
-"----------------------------------------------------------------------------------------------------------------------" + "\n" + 
-"--------------------------------------------------40404040--404040----------------------------------------------------" + "\n" + 
-"----------------------------------------------404040--------------404040----------------------------------------------" + "\n" + 
-"--------------------------*Z----------------6060----------*W----------6060--------------------------------------------" + "\n" + 
-"--------------*Q----------------------------60------------2B------------60----------------------------*E--------------" + "\n" + 
-"--43------0F--2B--0F------43--------------6060--------*X------*C--------60----------------43------0F--2B--0F------43--" + "\n" + 
-"--53------1F------1F------53--------------60----------@S------@S--------60----------------53------1F------1F------53--" + "\n" + 
-"--63----------------------63--------------------------02------02--------------------------63------------------E1--63--" + "\n" + 
-"--73--E5--------------C3--73------------60------------22------22--------60----------------73--D4------------------73--" + "\n" + 
-"--4040404040404040404040404040----------60------------32------32------------60----------0000404040404040404040404040--" + "\n" + 
-"----------------------------60----------60----------40404040404040----------60----------10----------------------------" + "\n" + 
-"------------*D*S*A----------60----------60--------------------------------4040404040404020----------*F*G*H------------" + "\n" + 
-"60------------2E------------4040404040404040----------------------------------------------------------2C------------60" + "\n" + 
-"60------------------------------------------------------------------------------------------------------------------60" + "\n" + 
-"60--C3----8586868687--------------------------------------@0--------------------------------------8586868687----D4--60" + "\n" + 
+var MAP_DATA = "" +
+"----------------------------------------------------------------------------------------------------------------------" + "\n" +
+"--------------------------------------------------40404040--404040----------------------------------------------------" + "\n" +
+"----------------------------------------------404040--------------404040----------------------------------------------" + "\n" +
+"--------------------------*Z----------------6060----------*W----------6060--------------------------------------------" + "\n" +
+"--------------*Q----------------------------60------------2B------------60----------------------------*E--------------" + "\n" +
+"--43------0F--2B--0F------43--------------6060--------*X------*C--------60----------------43------0F--2B--0F------43--" + "\n" +
+"--53------1F------1F------53--------------60----------@S------@S--------60----------------53------1F------1F------53--" + "\n" +
+"--63----------------------63--------------------------02------02--------------------------63------------------E1--63--" + "\n" +
+"--73--E5--------------C3--73------------60------------22------22--------60----------------73--D4------------------73--" + "\n" +
+"--4040404040404040404040404040----------60------------32------32------------60----------0000404040404040404040404040--" + "\n" +
+"----------------------------60----------60----------40404040404040----------60----------10----------------------------" + "\n" +
+"------------*D*S*A----------60----------60--------------------------------4040404040404020----------*F*G*H------------" + "\n" +
+"60------------2E------------4040404040404040----------------------------------------------------------2C------------60" + "\n" +
+"60------------------------------------------------------------------------------------------------------------------60" + "\n" +
+"60--C3----8586868687--------------------------------------@0--------------------------------------8586868687----D4--60" + "\n" +
 "6040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404060" ;
 
 /* manage character of status object */
@@ -25,7 +25,7 @@ var CharStatue = enchant.Class.create( SpriteChar, {
     var offsetH = 6; var offsetU = 4; var offsetB = 0;
     var startX = (mapX * _mapObj.tileWidth) - 4;
     var startY = (mapY * _mapObj.tileHeight) -16 + offsetB;
-    SpriteChar.call( this, 
+    SpriteChar.call( this,
       _gameObj, _mapObj, startX, startY, 24/* width */, 32/* height */,
       CHAR_SAILENE/* image */, offsetH, offsetU, offsetB
     );
@@ -88,7 +88,7 @@ var EventStage = enchant.Class.create({
           break;
           case "E":
             this.breakWall("X", true, 3);
-            this.breakWall("C", true, 3); 
+            this.breakWall("C", true, 3);
           break;
         }
         this.effect.visibleCounter = Math.floor(this._gameObj.fps * 1.5);
@@ -135,7 +135,7 @@ var initMoriy = function() {//---
   var game = new Game(GAME_WIDTH, GAME_HEIGHT);
 
   game.onload = function() {
-     
+
       var _map = new MapDataPerser(this, MAP_DATA);
       var fore = _map.foreMap;
       var map = _map.backMap;
@@ -148,7 +148,7 @@ var initMoriy = function() {//---
       var hero = new CharHero(game, map, _map.startX, _map.startY);
 
       var stage = new Group();
-      
+
       var i;
       var monitors = _map.monitors;
       for(i=0; i<monitors.length; i++){
@@ -164,7 +164,7 @@ var initMoriy = function() {//---
             events.blockX[position.key] = position.mapX;
             events.blockY[position.key] = position.mapY + 2;
           break;
-          case "A": case "S": case "D": case "F": case "G": case "H": 
+          case "A": case "S": case "D": case "F": case "G": case "H":
             monitor = new SpriteMonitor(game, hero, events, position.mapX, position.mapY);
             monitor.key = position.key;
             monitor.touchEvent = function(){ this._eventObj.getOver(this.key); };
@@ -173,7 +173,7 @@ var initMoriy = function() {//---
         if(monitor) stage.addChild(monitor);//
       }
 
-      
+
       stage.addChild(map);//background
 
       var objects = _map.objects;
@@ -184,7 +184,7 @@ var initMoriy = function() {//---
         var obje = new SpriteObj(game, map, hero, {}, o.mapX, o.mapY, settinge, o.default);
         obje._eventObj = events;
         switch(type){
-          case "messageBoard": 
+          case "messageBoard":
             obje.eventTouch = function(){ this._eventObj.message.setText('Holy eyes take you to the over the dimension.'); };
             obje.eventLeave = function(){ this._eventObj.message.setText(''); };
           break;
@@ -216,7 +216,7 @@ var initMoriy = function() {//---
         events.doors.push(objd);
         stage.addChild(objd);
       }
-      
+
       var enemies = _map.chars;
       for(i=0; i<enemies.length; i++){
         enemy = enemies[i];
@@ -265,7 +265,7 @@ var initMoriy = function() {//---
       game.rootScene.addChild(new MyPadLRU(0, game.height - 84));
 
       game.rootScene.backgroundColor = 'rgb( 2, 8,16)';
-      
+
   };
 
   game.end = GameFinalAction;//override to hack
@@ -273,16 +273,16 @@ var initMoriy = function() {//---
   game.preload(
     PAD_IMG_LRU, /*PAD_IMG_LR, PAD_IMG_UP,*/ CHAR_DOOR,
     START_IMG, CLEAR_IMG, OVER_IMG, DUMMY_IMG, CHAR_HERO, MAP_LIKE_OBJ, MAP_TILE, CHAR_EFFECT,
-    'jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
+    SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01
     /* this stage only ? */
     , CHAR_SAILENE, SOUND_SAILENE_00 /*, CHAR_CHIKEN, SOUND_CHIKEN_00, CHAR_EAGLE, SOUND_EAGLE_00,CHAR_BAT,CHAR_GIANT */
   );
   // sound preload for monaca
   if(typeof(monaca) !== 'undefined'){
-    monaca_sound_preload(['jump.wav', 'gameover.wav', SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01, SOUND_SAILENE_00]);
+    monaca_sound_preload([SOUND_JUMP, SOUND_GAMEOVER, SOUND_CORRECT, SOUND_SWITCH_00, SOUND_SWITCH_01, SOUND_LAMP, SOUND_OPEN_00, SOUND_CLOSE_00, SOUND_OPEN_01, SOUND_CLOSE_01, SOUND_SAILENE_00]);
   }
 
   game.start();
-    
+
 };//---
 
