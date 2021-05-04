@@ -86,11 +86,13 @@ function GameFinalAction(clear_flg){//override to hack
     var _submit;
     if(clear_flg){
       this.endScene.image = this.assets[CLEAR_IMG];
-      _submit = function() { window.location = SCREEN_SELECT; };//return to index
+      _submit = function() { window.history.back(); };//return to index
+      // _submit = function() { window.location = SCREEN_SELECT; };//return to index
     } else {
       this.endScene.image = this.assets[OVER_IMG];
       //_submit = function() { window.location.reload(); };//replay
-      _submit = function() { window.location = SCREEN_SELECT; };//return to index
+      _submit = function() { window.history.back(); };//return to index
+      // _submit = function() { window.location = SCREEN_SELECT; };//return to index
     }
     this.endScene.addEventListener('touchend', _submit);
     this.pushScene(this.endScene);

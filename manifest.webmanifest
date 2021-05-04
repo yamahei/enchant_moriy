@@ -1,0 +1,18 @@
+{
+    "theme_color": "#0c2781",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "pwa.html",
+    "description": "TODO",
+    "short_name": "Moriy",
+    "name": "Moriy - The Deep Fact",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "./promote/iconimage_moriy_512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

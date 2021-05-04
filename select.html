@@ -2,15 +2,22 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <script type="text/javascript" src="plugins/plugin-loader.js"></script>
-    <link rel="stylesheet" href="plugins/plugin-loader.css" />
+    <!-- <script type="text/javascript" src="plugins/plugin-loader.js"></script>
+    <link rel="stylesheet" href="plugins/plugin-loader.css" /> -->
+    <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png"></link>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.webmanifest"></link>
+    <script type="text/javascript" src="./registpwa.js"></script>
+
     <script type="text/javascript">
 
         function gotoEpisode(episodeNo){
             save(episodeNo);
             var noStr = '00' + episodeNo;
             var filename = 'stage' + noStr.substr(noStr.length - 2, 2) + '.html';
-            monaca.pushPage(filename);
+            window.location = filename;
+            // monaca.pushPage(filename);
         }
         function save(stage_no){
           if (window.localStorage) window.localStorage.setItem("last", stage_no);
@@ -49,10 +56,10 @@
           if (window.localStorage) { selected_stage = window.localStorage.getItem("last") * 1; }
           target_x_position = getTargetXPosition(selected_stage);
           scroll(0);
-          monaca.clearPageStack(true);
+          //monaca.clearPageStack(true);
         };
         
-        try{ monaca.viewport({width: 400}); } catch(e){}
+        // try{ monaca.viewport({width: 400}); } catch(e){}
 
     </script>
     <title>Moriy - the deep fact</title>
@@ -67,7 +74,7 @@
 
         div.episodes {
           margin: 0 0; padding: 0 0;
-          width: 400px; /* 100% */
+          width: 100%; /*400px;*/ /* 100% */
           overflow: hidden;
         }
         table {
@@ -406,10 +413,10 @@
     </script>
     <div id="AdBlock">
 <!-- nend -->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 var nend_params = {"media":5467,"site":20617,"spot":32351,"type":1,"oriented":3};
 </script>
-<script type="text/javascript" src="http://js1.nend.net/js/nendAdLoader.js"></script>                    
+<script type="text/javascript" src="http://js1.nend.net/js/nendAdLoader.js"></script>                     -->
 <!-- nend -->
     </div>
 

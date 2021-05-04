@@ -1,60 +1,126 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <script src="plugins/plugin-loader.js"></script>
-    <script type="text/javascript">
-        window.onload = function(){
-          document.addEventListener("click", function(){ monaca.pushPage('select.html'); }, false);
-        };
-    </script>    
+<html>
+<head>
+    <meta charset="utf-8">
     <title>Moriy - the deep fact</title>
-    <style type="text/css">
-        body {
-            width: 400px;
-            margin: 0 0; padding: 0 0;
-            background-color: #000;
-            overflow: hidden;
-        }
-        
-        div#TitleBlock {
-            margin: 0 0; padding: 0 0;
-            position: absolute;
-            left: 50%; top: 50%;
-        }
-        img#title {
-          margin: 0 0; padding: 0 0;
-          margin-left: -120px;
-          margin-top: -48px;
-        }
-        
-        div#AdBlock {
-            margin: 0 0; padding: 0 0;
-            position: absolute;
-            width: 100%; height: 50px;
-            left: 0px; bottom: 0px;
-            text-align: center;
-            z-index: 65536;
-            overflow: hidden;
-        }
-    </style>
-  </head>
+    <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png"></link>
+    <style>img { max-width: 100%; }</style>
+    <script></script>
+</head>
+<body>
+<!-- https://markdowntohtml.com/
 
-  <body>
-  
-    <div id="TitleBlock">
-      <img id="title" src="./siteimg/logo.png" />
-    </div>
+初めてスマホ向けに作った「Moriy - the deep fact」をブラウザゲームとして復刻しました
+===================================================================================
 
-    <div id="AdBlock">
-<!-- nend -->
-<script type="text/javascript">
-var nend_params = {"media":5467,"site":20617,"spot":32351,"type":1,"oriented":3};
-</script>
-<script type="text/javascript" src="http://js1.nend.net/js/nendAdLoader.js"></script>                    
-<!-- nend -->
-    </div>
-    
-  </body>
+![image](promote/titleimage_moriy.png)
+
+ワタシにしては珍しく自動生成ではなくステージクリア型の謎解きゲームです。
+毎夜作っては会社の先輩にプレイしてもらってました。
+なお、スマホアプリ化には [monaca](https://ja.monaca.io/)  を利用しました。
+
+
+遊び方
+------
+
+⇒[Moriy - the deep fact で遊ぶ](pwa.html)
+
+各ステージの謎を解き明かしてゴールを目指してください。
+クリア条件はステージごとに異なります。
+
+操作は左右と上（ジャンプ）のみです。
+
+【注意】
+* スマートフォンの場合、タッチした位置に仮想パッドが現れますが、PCのカーソルキーの方がはるかに遊びやすいです
+* ゲーム中、音が重要なヒントになります。音が出せる環境でお楽しみください。
+
+
+動作環境など
+------------
+Moriy - the deep fact はJavaScriptで開発しています。 PCやスマートフォンのブラウザで遊べます。
+
+TODO: PWA対応していますので、ホームに追加してオフラインで遊ぶこともできます。
+
+
+ライブラリ、素材
+----------------
+
+* 画像素材
+  * First Seed Material
+* 効果音素材
+  * [ザ・マッチメイカァズ](http://osabisi.sakura.ne.jp/m2/)
+* ロゴジェネレータ
+  * [Supalogo](https://supalogo.com/)
+* ゲームエンジン
+  * [enchant.js](https://ja.wikipedia.org/wiki/Enchant.js)
+
+開発
+----
+
+* ソースコード
+  * [yamahei/enchant_moriy \| GitHub](https://github.com/yamahei/enchant_moriy)
+* テキストエディタ
+  * [Atom](https://atom.io/)
+* 画像編集
+  * [GIMP](https://www.gimp.org/)
+
+
+-->
+
+<h1 id="-moriy-the-deep-fact-">初めてスマホ向けに作った「Moriy - the deep fact」をブラウザゲームとして復刻しました</h1>
+<p><img src="promote/titleimage_moriy.png" alt="image"></p>
+<p>ワタシにしては珍しく自動生成ではなくステージクリア型の謎解きゲームです。
+毎夜作っては会社の先輩にプレイしてもらってました。
+なお、スマホアプリ化には <a href="https://ja.monaca.io/">monaca</a>  を利用しました。</p>
+<h2 id="-">遊び方</h2>
+<p>⇒<a href="pwa.html">Moriy - the deep fact で遊ぶ</a></p>
+<p>各ステージの謎を解き明かしてゴールを目指してください。
+クリア条件はステージごとに異なります。</p>
+<p>操作は左右と上（ジャンプ）のみです。</p>
+<p>【注意】</p>
+<ul>
+<li>スマートフォンの場合、タッチした位置に仮想パッドが現れますが、PCのカーソルキーの方がはるかに遊びやすいです</li>
+<li>ゲーム中、音が重要なヒントになります。音が出せる環境でお楽しみください。</li>
+</ul>
+<h2 id="-">動作環境など</h2>
+<p>Moriy - the deep fact はJavaScriptで開発しています。 PCやスマートフォンのブラウザで遊べます。</p>
+<p>TODO: PWA対応していますので、ホームに追加してオフラインで遊ぶこともできます。</p>
+<h2 id="-">ライブラリ、素材</h2>
+<ul>
+<li>画像素材<ul>
+<li>First Seed Material</li>
+</ul>
+</li>
+<li>効果音素材<ul>
+<li><a href="http://osabisi.sakura.ne.jp/m2/">ザ・マッチメイカァズ</a></li>
+</ul>
+</li>
+<li>ロゴジェネレータ<ul>
+<li><a href="https://supalogo.com/">Supalogo</a></li>
+</ul>
+</li>
+<li>ゲームエンジン<ul>
+<li><a href="https://ja.wikipedia.org/wiki/Enchant.js">enchant.js</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="-">開発</h2>
+<ul>
+<li>ソースコード<ul>
+<li><a href="https://github.com/yamahei/enchant_moriy">yamahei/enchant_moriy | GitHub</a></li>
+</ul>
+</li>
+<li>テキストエディタ<ul>
+<li><a href="https://atom.io/">Atom</a></li>
+</ul>
+</li>
+<li>画像編集<ul>
+<li><a href="https://www.gimp.org/">GIMP</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+</body>
 </html>
-

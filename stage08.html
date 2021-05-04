@@ -6,6 +6,12 @@
         <meta name="apple-mobile-web-app-capable" content="yes"> 
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <title>Moriy - the deep fact</title>
+        <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png"></link>
+
+        <!-- PWA -->
+        <link rel="manifest" href="manifest.webmanifest"></link>
+        <script type="text/javascript" src="./registpwa.js"></script>
+
         <script type="text/javascript" src="./enchant.js"></script>
         <script type="text/javascript" src="./enchant.plugins/nineleap.enchant.js"></script>
         <script type="text/javascript" src="./enchant.plugins/ui.enchant.js"></script>
@@ -13,8 +19,8 @@
         <script type="text/javascript" src="./firstSeedEnchant.js"></script>
         <script type="text/javascript" src="./stage08.js"></script>
         <script type="text/javascript" src="./initMoriy.js"></script>
-        <script type="text/javascript" src="./plugins/plugin-loader.js"></script>
-        <link rel="stylesheet" href="plugins/plugin-loader.css" />
+        <!-- <script type="text/javascript" src="./plugins/plugin-loader.js"></script>
+        <link rel="stylesheet" href="plugins/plugin-loader.css" /> -->
         <script type="text/javascript">
           if(typeof monaca === "undefined"){
             window.onload = init;
