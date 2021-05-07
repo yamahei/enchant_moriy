@@ -9,7 +9,7 @@
  *     以下のコマンドを実行する
  *     $ find . -type f | grep "enchant_moriy" | grep -v ".git" | sed 's/^\.//'
  */
-const CACHE_STORAGE_NAME = 'enchant_moriy_v2';
+const CACHE_STORAGE_NAME = 'enchant_moriy_v3';
 const files_to_cache = `
 /enchant_moriy/AdBlock.html
 /enchant_moriy/apad.png

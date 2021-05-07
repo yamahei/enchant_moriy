@@ -126,7 +126,9 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
             padImage._startPadFadeAction(e.x, e.y, 0.0);
             this._updateInput({ up: false, left: false, right: false });
         });
-        object.addEventListener('touchmove', function(e) { this._updateInput(this._detectInput(e.localX, e.localY)); });
+        object.addEventListener('touchmove', function(e) {
+          this._updateInput(this._detectInput(e.localX, e.localY));
+        });
         object._detectInput = function(x, y) {
             var width = this.width; var height = this.height;
 
@@ -156,8 +158,14 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
         object._updateInput = function(input) {
             var game = enchant.Game.instance;
             ['up', 'left', 'right'].forEach(function(type) {
-                if (this.input[type] && !input[type]) game.dispatchEvent(new Event(type + 'buttonup'));
-                if (!this.input[type] && input[type]) game.dispatchEvent(new Event(type + 'buttondown'));
+                if (this.input[type] && !input[type] && game.input[type] !== 'undefined') {
+                  // game.dispatchEvent(new Event(type + 'buttonup'));
+                  game.input[type] = false;
+                }
+                if (!this.input[type] && input[type] && game.input[type] !== 'undefined') {
+                  // game.dispatchEvent(new Event(type + 'buttondown'));
+                  game.input[type] = true;
+                }
             }, this);
             this.input = input;
         };
@@ -596,6 +604,7 @@ var CharHero = enchant.Class.create( SpriteChar, {
   autoMode: { set: function(v){ this._autoMode = v; }},
   enterFrame: function(e){
     var gi = (this._autoMode ? {} : this._gameObj.input);
+    console.log(this._gameObj.input);
     var tileW = this._mapObj.tileWidth; var tileH = this._mapObj.tileHeight;
     var acc = this.accel; var ms = this.maxspeed;
     var _frame = this.frame;
