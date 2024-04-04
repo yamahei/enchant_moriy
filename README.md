@@ -1,6 +1,8 @@
 Moriy - the deep fact
 =====================
 
+https://yamahei.github.io/enchant_moriy/
+
 起動方法（ローカル）
 --------
 
