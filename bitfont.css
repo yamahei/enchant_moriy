@@ -1,0 +1,22 @@
+/*
+    USAGE:
+    <span class="bitfont">8ビットゲームのようなフォントで表示</span>
+*/
+
+@font-face {
+	font-family: 'NuMochi';
+	src: url(./assets/font/NuKinakoMochi-Reg.otf);
+}
+
+.bitfont {
+    /* font setting */
+    font-family: 'NuMochi';
+    image-rendering: pixelated;
+    color: rgb(239, 239, 250);
+
+    /* shadow setting */
+    text-shadow:
+    1px 1px 2px black,
+    0 0 1em black,
+    0 0 0.2em black;
+}
