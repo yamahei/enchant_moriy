@@ -185,7 +185,8 @@ var initMoriy = function() {//---
         obje._eventObj = events;
         switch(type){
           case "messageBoard":
-            obje.eventTouch = function(){ this._eventObj.message.setText('Holy eyes take you to the over the dimension.'); };
+            // obje.eventTouch = function(){ this._eventObj.message.setText('Holy eyes take you to the over the dimension.'); };
+            obje.eventTouch = function(){ this._eventObj.message.setText('せいれい の ひとみ が しゅくふく を もたらす'); };
             obje.eventLeave = function(){ this._eventObj.message.setText(''); };
           break;
           case "switchUD":

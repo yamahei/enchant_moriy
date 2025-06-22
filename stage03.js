@@ -77,7 +77,8 @@ var initMoriy = function() {//---
       }
       doorpair[3].eventTouch = function(){ if( this.isOpen ) this._eventObj.isClear = true; };
 
-      var mymsg = [ 'Go the shortest way.', 'Probably fall.' ];
+      // var mymsg = [ 'Go the shortest way.', 'Probably fall.' ];
+      var mymsg = [ 'とじた みち の そと を ゆけ', 'この穴 いまだ とびたる もの なし' ];
       var doorIndex = [3, 1, 0, 2];
       var firstSwitch = true;
 

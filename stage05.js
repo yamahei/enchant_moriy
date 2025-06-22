@@ -369,7 +369,8 @@ var initMoriy = function() {//---
         obj._eventObj = events;
         switch(typee){
           case "messageBoard":
-            obj.eventTouch = function(){ this._eventObj.message.setText('Find correct steps.'); };
+            // obj.eventTouch = function(){ this._eventObj.message.setText('Find correct steps.'); };
+            obj.eventTouch = function(){ this._eventObj.message.setText('やみ の じゅうにん は 光に われを わすれる'); };
             obj.eventLeave = function(){ this._eventObj.message.setText(''); };
           break;
           case "switchUD": case "switchLR":

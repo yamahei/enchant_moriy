@@ -604,7 +604,7 @@ var CharHero = enchant.Class.create( SpriteChar, {
   autoMode: { set: function(v){ this._autoMode = v; }},
   enterFrame: function(e){
     var gi = (this._autoMode ? {} : this._gameObj.input);
-    console.log(this._gameObj.input);
+    // console.log(this._gameObj.input);
     var tileW = this._mapObj.tileWidth; var tileH = this._mapObj.tileHeight;
     var acc = this.accel; var ms = this.maxspeed;
     var _frame = this.frame;

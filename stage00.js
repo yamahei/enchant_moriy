@@ -55,9 +55,12 @@ var initMoriy = function() {//---
       var message = new MutableText( 16, 16,368);
       events.message = message;
       var m = 0; var messages = [
-        'To move, tap the screen and the game pad will appear.',
-        'To clear, solve something with some hints.',
-        'The end of the world, ahead.',
+        // 'To move, tap the screen and the game pad will appear.',
+        'バーチャル ゲーム パッド か カーソル キー で いどう せよ',
+        // 'To clear, solve something with some hints.',
+        'ヒント を 元に ナゾ を 解け',
+        // 'The end of the world, ahead.',
+        'おちるな キケン この先 ちゅうい',
       ];
       var hero = new CharHero(game, map, _map.startX, _map.startY);
 

@@ -54,7 +54,7 @@ var EventStage = enchant.Class.create({
       for(var i=0; i<this.lamps.length; i++){ this.lamps[i].setValue(v); }
     },
     isCorrect: { get: function(){
-      //console.log("A: " + this.getHint() + " /  C: " + this.getAiming());
+      console.log({name: "isCorrect", hint: this.getHint(), aiming: this.getAiming()});
       return (this.getHint()===this.getCurrent() ? true : false);
     }},
     isCorrecting: { get: function(){
@@ -77,20 +77,26 @@ var EventStage = enchant.Class.create({
     },
     getHint: function(){
       var c = this.answer;
-      return ["N: "+this.lampCount("N", c)+", E: "+this.lampCount("E", c)
-           +", S: "+this.lampCount("S", c)+", W: "+this.lampCount("W", c)].join("");
+      // return ["N: "+this.lampCount("N", c)+", E: "+this.lampCount("E", c)
+      //      +", S: "+this.lampCount("S", c)+", W: "+this.lampCount("W", c)].join("");
+      return ["N"+this.lampCount("N", c), "E"+this.lampCount("E", c),
+              "S"+this.lampCount("S", c), "W"+this.lampCount("W", c)].join(" ");
     },
     getCurrent: function(){
       var c = [];
       for(var i=0; i<9; i++){ c.push(this.lamps[i].currentValue ? 1 : 0); }
-      return ["N: "+this.lampCount("N", c)+", E: "+this.lampCount("E", c)
-           +", S: "+this.lampCount("S", c)+", W: "+this.lampCount("W", c)].join("");
+      // return ["N: "+this.lampCount("N", c)+", E: "+this.lampCount("E", c)
+      //      +", S: "+this.lampCount("S", c)+", W: "+this.lampCount("W", c)].join("");
+      return ["N"+this.lampCount("N", c),"E"+this.lampCount("E", c),
+              "S"+this.lampCount("S", c),"W"+this.lampCount("W", c)].join(" ");
     },
     getAiming: function(){
       var c = [];
       for(var i=0; i<9; i++){ c.push(this.lamps[i].expect ? 1 : 0); }
-      return ["N: "+this.lampCount("N", c)+", E: "+this.lampCount("E", c)
-           +", S: "+this.lampCount("S", c)+", W: "+this.lampCount("W", c)].join("");
+      // return ["N: "+this.lampCount("N", c)+", E: "+this.lampCount("E", c)
+      //      +", S: "+this.lampCount("S", c)+", W: "+this.lampCount("W", c)].join("");
+      return ["N"+this.lampCount("N", c),"E"+this.lampCount("E", c),
+              "S"+this.lampCount("S", c),"W"+this.lampCount("W", c)].join(" ");
     },
     lampCount: function(direction, states){
       var count = 0; var lampBox =  this.lampBoxes()[direction];
@@ -159,14 +165,16 @@ var initMoriy = function() {//---
             obj.eventLeave = function(){ this._eventObj.message.setText(''); };
             if(bbscount++ === 0){
               obj.eventTouch = function(){
-                this._eventObj.message.setText( 'Near side is negative, far side is positive.' );
+                // this._eventObj.message.setText( 'Near side is negative, far side is positive.' );
+                this._eventObj.message.setText( 'てまえ は アン おく は メイ' );
               };
             }else{
               obj.eventTouch = function(){
                 if(this._eventObj.switchUD.currentValue){
-                  this._eventObj.message.setText( this._eventObj.getHint() );
+                  this._eventObj.message.setText( this._eventObj.getHint() + " : " + this._eventObj.getAiming() );
                 } else {
-                  this._eventObj.message.setText( 'Turn on the main power, first.' );
+                  // this._eventObj.message.setText( 'Turn on the main power, first.' );
+                  this._eventObj.message.setText( 'まずは キドウ せよ' );
                 }
               };
             }

@@ -36,7 +36,8 @@ var EventStage = enchant.Class.create({
     resetStage: function(){
       var frame = enchant.Game.instance.frame;
       this.route = 0;
-      this.routes = ["NESENN","ENWSSEE","WSESWS","SENESENW"][Math.floor(Math.random()*frame)%4];
+      // this.routes = ["NESENN","ENWSSEE","WSESWS","SENESENW"][Math.floor(Math.random()*frame)%4];
+      this.routes = ["NESENE","ENWSENW","WSESWS","SENESENW"][Math.floor(Math.random()*frame)%4];
       for(var i=0; i<this.doors.length; i++){
         var door = this.doors[i];
         if(!door.isOpen) door.open();
@@ -48,15 +49,22 @@ var EventStage = enchant.Class.create({
       if(this.route === 0){
         message = this.routes.substring(0, length).split("").join("-");
       }else if(this.route >= length){
-        message = "What comes in your mind?";
+        // message = "What comes in your mind?";
+        message = "道は ひらかれた";
       }else{
         message = [
-          "Don't catch a cold!",
-          "Your teeth brushed?",
-          "Take a bath!",
-          "Your homework finished?",
-          "Just a little.",
-          "Be filially!",
+          // "Don't catch a cold!",
+          "カゼ ひくなよ",
+          // "Your teeth brushed?",
+          "はみがき したか？",
+          // "Take a bath!",
+          "フロ 入れよ",
+          // "Your homework finished?",
+          "しゅくだい やったか？",
+          // "Just a little.",
+          "ちょっと だけよ",
+          // "Be filially!",
+          "おやこうこう しろよ！",
         ][this.route - 1];
       }
       this.message.setText(message);
