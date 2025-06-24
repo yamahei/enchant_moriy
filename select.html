@@ -13,58 +13,124 @@
 
     <script type="text/javascript">
 
-        function gotoEpisode(episodeNo){
-            save(episodeNo);
-            var noStr = '00' + episodeNo;
-            var filename = 'stage' + noStr.substr(noStr.length - 2, 2) + '.html';
-            window.location = filename;
-            // monaca.pushPage(filename);
-        }
-        function save(stage_no){
-          if (window.localStorage) window.localStorage.setItem("last", stage_no);
-          return true;
-        }
+      const episodes = [
+        {no: 0, difficulty: 0, title: 'Prolog', image: './siteimg/epimg_prolog.png'},
+        {no: 1, difficulty: 0, title: 'Brightness', image: './siteimg/epimg_brightness.png'},
+        {no: 7, difficulty: 1, title: 'Forecourt', image: './siteimg/epimg_forecourt.png'},
+        {no: 8, difficulty: 2, title: 'Mausoleum', image: './siteimg/epimg_mausoleum.png'},
+        {no: 4, difficulty: 2, title: 'Passkey', image: './siteimg/epimg_passkey.png'},
+        {no: 2, difficulty: 1, title: 'Banners', image: './siteimg/epimg_ribbons.png'},
+        {no: 6, difficulty: 1, title: 'Loophole', image: './siteimg/epimg_loophole.png'},
+        {no: 5, difficulty: 3, title: 'Dungeon', image: './siteimg/epimg_dungeon.png'},
+        {no: 3, difficulty: 3, title: 'Maze', image: './siteimg/epimg_maze.png'},
+        {no: 9, difficulty: 3, title: 'Core', image: './siteimg/epimg_core.png'},
+        {no: 10, difficulty: 2, title: 'Lyra', image: './siteimg/epimg_lyra.png'},
+        {no: 11, difficulty: 1, title: 'Epilogue', image: './siteimg/epimg_epilogue.png'},
+      ];
 
-        function getTargetXPosition(stage_no){ return stage_no * 200; }
-        function scrollLeft(){ scroll(-1); }
-        function scrollRight(){ scroll(1); }
-        function scroll(add){
-          selected_stage += add;
-          if(selected_stage <=  0) selected_stage =  0;
-          if(selected_stage >= 11) selected_stage = 11;
-          target_x_position = getTargetXPosition(selected_stage);
-          setTimeout(moveEpisodesBlock, 50)
-        }
-        function moveEpisodesBlock(){
-          var scrollBlock = document.getElementById("episodes");
-          var scrollPosition = scrollBlock.scrollLeft;
-          var scrollingWidth = Math.floor((target_x_position - scrollPosition) / 2);
-          scrollBlock.scrollLeft = scrollPosition + scrollingWidth;
-          if(Math.abs(scrollingWidth) > 0) {
-            setTimeout(moveEpisodesBlock, 50);
-          } else {
-            scrollBlock.scrollLeft = target_x_position;
-          }
-        }
-
-        var selected_stage = 0;
-        var target_x_position = 0;
-
-        window.onReactivate = function(){
-          if(monaca.isAndroid) monaca.clearPageStack(true);
-        }
-        window.onload = function(){
-          if (window.localStorage) { selected_stage = window.localStorage.getItem("last") * 1; }
-          target_x_position = getTargetXPosition(selected_stage);
-          scroll(0);
-          //monaca.clearPageStack(true);
+      function loadData(){
+        const emptydata = {
+          unlock: -1,// cleard episode index
         };
+        const rawjson = localStorage.getItem("Moriy");
+        const json = rawjson ? JSON.parse(rawjson) : emptydata;
+        return json;
+      }
 
-        // try{ monaca.viewport({width: 400}); } catch(e){}
+      function onClickEpisode(episode, index){
+        console.debug({episode, index});
+        const episodeno = ("00" + episode.no).slice(-2);
+        const filename = `stage${episodeno}.html`;
 
+        const params = new URLSearchParams();
+        params.append("no", episode.no);
+        params.append("index", index);
+        params.append("filename", filename);
+
+        const nextpath = "story.html?" + params.toString();
+        window.location = nextpath;
+      }
+
+      function xpath(path){
+        return document.evaluate(path, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null );
+      }
+
+      function scrollToLatestEpisode(unlock){
+        const $elements = [...document.getElementById("episodes").childNodes];
+        const $episodes = $elements.filter(($el)=>{
+          if($el.nodeName=="#text"){ return false; }
+          return (/\bepisode\b/).test(`${$el.getAttribute("class")}`);
+        });
+        const $episode = $episodes[unlock] || $episodes[0];
+        if($episode){
+          $episode.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+      }
+
+      window.onload = function(){
+        const data = loadData();
+
+        const $episodes = document.getElementById("episodes");
+        const $uppermargin = document.createElement("div");
+        $uppermargin.setAttribute("class", "margin");
+        $episodes.appendChild($uppermargin);
+
+        episodes.forEach((episode, index)=>{
+          const unlock = !!(index <= data.unlock);
+          const isnext = !!(index <= data.unlock + 1)
+          const boxclass = isnext ? "episode unlock" : "episode";
+          const $box = document.createElement("div");
+          $box.setAttribute("class", boxclass);
+          if(isnext){
+            $box.addEventListener("click", ()=>{
+              onClickEpisode(episode, index)
+            });
+          }
+
+          const $img = document.createElement("img");
+          $img.setAttribute("src", episode.image);
+          $img.setAttribute("class", "epimg");
+          $box.appendChild($img);
+
+          const $label = document.createElement("div");
+          $label.setAttribute("class", "label");
+
+          const $title = document.createElement("p");
+          $title.textContent = episode.title;
+          $title.setAttribute("class", "title");
+          $label.appendChild($title);
+
+          const $difficulty = document.createElement("p");
+          $difficulty.setAttribute("class", "difficulty");
+
+          for(var i=1; i<=3; i++){
+            const srcon = "./siteimg/lamp_on.png";
+            const srcoff = "./siteimg/lamp_off.png";
+            const src = (episode.difficulty >= i) ? srcon : srcoff;
+            const $lampimg = document.createElement("img");
+            $lampimg.setAttribute("src", src);
+            $difficulty.appendChild($lampimg);
+          }
+          $label.appendChild($difficulty);
+          $box.appendChild($label);
+          $episodes.appendChild($box);
+
+        });
+        const $undermargin = document.createElement("div");
+        $undermargin.setAttribute("class", "margin");
+        $episodes.appendChild($undermargin);
+
+        scrollToLatestEpisode(data.unlock);
+      }
     </script>
     <title>Moriy - the deep fact</title>
     <style type="text/css">
+        /* define in bitfont.css
+        :root {
+            --text-length: 32;
+            --font-size: calc(100vw / var(--text-length))
+        } */
+
         body {
           margin: 0 0; padding: 0 0;
           /* width: 400px; */
@@ -72,353 +138,83 @@
           background-color: #000;
           overflow: hidden;
         }
-
-        div.episodes {
-          margin: 0 0; padding: 0 0;
-          width: 100%; /*400px;*/ /* 100% */
-          overflow: hidden;
+        div.top{
+          margin: 0;
+          padding: 0;
+          min-height: 100vh;
+          max-height: 100vh;
+          display: flex;
+          justify-content: center;
         }
-        table {
-          margin: 0 0; padding: 0 0;
-          border-collapse: collapse;
-          border: 0px solid black;
+        div.side{
+          margin: 0;
+          padding: 0;
+          width: 50vw;
         }
-        table tr, table td {
-          margin: 0 0; padding: 0 0;
-          border: none;
+        div.side.left{
+          align-content: center;
         }
-
-        table.select_layout {
-          /* width: 400px; */
-          /*margin-top: auto;
-          margin-bottom: auto;*/
-          /* border: 1px solid green; */
+        div.side.left img{
+          display: block;
+          margin: auto;
+          width: calc(var(--font-size) * 10);
         }
-
-        td.dummy_blockL div {
-          width: 125px;
-          /* border: 1px solid blue; */
+        div.side.right{
+          overflow: auto;
         }
-        td.dummy_blockR div {
-          width: 75px;
-          /* border: 1px solid blue; */
+        #episodes .margin{
+          height:50vh;
         }
-
-        h2 {
-          text-align: center;
-          margin: 0px; padding: 0px;
-          padding-top: 8px;
-          border-top: 1px solid #224;
-          border-bottom: 1px solid #224;
+        .episode{
+          display: flex;
+          align-items: flex-start;
+          color:gray;
+          margin-top: calc(var(--font-size));
+          margin-bottom: calc(var(--font-size));
         }
-        a {
-          color: silver;
-          text-decoration: none;
+        .episode.unlock{
+          cursor: pointer;
+          color:silver;
         }
-
-        dl.episodes {
-          width: 200px;
-          /* border: 1px solid red; */
+        img.epimg {
+          border: 1px solid gray;
+          width: calc(var(--font-size) * 2);
         }
-        dl.episodes dt {
-          clear: both;
-          width: 50px;
-          float: left;
+        div.label{
+          margin-top: 0.2rem;
+          margin-left: calc(var(--font-size) / 2);
         }
-        dl.episodes dd {
-          height: 36px;
-          margin-left: 50px;
-          padding-left: 0.5em;
-          margin-bottom: 1em;
+        p.title {
+          margin: 0;
+          padding: 0;
+          font-size: calc(var(--font-size) * 0.75);
         }
-        p.epno {
-          margin: 0px; padding: 0px;
-          font-size: 9px;
+        p.difficulty{
+          margin: 0;
+          padding: 0;
         }
-        p.epdif {
-          margin: 0px; padding: 0px;
-          text-align: center;
-        }
-        img.epdif {　margin: 0px; padding: 0px; }
-        img.epimg { border: 1px solid gray; }
-        h3.epnm {
-          margin: 0px; padding: 0px;
-          font-size: 20px;
-          font-family: serif;
+        p.difficulty img{
+          width: calc(var(--font-size) * 0.5);
         }
 
-        div.scroll-L, div.scroll-R {
-          margin: 0 0; padding: 0 0;
-          position: absolute;
-          top: 0px; width: 48px; height: 100%;
-          z-index: 65535;
-        }
-        div.scroll-L { left: 0px; }
-        div.scroll-R { right: 0px; }
-        div.scroll-L table, div.scroll-R table {
-          margin: 0px; padding: 0px;
-          top: 0px;
-          width: 48px; height: 100%;
-          border-collapse: collapse;
-          border: none;
-        }
-        div.scroll-L table tr, div.scroll-L table td, div.scroll-R table tr, div.scroll-R table td {
-            margin: 0 0; padding: 0 0;
-            border: none;
-        }
-        div.scroll-L td, div.scroll-R td  {
-          text-align: center;
-          vertical-align: middle;
-        }
 
-        div#AdBlock {
-            margin: 0 0; padding: 0 0;
-            position: absolute;
-            width: 100%; height: 50px;
-            left: 0px; bottom: 0px;
-            text-align: center;
-            z-index: 65536;
-            overflow: hidden;
-        }
     </style>
   </head>
 
   <body>
-  <div style="margin: 0 auto; padding: 0 0;">
-  <div style="margin: 0 0; padding: 0 0; position: absolute; top: 50%; margin-top: -82px; width: 100%;">
-  <div style="margin: 0 0; padding: 0 0;">
+    <div class="top">
+      <div class="side left">
+        <img src="./assets/image/GameMsg_SelectEpisode.png"  />
+      </div>
+      <div class="side right">
 
-    <h2>
-      <img src="./assets/image/GameMsg_SelectEpisode.png" class="blockimg" />
-    </h2>
+        <div id="episodes" class="bitfont">
+        </div>
 
-    <div id="episodes" class="episodes">
-      <table class="episode_layout">
-        <tr>
+      </div>
 
-          <td class="dummy_blockL">
-            <div><br /></div>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- prolog -->
-              <dt>
-                <a onclick="gotoEpisode(0);"><img src="./siteimg/epimg_prolog.png" class="epimg" /></a>
-                <p class="epno">episode:00</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(0);">prolog</a>
-                </h3>
-                <img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- forecourt -->
-              <dt>
-                <a onclick="gotoEpisode(7);"><img src="./siteimg/epimg_forecourt.png" class="epimg" /></a>
-                <p class="epno">episode:01</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(7);">forecourt</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- ribbons -->
-              <dt>
-                <a onclick="gotoEpisode(2);"><img src="./siteimg/epimg_ribbons.png" class="epimg" /></a>
-                <p class="epno">episode:02</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(2);">banners</a>
-                </h3>
-                <img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- brightness -->
-              <dt>
-                <a onclick="gotoEpisode(1);"><img src="./siteimg/epimg_brightness.png" class="epimg" /></a>
-                <p class="epno">episode:03</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(1);">brightness</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- mausoleum -->
-              <dt>
-                <a onclick="gotoEpisode(8);"><img src="./siteimg/epimg_mausoleum.png" class="epimg" /></a>
-                <p class="epno">episode:04</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(8);">mausoleum</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- loophole -->
-              <dt>
-                <a onclick="gotoEpisode(6);"><img src="./siteimg/epimg_loophole.png" class="epimg" /></a>
-                <p class="epno">episode:05</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(6);">loophole</a>
-                </h3>
-                <img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- dungeon -->
-              <dt>
-                <a onclick="gotoEpisode(5);"><img src="./siteimg/epimg_dungeon.png" class="epimg" /></a>
-                <p class="epno">episode:06</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(5);">dungeon</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- maze -->
-              <dt>
-                <a onclick="gotoEpisode(3);"><img src="./siteimg/epimg_maze.png" class="epimg" /></a>
-                <p class="epno">episode:07</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(3);">maze</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_on.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- passkey -->
-              <dt>
-                <a onclick="gotoEpisode(4);"><img src="./siteimg/epimg_passkey.png" class="epimg" /></a>
-                <p class="epno">episode:08</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(4);">passkey</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- core -->
-              <dt>
-                <a onclick="gotoEpisode(9);"><img src="./siteimg/epimg_core.png" class="epimg" /></a>
-                <p class="epno">episode:09</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(9);">core</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_on.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- lyra -->
-              <dt>
-                <a onclick="gotoEpisode(10);"><img src="./siteimg/epimg_lyra.png" class="epimg" /></a>
-                <p class="epno">episode:10</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(10);">lyra</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="episode_block">
-            <dl class="episodes">
-              <!-- epilogue -->
-              <dt>
-                <a onclick="gotoEpisode(11);"><img src="./siteimg/epimg_epilogue.png" class="epimg" /></a>
-                <p class="epno">episode:11</p>
-              </dt>
-              <dd>
-                <h3 class="epnm">
-                  <a onclick="gotoEpisode(11);">epilogue</a>
-                </h3>
-                <img src="./siteimg/lamp_on.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" /><img src="./siteimg/lamp_off.png" class="epdif" />
-              </dd>
-            </dl>
-          </td>
-
-          <td class="dummy_blockR">
-            <div><br /></div>
-          </td>
-
-        </tr>
-      </table>
     </div>
 
-
-  </div>
-  </div>
-  </div>
-
-    <div id="scroll-L" class="scroll-L"><table></tr><td><img src="./siteimg/scrollarrow-L.png" /></td></tr></table></div>
-    <div id="scroll-R" class="scroll-R"><table></tr><td><img src="./siteimg/scrollarrow-R.png" /></td></tr></table></div>
-    <script type="text/javascript">
-        document.getElementById("scroll-L").addEventListener("click", scrollLeft, false);
-        document.getElementById("scroll-R").addEventListener("click", scrollRight, false);
-    </script>
-    <div id="AdBlock">
-<!-- nend -->
-<!-- <script type="text/javascript">
-var nend_params = {"media":5467,"site":20617,"spot":32351,"type":1,"oriented":3};
-</script>
-<script type="text/javascript" src="http://js1.nend.net/js/nendAdLoader.js"></script>                     -->
-<!-- nend -->
-    </div>
 
   </body>
 </html>

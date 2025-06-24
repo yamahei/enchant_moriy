@@ -11,11 +11,18 @@
     <script type="text/javascript" src="./registpwa.js"></script>
 
     <script type="text/javascript">
+        const next = function(){
+          document.body.click();
+        };
         window.onload = function(){
           document.addEventListener("click", function(){
             location.href = 'select.html';
             // monaca.pushPage('select.html');
           }, false);
+          document.addEventListener('keydown', (e)=>{
+            if(e.key === 'Enter'){ next(); }
+          });
+          setTimeout(next, 5000);
         };
     </script>
     <title>Moriy - the deep fact</title>
