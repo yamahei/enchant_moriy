@@ -27,7 +27,54 @@
         {no: 11, title: 'Epilogue'},
       ];
 
+      function gotoStage(episode){
+        alert("gotoStage is not implemented in story.html");
+      }
+
       window.onload = function(){
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        const no = Number(params.get('no'));
+        const index = Number(params.get('index'));
+        const filename = params.get('filename');
+        const episode = episodes[index];
+        if(episode.no !== no){
+          console.error({no, index, filename, episode});
+          throw new Error("Invalid episode data");
+        }
+        const id = `stage${("00" + no).slice(-2)}:${episode.title}`;
+        const $story = document.getElementById(id);
+        if(!$story){
+          console.error({id, episode});
+          throw new Error("Story not found");
+        }
+
+        const rect = $story.getBoundingClientRect();
+        const top = rect.top;
+        const bottom = rect.bottom;
+        const height = rect.height;
+        const speed = 50 / height;
+
+        let touching = false;
+        document.addEventListener("mousedown", (e)=>{touching = true;});
+        document.addEventListener("touchstart", (e)=>{touching = true;});
+        document.addEventListener("mouseup", (e)=>{touching = false;});
+        document.addEventListener("touchend", (e)=>{touching = false;});
+        document.addEventListener("dblclick", (e)=>{ gotoStage(episode); });
+
+        const interval = 1000 / 60; // 60 FPS
+        let currenttop = 100;
+        const scroll = function(){
+          currenttop -= speed * (touching ? 10 : 1);
+          $story.style.top = `${currenttop}vh`;
+          console.debug({currenttop});
+          if($story.getBoundingClientRect().bottom < 0){
+            gotoStage(episode);
+          }else{
+            setTimeout(scroll, interval);
+          }
+        };
+        scroll();
       }
 
     </script>
@@ -41,16 +88,77 @@
 
         body {
           margin: 0 0; padding: 0 0;
+          min-width: 100vw;
+          min-height: 100vh;
           /* width: 400px; */
           color: silver;
           background-color: #000;
           overflow: hidden;
         }
 
+        section.story {
+          position: absolute;
+          top: 100vh; left: 0;
+          /* min-height: 100vh; */
+          width: calc(100vw - var(--font-size) * 6);
+          padding-left: calc(var(--font-size) * 3);
+          padding-right: calc(var(--font-size) * 3);
+          font-size: calc(var(--font-size) * 1);
+          line-height: 1.5em;
+        }
+
     </style>
   </head>
 
   <body>
+    <section id="stage00:Prolog" class="story bitfont">
+      <p>
+        ここ は 光 の めがみ ライラ の かご に 守られた 平和 な 王国 モーリィ。
+        おんだん な きこう に めぐまれ がいてき の きょうい も ない。
+      </p>
+      <p>
+        国王 の しんこうしん は あつく しゅうきょう の ほごしゃ として じいん と りょうこう な かんけい を きずいて いた。
+      </p>
+      <p><br/></p>
+      <p>
+        100年 の 平和 を きょうじゅ した 王国 だったが ふおんな な できごと が かくち で 見られる よう に なった。
+        しぜんさいがい の ぞうか や てんこう の ふじゅん による ふさく が つづいた。
+      </p>
+      <p>
+        おいうち を かける ように おきた 大日食 を きっかけ に ひとびと は ヤミ の 女王 アリル の ふっかつ を うわさする よう に なった。
+      </p>
+      <p><br/></p>
+      <p>
+        あ
+      </p>
+      <p>aa</p>
+      <p>aa</p>
+      <p>aa</p>
+      <p>aa</p>
+      <p>aa</p>
+    </section>
+    <section id="stage01:Brightness" class="story bitfont">
+    </section>
+    <section id="stage07:Forecourt" class="story bitfont">
+    </section>
+    <section id="stage08:Mausoleum" class="story bitfont">
+    </section>
+    <section id="stage04:Passkey" class="story bitfont">
+    </section>
+    <section id="stage02:Banners" class="story bitfont">
+    </section>
+    <section id="stage06:Loophole" class="story bitfont">
+    </section>
+    <section id="stage05:Dungeon" class="story bitfont">
+    </section>
+    <section id="stage03:Maze" class="story bitfont">
+    </section>
+    <section id="stage09:Core" class="story bitfont">
+    </section>
+    <section id="stage10:Lyra" class="story bitfont">
+    </section>
+    <section id="stage11:Epilogue" class="story bitfont">
+    </section>
   </body>
 </html>
 
