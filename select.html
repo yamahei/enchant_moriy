@@ -11,6 +11,7 @@
     <!-- <link rel="manifest" href="manifest.webmanifest"></link>
     <script type="text/javascript" src="./registpwa.js"></script> -->
 
+    <script type="text/javascript" src="./storage.js"></script>
     <script type="text/javascript">
 
       const episodes = [
@@ -28,13 +29,18 @@
         {no: 11, difficulty: 1, title: 'Epilogue', image: './siteimg/epimg_epilogue.png'},
       ];
 
-      function loadData(){
-        const emptydata = {
-          unlock: -1,// cleard episode index
-        };
-        const rawjson = localStorage.getItem("Moriy");
-        const json = rawjson ? JSON.parse(rawjson) : emptydata;
-        return json;
+      function setUnlockIfCleared(data){
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        if(params.get("triumphant") !== null){
+          const unlock = data.unlock;
+          const last = data.last;
+          if(unlock < last){
+            saveData({unlock: last});
+            return true;
+          }
+        }
+        return false;
       }
 
       function onClickEpisode(episode, index){
@@ -46,6 +52,8 @@
         params.append("no", episode.no);
         params.append("index", index);
         params.append("filename", filename);
+
+        saveData({last: index});
 
         const nextpath = "story.html?" + params.toString();
         window.location = nextpath;
@@ -68,7 +76,9 @@
       }
 
       window.onload = function(){
+        if(!loadData()){saveData({});}
         const data = loadData();
+        const iscleared = setUnlockIfCleared(data);
 
         const $episodes = document.getElementById("episodes");
         const $uppermargin = document.createElement("div");
@@ -77,11 +87,11 @@
 
         episodes.forEach((episode, index)=>{
           const unlock = !!(index <= data.unlock);
-          const isnext = !!(index <= data.unlock + 1)
-          const boxclass = isnext ? "episode unlock" : "episode";
+          const isnext = !!(index <= data.unlock + 1);
+          const clickable = unlock || isnext;
           const $box = document.createElement("div");
-          $box.setAttribute("class", boxclass);
-          if(isnext){
+          $box.setAttribute("class", clickable ? "episode unlock" : "episode");
+          if(clickable){
             $box.addEventListener("click", ()=>{
               onClickEpisode(episode, index)
             });
@@ -120,6 +130,7 @@
         $undermargin.setAttribute("class", "margin");
         $episodes.appendChild($undermargin);
 
+        const indexForScrolltarget = iscleared ? data.last + 1 : data.unlock;
         scrollToLatestEpisode(data.unlock);
       }
     </script>
@@ -169,8 +180,8 @@
           display: flex;
           align-items: flex-start;
           color:gray;
-          margin-top: calc(var(--font-size));
-          margin-bottom: calc(var(--font-size));
+          margin-top: calc(var(--font-size) * 1.5);
+          margin-bottom: calc(var(--font-size) * 1.5);
         }
         .episode.unlock{
           cursor: pointer;
