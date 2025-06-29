@@ -15,18 +15,18 @@
     <script type="text/javascript">
 
       const episodes = [
-        {no: 0, difficulty: 0, title: 'Prolog', image: './siteimg/epimg_prolog.png'},
-        {no: 1, difficulty: 0, title: 'Brightness', image: './siteimg/epimg_brightness.png'},
-        {no: 7, difficulty: 1, title: 'Forecourt', image: './siteimg/epimg_forecourt.png'},
-        {no: 8, difficulty: 2, title: 'Mausoleum', image: './siteimg/epimg_mausoleum.png'},
-        {no: 4, difficulty: 2, title: 'Passkey', image: './siteimg/epimg_passkey.png'},
-        {no: 2, difficulty: 1, title: 'Banners', image: './siteimg/epimg_ribbons.png'},
-        {no: 6, difficulty: 1, title: 'Loophole', image: './siteimg/epimg_loophole.png'},
-        {no: 5, difficulty: 3, title: 'Dungeon', image: './siteimg/epimg_dungeon.png'},
-        {no: 3, difficulty: 3, title: 'Maze', image: './siteimg/epimg_maze.png'},
-        {no: 9, difficulty: 3, title: 'Core', image: './siteimg/epimg_core.png'},
-        {no: 10, difficulty: 2, title: 'Lyra', image: './siteimg/epimg_lyra.png'},
-        {no: 11, difficulty: 1, title: 'Epilogue', image: './siteimg/epimg_epilogue.png'},
+        {no: 0, src: 'stage00.html', difficulty: 0, title: 'Prolog', image: './siteimg/epimg_prolog.png'},
+        {no: 2, src: 'stage02.html', difficulty: 1, title: 'Banners', image: './siteimg/epimg_ribbons.png'},
+        {no: 1, src: 'stage01.html', difficulty: 0, title: 'Brightness', image: './siteimg/epimg_brightness.png'},
+        {no: 7, src: 'stage07.html', difficulty: 1, title: 'Forecourt', image: './siteimg/epimg_forecourt.png'},
+        {no: 8, src: 'stage08.html', difficulty: 2, title: 'Mausoleum', image: './siteimg/epimg_mausoleum.png'},
+        {no: 4, src: 'stage04.html', difficulty: 2, title: 'Passkey', image: './siteimg/epimg_passkey.png'},
+        {no: 3, src: 'stage03.html', difficulty: 3, title: 'Maze', image: './siteimg/epimg_maze.png'},
+        {no: 5, src: 'stage05.html', difficulty: 3, title: 'Dungeon', image: './siteimg/epimg_dungeon.png'},
+        {no: 6, src: 'stage06.html', difficulty: 1, title: 'Loophole', image: './siteimg/epimg_loophole.png'},
+        {no: 9, src: 'stage09.html', difficulty: 3, title: 'Core', image: './siteimg/epimg_core.png'},
+        {no: 10, src: 'stage10.html', difficulty: 2, title: 'Lyra', image: './siteimg/epimg_lyra.png'},
+        {no: 11, src: 'stage11.html', difficulty: 1, title: 'Epilogue', image: './siteimg/epimg_epilogue.png'},
       ];
 
       function setUnlockIfCleared(data){
@@ -37,21 +37,20 @@
           const last = data.last;
           if(unlock < last){
             saveData({unlock: last});
-            return true;
           }
+          return true;
         }
         return false;
       }
 
       function onClickEpisode(episode, index){
         console.debug({episode, index});
-        const episodeno = ("00" + episode.no).slice(-2);
-        const filename = `stage${episodeno}.html`;
-
+        const filename = episode.src;
         const params = new URLSearchParams();
         params.append("no", episode.no);
         params.append("index", index);
         params.append("filename", filename);
+        params.append("_t", +new Date());
 
         saveData({last: index});
 
@@ -89,8 +88,9 @@
           const unlock = !!(index <= data.unlock);
           const isnext = !!(index <= data.unlock + 1);
           const clickable = unlock || isnext;
-          const $box = document.createElement("div");
+          const $box = document.createElement("li");
           $box.setAttribute("class", clickable ? "episode unlock" : "episode");
+          $box.setAttribute("tabindex", clickable ? 0 : -1);
           if(clickable){
             $box.addEventListener("click", ()=>{
               onClickEpisode(episode, index)
@@ -131,7 +131,31 @@
         $episodes.appendChild($undermargin);
 
         const indexForScrolltarget = iscleared ? data.last + 1 : data.unlock;
-        scrollToLatestEpisode(data.unlock);
+        console.debug({indexForScrolltarget, iscleared, last: data.last, unlock: data.unlock});
+        scrollToLatestEpisode(indexForScrolltarget);
+        document.getElementsByClassName("episode")[indexForScrolltarget]?.focus();
+
+        document.body.addEventListener("keyup", (e) => {
+          const isenter = !!(e.key == "Enter");
+          const isback = !!(e.key == "ArrowUp" || e.key == "ArrowLeft");
+          const isfore = !!(e.key == "ArrowDown" || e.key == "ArrowRight");
+          if(!isenter && !isback && !isfore){ return; }
+
+          const $target = e.target;
+          if(isenter){
+            $target.click();
+            return;
+          }
+
+          if(!$target.classList.contains("episode")){ return; }
+          let $next = null;
+          if(isback){ $next = $target.previousElementSibling; }
+          if(isfore){ $next = $target.nextElementSibling; }
+          if(!$next){ return; }
+          if(!$next.classList.contains("episode")){ return; }
+          $next.focus();
+        });
+
       }
     </script>
     <title>Moriy - the deep fact</title>
@@ -142,18 +166,29 @@
             --font-size: calc(100vw / var(--text-length))
         } */
 
+        html {
+          background-color: rgb( 0, 0, 0);
+        }
         body {
-          margin: 0 0; padding: 0 0;
+          width: 100vw;
+          height: calc(100vw * 0.48);/* 400:192 */
+          margin: 0 0;
+          padding: 0 0;
           /* width: 400px; */
           color: silver;
-          background-color: #000;
+          /* background-color: #000; */
           overflow: hidden;
+          user-select: none;
+          background-color: rgb( 2, 8,16);
+          position: absolute;
+          margin: auto;
+          top: 0; right: 0; bottom: 0; left: 0;
         }
         div.top{
           margin: 0;
           padding: 0;
-          min-height: 100vh;
-          max-height: 100vh;
+          min-height: 100%;
+          max-height: 100%;
           display: flex;
           justify-content: center;
         }
@@ -172,20 +207,33 @@
         }
         div.side.right{
           overflow: auto;
+          scrollbar-color: rgb( 8,32,64) rgb( 2, 8,16);
+          scrollbar-width: thin;
         }
-        #episodes .margin{
-          height:50vh;
+        ul#episodes .margin{
+          /* height:50vh; */
+          height: calc(100vw * 0.48 * 0.5);/* 400:192 / 2 = 96 */
+          margin:0; padding: 0;
+          list-style-type: none;
         }
         .episode{
           display: flex;
           align-items: flex-start;
           color:gray;
+          margin:0; padding: 0;
           margin-top: calc(var(--font-size) * 1.5);
           margin-bottom: calc(var(--font-size) * 1.5);
         }
         .episode.unlock{
           cursor: pointer;
-          color:silver;
+          color:floralwhite;
+        }
+        .episode.unlock:focus{
+          border: none;
+          background-color:#101; 
+        }
+        .episode:not(.unlock) img{
+          filter: grayscale(1);
         }
         img.epimg {
           border: 1px solid gray;
@@ -219,8 +267,8 @@
       </div>
       <div class="side right">
 
-        <div id="episodes" class="bitfont">
-        </div>
+        <ul id="episodes" class="bitfont" focusgroup>
+        </ul>
 
       </div>
 

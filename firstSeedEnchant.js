@@ -1,8 +1,9 @@
 enchant();
 
-GAME_WIDTH = 400;
-//GAME_HEIGHT = 192;
-GAME_HEIGHT = Math.floor((400 / screen.width) * screen.height);
+//GAME_WIDTH = 400;
+////GAME_HEIGHT = 192;
+//GAME_HEIGHT = Math.floor((400 / screen.width) * screen.height);
+  // console.debug({here:"firstSeedEnchant#", GAME_WIDTH, GAME_HEIGHT});
 
 var SCREEN_TITILE = './index.html';
 var SCREEN_SELECT = './select.html';
@@ -94,6 +95,7 @@ function GameFinalAction(clear_flg){//override to hack
       this.endScene.image = this.assets[CLEAR_IMG];
       const params = new URLSearchParams();
       params.append("triumphant", 1);
+      params.append("_t", +new Date());
       nextpath = filename + '?' + params.toString();
     } else {
       this.endScene.image = this.assets[OVER_IMG];

@@ -2,7 +2,8 @@
 function init(){
     //window.onbeforeunload = function(e){ monaca_sound_release(); };
     GAME_WIDTH = 400;
-    GAME_HEIGHT = Math.floor((400 / window.outerWidth) * window.outerHeight);
+    // GAME_HEIGHT = Math.floor((400 / window.outerWidth) * window.outerHeight);
+    GAME_HEIGHT = 192;
     initMoriy();
 }
 function onBackButtonDown(){

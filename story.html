@@ -14,24 +14,21 @@
     <script type="text/javascript">
       const episodes = [
         {no: 0, title: 'Prolog'},
+        {no: 2, title: 'Banners'},
         {no: 1, title: 'Brightness'},
         {no: 7, title: 'Forecourt'},
         {no: 8, title: 'Mausoleum'},
         {no: 4, title: 'Passkey'},
-        {no: 2, title: 'Banners'},
-        {no: 6, title: 'Loophole'},
         {no: 5, title: 'Dungeon'},
         {no: 3, title: 'Maze'},
+        {no: 6, title: 'Loophole'},
         {no: 9, title: 'Core'},
         {no: 10, title: 'Lyra'},
         {no: 11, title: 'Epilogue'},
       ];
 
-      function gotoStage(episode){
-        const no = episode.no;
-        const filename = `stage${("00" + no).slice(-2)}.html`;
+      function gotoStage(filename){
         window.location = filename;
-        //TODO: save last episode to localStorage
       }
 
       window.onload = function(){
@@ -51,36 +48,36 @@
           console.error({id, episode});
           throw new Error("Story not found");
         }
+        $story.style.display = "block";
 
         const $episode = $story.querySelector("p.title span.index");
         $episode.textContent = `Episode ${("00" + index).slice(-2)}`;
         const $title = $story.querySelector("p.title span.name");
         $title.textContent = episode.title;
 
-        const rect = $story.getBoundingClientRect();
-        const top = rect.top;
-        const bottom = rect.bottom;
-        const height = rect.height;
-        const speed = 50 / height;
-
         let touching = false;
         document.addEventListener("mousedown", (e)=>{touching = true;});
         document.addEventListener("touchstart", (e)=>{touching = true;});
         document.addEventListener("mouseup", (e)=>{touching = false;});
         document.addEventListener("touchend", (e)=>{touching = false;});
-        document.addEventListener("dblclick", (e)=>{ gotoStage(episode); });
+        document.addEventListener("dblclick", (e)=>{ gotoStage(filename); });
 
-        const boost = 10;
-        const interval = 1000 / 60; // 60 FPS
-        let currenttop = 100;
-        const scroll = function(){
-          currenttop -= speed * (touching ? boost : 1);
-          $story.style.top = `${currenttop}vh`;
-          if($story.getBoundingClientRect().bottom < 0){
-            gotoStage(episode);
-          }else{
-            setTimeout(scroll, interval);
+        $container = $story.parentElement;
+        $container.addEventListener('scroll', function() {
+          console.log($container.scrollHeight - $container.scrollTop);
+          if ($container.scrollHeight - $container.scrollTop <= $container.clientHeight + 1) {
+            gotoStage(filename);
           }
+        });        
+        
+        const boostScroll = 15;
+        const normalScroll = 1;
+        const interval = 1000 / 15; // 90 FPS
+
+        const scroll = function(){
+          const nextScrollTop = $container.scrollTop + (touching ? boostScroll : normalScroll);
+          $container.scroll({top: nextScrollTop});
+          setTimeout(scroll, interval);
         };
         scroll();
       }
@@ -93,24 +90,39 @@
             --text-length: 32;
             --font-size: calc(100vw / var(--text-length))
         } */
-
+        :root {
+          --body-height: calc(100vw * 0.48);/* 400:192 */
+        }
+        html {
+          background-color: rgb( 0, 0, 0);
+        }
         body {
+          width: 100vw;
+          height: var(--body-height);
           margin: 0 0; padding: 0 0;
-          min-width: 100vw;
-          min-height: 100vh;
-          /* width: 400px; */
           color: silver;
-          background-color: #000;
           overflow: hidden;
+          user-select: none;
+          background-color: rgb( 2, 8,16);
+          position: absolute;
+          margin: auto;
+          top: 0; right: 0; bottom: 0; left: 0;
+        }
+        div.container{
+          margin:0;padding:0;
+          width: 100%; height: 100%;
+          overflow: auto;
+          scrollbar-color: rgb( 8,32,64) rgb( 2, 8,16);
+          scrollbar-width: thin;
         }
 
         section.story {
-          position: absolute;
-          top: 100vh; left: 0;
-          /* min-height: 100vh; */
-          width: calc(100vw - var(--font-size) * 6);
-          padding-left: calc(var(--font-size) * 3);
-          padding-right: calc(var(--font-size) * 3);
+          display: none;
+          width: auto;
+          min-height: 100%;
+          margin-top: 50%; margin-bottom: var(--body-height);
+          margin-left: calc(var(--font-size) * 3);
+          margin-right: calc(var(--font-size) * 3);
           font-size: calc(var(--font-size) * 1);
           line-height: 2em;
         }
@@ -123,6 +135,7 @@
   </head>
 
   <body>
+    <div class="container">
     <section id="stage00:Prolog" class="story bitfont">
       <p class="title">
         <span class="index"></span><br/><span class="name"></span>
@@ -132,41 +145,91 @@
         なぜ 自分 の ような みぶん の ひくい もの が しんえいたい の たいちょう に えらばれたのか。
       </p>
       <p>
-        みぶん の たかい どうりょう たち の せんぼう と ねたみ そねみ の まなざし は ヨシュナ には いたい ほど に かんじられた。
-        国王 に 自分 を すいせん した 大そうじょう さま は いったい どういう つもり なのか。
+        どうりょう たち の せんぼう と ねたみ そねみ の まなざし は ヨシュナ には いたい ほど に かんじられた。
+        へいか に 自分 を すいせん した 大そうじょう さま は いったい どういう つもり なのか。
       </p>
       <p><br/></p>
       <p>
         とき を 同じくして 王国 には いへん が おこりはじめていた。
-        しぜんさいがい の ぞうか や てんこう の ふじゅん による ふさく が 目に 見えて ふえた。
+        しぜんさいがい や てんこう の ふじゅん による ふさく が 目に 見えて ふえた。
       </p>
       <p>
-        ひとびと は 光 の めがみ ライラ の かご が うすれ ヤミ の 女王 アリル が ふっかつ するのではないか と うわさする よう に なった。
+        ひとびと は 光の めがみ ライラ の かご が うすれ ヤミの 女王 アリル が ふっかつ するのでは ないか と うわさする よう に なった。
       </p>
       <p><br/></p>
       <p>
-        しんまい たいちょう の ヨシュナ に 手だて など あるはず も なく 不安 な きもち を おしころす ように くんれん に はげむ の だった。
+        しんまい たいちょう の ヨシュナ に 手だて など あるはず も なく 不安な きもち を おしころす ように くんれん に はげむ の だった。
+      </p>
+    </section>
+    <section id="stage02:Banners" class="story bitfont">
+      <p class="title">
+        <span class="index"></span><br/><span class="name"></span>
+      </p>
+      <p>
+        きょう は しんえいたい に とって とくべつ な くんれん の 日 だ。
+        まんがいち の じたい に 国王 たち を だっしゅつ させる いわば ひなん くんれん で ある。
+      </p>
+      <p>
+        この へいわ な 王国 で そんな じたい が あるの だろうか。
+        いや ふあん の め は ある。
+        さっこん の やくさい に ひとびと の ふあん が たかまって いる。
+      </p>
+      <p>
+        ひとびと は ふあん の はけぐち に わかりやすい げんいん を もとめて いる。
+        ヤミ の 女王 アリル ふっかつ の うわさ に しかり。
+        こと に よると 国王 や 大そうじょう さま あるいは ヨシュナ さえも ひょうてき に なりえる。
+        人の 上に 立つ もの は 人の 目に つく もの でも ある。
+      </p>
+      <p>
+        そこまで かんがえ て ヨシュナ は 大きく かぶり を ふった。
+        ばかな。
+        へいみん しゅっしん の 自分 が たみ を かそうてき と かんがえる なんて。
+      </p>
+      <p><br/></p>
+      <p>
+        さあ みんな だっしゅつ けいろ の かくにん だ。<br/>
+        みち に まよって おくれ を とるな。
+      </p>
+      <p>
+        なにか を ふりはらう ように ヨシュナ は 大きな こえ で そう さけんだ。
       </p>
     </section>
     <section id="stage01:Brightness" class="story bitfont">
       <p class="title">
         <span class="index"></span><br/><span class="name"></span>
       </p>
-
       <p>
-        ここ は 光 の めがみ ライラ の かご に 守られた 平和 な 王国 モーリィ。
-        おんだん な きこう に めぐまれ がいてき の きょうい も ない。
-      </p>
-      <p>
-        国王 の しんこうしん は あつく しゅうきょう の ほごしゃ として じいん と りょうこう な かんけい を きずいて いた。
+        久しぶり に よく はれた ある日 の ごご。
+        ヨシュナ は ひとり くんれん を ぬけだし 木かげ に ねころんで いた。
       </p>
       <p><br/></p>
       <p>
-        100年 の 平和 を きょうじゅ した 王国 だったが ふおんな な できごと が かくち で 見られる よう に なった。
-        しぜんさいがい の ぞうか や てんこう の ふじゅん による ふさく が つづいた。
+        フォ フォ フォ。<br/>
+        こんな ところ で めいそう に ふけって おられるのは 今 を ときめく しんえい たいちょう どの では ないか。
+      </p>
+      <p><br/></p>
+      <p>
+        大そうじょう さま ... !<br/>
+        わたし は ... その あの えーと。
+      </p>
+      <p><br/></p>
+      <p>
+        フォ フォ フォ。<br/>
+        まあ よい よい。
+        その わかさ で たい を ひきいる には くろう も 多かろう。
       </p>
       <p>
-        おいうち を かける ように おきた 大日食 を きっかけ に ひとびと は ヤミ の 女王 アリル の ふっかつ を うわさする よう に なった。
+        大い に なやむ が よい。
+        よい こと も わるい こと も あり の まま に うけいれ て みよ。
+        ぜんあく に とらわれ ては ならんぞ。
+        それ は 光 と カゲ の よう に ものごと の そくめん で しか ない の じゃ。
+      </p>
+      <p>
+        そろそろ きゅうけい も おわり に して せいどう に 光 を ともして きて おくれ。
+        めがみ さま の しゅくふく で おぬし の き も 少しは はれる じゃろう。
+      </p>
+      <p>
+        フォ フォ フォ。
       </p>
 
     </section>
@@ -174,31 +237,105 @@
       <p class="title">
         <span class="index"></span><br/><span class="name"></span>
       </p>
-      <p></p>
+      <p>
+        ミハラクイ山 の ちゅうふく に ある いわ の せいどう に ヨシュナ は いた。
+        まいとし こうれい の 光 の ぎしき を とり行なう 大そうじょう さま の ごえい として つきそって きた の である。
+      </p>
+      <p>
+        光の めがみ ライラ に つきしたがう せいれい セイレン を まつる そうごん な さいし。
+        しかし ヨシュナ は そらぞらしい きもち で それ を ながめ て いた。
+        ろうそく に 火 を ともした ぐらい で 光 の めがみ さま の ごきげん など とれる ものか。
+      </p>
+      <p>
+        こうき な かたがた には りかい できまい が おてんとう さま だけ を あがめた ところ で なんに なる。
+        かて を はぐくむ ため には 雨も 風も よる の ヤミ さえ ひつよう なのだ。
+        しんえいたい たいちょう と なった 今 くち が さけて も いえない が。
+      </p>
       <p><br/></p>
+      <p>
+        ぎしき の あと ヨシュナ は 大そうじょう さま に よびだされた。
+      </p>
+      <p>
+        フォ フォ フォ。<br/>
+        ごくろう だの。
+        しかし 今年 は ここから が ほんばん じゃ。
+        せいどう の おく に ある れいびょう も まいらねば ならん。
+        としおいた ワシ に とびら は あけられぬ。
+        ヨシュナ よ ついて きて おくれ。
+      </p>
+      <p>
+        ここ から 先 は ワシ と おぬし ふたり きり じゃ。<br/>
+        ふだん は いえぬ こと も あろう。
+        ゆるり と かたらい ながら ゆこう では ないか。
+      </p>
+      <p>
+        フォ フォ フォ。
+      </p>
     </section>
     <section id="stage08:Mausoleum" class="story bitfont">
       <p class="title">
         <span class="index"></span><br/><span class="name"></span>
       </p>
-      <p></p>
+      <p>
+        れいびょう の 中は ひんやり として おごそか な ふんいき が ただよって いた。
+        しかし 大そうじょう さま は さいじ を とりおこなう ようす が ない。
+      </p>
       <p><br/></p>
+      <p>
+        フォ フォ フォ。<br/>
+        さあ ヨシュナ よ せいれい さま の しゅくふく を うけよ。
+        ワシ は 大むかし に しゅくふく されて おる。
+        次は おぬし の ばん じゃ。
+      </p>
+      <p><br/></p>
+      <p>
+        大そうじょう さま。<br/>
+        ヨシュナ は じゃくはいもの で ございます。
+        せいれい さま の しゅくふく を うける とは いかなる ぎ に ございましょう ?
+      </p>
+      <p>
+        もしや わたし が しんえいたい たいちょう に えらばれた こと と かかわりが ありましょうか。
+        もしや さっこん の やくさい にも かかわり の あること で ございますか ... ?
+      </p>
+      <p><br/></p>
+      <p>
+        フォ フォ フォ。<br/>
+        しつもん ぜめ だの。
+      </p>
+      <p>
+        あんずる こと は ない。
+        おぬし の まなこ で みて おぬし の みみ で きけ。
+        さすれば おのずと こたえ は えられよう。
+      </p>
     </section>
     <section id="stage04:Passkey" class="story bitfont">
       <p class="title">
         <span class="index"></span><br/><span class="name"></span>
       </p>
-      <p></p>
-      <p><br/></p>
-    </section>
-    <section id="stage02:Banners" class="story bitfont">
-      <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+      <p>
+        あたたかい しゅくふく の 光 が れいびょう に みちた あと せきひつ の ひとつ が おとを 立てて ひらいた。
+        その中 に ちかへ と つづく かいだん が 見える。
       </p>
-      <p></p>
+      <p>
+        ヨシュナ は かいだん の まえ で 立ち つくして いた。
+        大きな なにか に まきこまれて いる が それが なにか は わからない。
+      </p>
+      <p>
+        だが ふしぎ と ふあん は なかった。
+        むね に のこる しゅくふく の ぬくもり の せい だろうか。
+      </p>
       <p><br/></p>
+      <p>
+        フォ フォ フォ。<br/>
+        とびら は ひらかれた。
+        おぬし の もとめる こたえ は この 先に ある。
+      </p>
+      <p>
+        じゃが まずは カギ を あけねば ならん。
+        ヨシュナ と せいれい さま との ちえくらべ じゃ。
+      </p>
     </section>
-    <section id="stage06:Loophole" class="story bitfont">
+    <section id="stage03:Maze" class="story bitfont">
       <p class="title">
         <span class="index"></span><br/><span class="name"></span>
       </p>
@@ -212,7 +349,7 @@
       <p></p>
       <p><br/></p>
     </section>
-    <section id="stage03:Maze" class="story bitfont">
+    <section id="stage06:Loophole" class="story bitfont">
       <p class="title">
         <span class="index"></span><br/><span class="name"></span>
       </p>
@@ -240,6 +377,7 @@
       <p></p>
       <p><br/></p>
     </section>
+    </div><!-- cotainer -->
   </body>
 </html>
 
