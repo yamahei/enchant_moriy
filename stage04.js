@@ -54,7 +54,7 @@ var EventStage = enchant.Class.create({
       for(var i=0; i<this.lamps.length; i++){ this.lamps[i].setValue(v); }
     },
     isCorrect: { get: function(){
-      console.log({name: "isCorrect", hint: this.getHint(), aiming: this.getAiming()});
+      console.log({name: "isCorrect", hint: this.getHint(), aiming: this.getAiming(), current: this.getCurrent()});
       return (this.getHint()===this.getCurrent() ? true : false);
     }},
     isCorrecting: { get: function(){
@@ -171,7 +171,7 @@ var initMoriy = function() {//---
             }else{
               obj.eventTouch = function(){
                 if(this._eventObj.switchUD.currentValue){
-                  this._eventObj.message.setText( this._eventObj.getHint() + " : " + this._eventObj.getAiming() );
+                  this._eventObj.message.setText( this._eventObj.getHint() + " : " + this._eventObj.getCurrent() );
                 } else {
                   // this._eventObj.message.setText( 'Turn on the main power, first.' );
                   this._eventObj.message.setText( 'まずは キドウ せよ' );
