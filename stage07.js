@@ -311,7 +311,8 @@ var initMoriy = function() {//---
         obje._eventObj = events;
         switch(typee){
           case "messageBoard":
-            obje.eventTouch = function(){ this._eventObj.message.setText('ATTENTION: Due to a known bug, do not quit the application in sound reproduction.'); };
+            // obje.eventTouch = function(){ this._eventObj.message.setText('ATTENTION: Due to a known bug, do not quit the application in sound reproduction.'); };
+            obje.eventTouch = function(){ this._eventObj.message.setText('オオワシ は せいれい の みちびき'); };
             obje.eventLeave = function(){ this._eventObj.message.setText(''); };
           break;
         }

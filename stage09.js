@@ -179,13 +179,14 @@ var EventStage = enchant.Class.create({
       this.recordLamp1.push(cristal.currentValue ? cristal.lowHint : cristal.capHint);
       while(this.recordLamp1.length > this.answerLamp1.length){ this.recordLamp1.shift(); }
       this.lamps[3].setValue((this.recordLamp1.join("") == this.answerLamp1));
+      console.log({recordLamp1: this.recordLamp1.join(""), answerLamp1: this.answerLamp1});
     },
     countLampIsOff: function(){
       var count = this.lamps.length;
       for(var i=0; i<this.lamps.length; i++){ if(this.lamps[i].currentValue) count--; }
       return count;
     },
-    hintLamp1: function(){ return "Lighting key: " + this.answerLamp1.split("").join("-"); },
+    hintLamp1: function(){ return this.answerLamp1.split("").join("-") + " の じゅん に ふめ"; },
     makeAnswerLamp1: function(){
       // make answer of lamp1
       var game = enchant.Game.instance; var temp = [];
@@ -306,7 +307,11 @@ var initMoriy = function() {//---
               obj.eventTouch = function(){ events.message.setText(events.hintLamp1()); };
             }else{
               obj.eventTouch = function(){
-                events.message.setText('Two triangle will make the world stabilized.');
+                // events.message.setText('Two triangle will make the world stabilized.');
+                events.message.setText([
+                  '光 と ヤミ は めがみさま の そくめん',
+                  'しゅくふく と しじま を ひとしく ささげよ'
+                ].join("\n"));
               };
             }
             obj.eventLeave = function(){ events.message.setText(''); };

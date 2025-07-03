@@ -82,7 +82,8 @@ var initMoriy = function() {//---
         switch(type){
           case "messageBoard":
             obj.eventObj = events;
-            obj.eventTouch = function(){ this._eventObj.message.setText('Bright you up.'); };
+            // obj.eventTouch = function(){ this._eventObj.message.setText('Bright you up.'); };
+            obj.eventTouch = function(){ this._eventObj.message.setText('せいなる 光が なんじをも かがやかす'); };
             obj.eventLeave = function(){ this._eventObj.message.setText(''); };
           break;
           case "lamp":

@@ -1,8 +1,9 @@
 enchant();
 
-GAME_WIDTH = 400;
-//GAME_HEIGHT = 192;
-GAME_HEIGHT = Math.floor((400 / screen.width) * screen.height);
+//GAME_WIDTH = 400;
+////GAME_HEIGHT = 192;
+//GAME_HEIGHT = Math.floor((400 / screen.width) * screen.height);
+  // console.debug({here:"firstSeedEnchant#", GAME_WIDTH, GAME_HEIGHT});
 
 var SCREEN_TITILE = './index.html';
 var SCREEN_SELECT = './select.html';
@@ -87,20 +88,30 @@ function monaca_sound_play(soundfile){
 /* common final action - at game end, clear or oops */
 function GameFinalAction(clear_flg){//override to hack
     if(typeof(monaca) !== 'undefined') monaca_sound_release();
-    var _submit;
+    const filename = "select.html";
+
+    var nextpath;
     if(clear_flg){
       this.endScene.image = this.assets[CLEAR_IMG];
-      _submit = function() { window.history.back(); };//return to index
-      // _submit = function() { window.location = SCREEN_SELECT; };//return to index
+      const params = new URLSearchParams();
+      params.append("triumphant", 1);
+      params.append("_t", +new Date());
+      nextpath = filename + '?' + params.toString();
     } else {
       this.endScene.image = this.assets[OVER_IMG];
-      //_submit = function() { window.location.reload(); };//replay
-      _submit = function() { window.history.back(); };//return to index
-      // _submit = function() { window.location = SCREEN_SELECT; };//return to index
+      nextpath = filename;
     }
-    this.endScene.addEventListener('touchend', _submit);
+
+    const submit = function(){
+      window.location = nextpath;
+    };
+    this.endScene.addEventListener('touchend', submit);
     this.pushScene(this.endScene);
-    window.setTimeout(_submit, 5000);
+    document.addEventListener('keydown', (e)=>{
+      document.removeEventListener('keydown', arguments.callee);
+      if(e.key === 'Enter'){ submit(); }
+    });
+    window.setTimeout(submit, 5000);
 }
 
 /* my pad - see enchant.ui.Pad */
@@ -285,8 +296,7 @@ var SpriteMonitor = enchant.Class.create(enchant.Sprite, {
     return ( (this.hitLX < this._heroObj.hitRX) && (this.hitRX > this._heroObj.hitLX)
      && (this.hitUY < this._heroObj.hitBY) && (this.hitBY > this._heroObj.hitUY)
     );
-
-}},
+  }},
   hitLX: { get: function() { return this.x; } }, // logical hit area left
   hitRX: { get: function() { return this.x + this.width; } }, // logical hit area right
   hitUY: { get: function() { return this.y; } }, // logical hit area upper
@@ -604,7 +614,7 @@ var CharHero = enchant.Class.create( SpriteChar, {
   autoMode: { set: function(v){ this._autoMode = v; }},
   enterFrame: function(e){
     var gi = (this._autoMode ? {} : this._gameObj.input);
-    console.log(this._gameObj.input);
+    // console.log(this._gameObj.input);
     var tileW = this._mapObj.tileWidth; var tileH = this._mapObj.tileHeight;
     var acc = this.accel; var ms = this.maxspeed;
     var _frame = this.frame;

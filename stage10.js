@@ -191,7 +191,8 @@ var initMoriy = function() {//---
         obj._eventObj = events;
         switch(type){
           case "messageBoard":
-            obj.eventTouch = function(){ events.message.setText('Go without looking back.'); };
+            // obj.eventTouch = function(){ events.message.setText('Go without looking back.'); };
+            obj.eventTouch = function(){ events.message.setText('ふりむいて は ならぬ'); };
             obj.eventLeave = function(){ events.message.setText(''); };
           break;
         }

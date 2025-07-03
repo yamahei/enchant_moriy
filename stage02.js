@@ -73,7 +73,8 @@ var initMoriy = function() {//---
       var typem = SpriteObjTypes.indexes[o.type];
       var settingm = SpriteObjTypes[typem];
       var objm = new SpriteObj(game, map, hero, events, o.mapX, o.mapY, settingm, o.default);
-      objm.eventTouch = function(){ this._eventObj.message.setText("Banners will lead you to the entrance."); };
+      // objm.eventTouch = function(){ this._eventObj.message.setText("Banners will lead you to the entrance."); };
+      objm.eventTouch = function(){ this._eventObj.message.setText("はた に みちびかれよ"); };
       objm.eventLeave = function(){ this._eventObj.message.setText(''); };
       stage.addChild(objm);
 

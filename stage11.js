@@ -144,7 +144,8 @@ var initMoriy = function() {//---
         obj._eventObj = events;
         switch(type){
           case "messageBoard":
-            obj.eventTouch = function(){ events.message.setText('Up up up! '); };
+            // obj.eventTouch = function(){ events.message.setText('Up up up!'); };
+            obj.eventTouch = function(){ events.message.setText('むげん かいろう を かいくぐって あがれ'); };
             obj.eventLeave = function(){ events.message.setText(''); };
           break;
           case "lamp":
