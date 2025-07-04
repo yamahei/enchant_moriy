@@ -39,14 +39,11 @@
           const unlock = data.unlock;
           const last = data.last;
           if(unlock < last){
-            saveData({unlock: last});
+            data.unlock = last;
+            saveData(data);
           }
         }
-
-        if(iscleared || isfailed){
-          history.replaceState(null, null, window.location.pathname);
-        }
-
+        history.replaceState(null, null, window.location.pathname);
         return {iscleared, isfailed};
       }
 
@@ -85,6 +82,8 @@
         if(!loadData()){saveData({});}
         const data = loadData();
         const {iscleared, isfailed} = getPageState(data);
+        const maxClickableIndex = data.unlock + 1;
+        const scrollTargetIndex = isfailed ? data.last : (iscleared ? data.last + 1 : maxClickableIndex);
 
         const $episodes = document.getElementById("episodes");
         const $uppermargin = document.createElement("div");
@@ -92,9 +91,10 @@
         $episodes.appendChild($uppermargin);
 
         episodes.forEach((episode, index)=>{
-          const unlock = !!(index <= data.unlock);
-          const isnext = !!(index <= data.unlock + 1);
-          const clickable = unlock || isnext;
+          // const unlock = !!(index <= data.unlock + 1);
+          // const isnext = !!(index <=  data.last + iscleared ? 1 : 0);
+          // const clickable = unlock || isnext;
+          const clickable = !!(index <= maxClickableIndex);
           const $box = document.createElement("li");
           $box.setAttribute("class", clickable ? "episode unlock" : "episode");
           $box.setAttribute("tabindex", clickable ? 0 : -1);
@@ -137,25 +137,16 @@
         $undermargin.setAttribute("class", "margin");
         $episodes.appendChild($undermargin);
 
-        let indexForScrolltarget;
-        if(iscleared){
-          indexForScrolltarget = data.last + 1;
-        } else if(isfailed){
-          indexForScrolltarget = data.last;
-        } else {
-          indexForScrolltarget = data.unlock;
-        }
+        let indexForScrolltarget = scrollTargetIndex;
+        // if(iscleared){
+        //   indexForScrolltarget = data.last + 1;
+        // } else if(isfailed){
+        //   indexForScrolltarget = data.last;
+        // } else {
+        //   indexForScrolltarget = data.unlock;
+        // }
 
-        let indexForScrolltarget;
-        if(iscleared){
-          indexForScrolltarget = data.last + 1;
-        } else if(isfailed){
-          indexForScrolltarget = data.last;
-        } else {
-          indexForScrolltarget = data.unlock;
-        }
-
-        console.debug({indexForScrolltarget, iscleared, isfailed, last: data.last, unlock: data.unlock});
+        // console.debug({indexForScrolltarget, iscleared, isfailed, last: data.last, unlock: data.unlock});
         scrollToLatestEpisode(indexForScrolltarget);
         document.getElementsByClassName("episode")[indexForScrolltarget]?.focus();
 

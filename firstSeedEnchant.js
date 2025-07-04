@@ -88,8 +88,8 @@ function monaca_sound_play(soundfile){
 /* common final action - at game end, clear or oops */
 function GameFinalAction(clear_flg){//override to hack
     if(typeof(monaca) !== 'undefined') monaca_sound_release();
-    const filename = "select.html";
 
+    const filename = "select.html";
     const params = new URLSearchParams();
     params.append("_t", +new Date());
     if(clear_flg){
@@ -99,9 +99,10 @@ function GameFinalAction(clear_flg){//override to hack
       this.endScene.image = this.assets[OVER_IMG];
       params.append("failed", 1);
     }
-    const nextpath = filename + '?' + params.toString();
 
     const submit = function(){
+      const nextpath = filename + '?' + params.toString();
+      console.log({nextpath, clear_flg})
       window.location = nextpath;
     };
     this.endScene.addEventListener('touchend', submit);
