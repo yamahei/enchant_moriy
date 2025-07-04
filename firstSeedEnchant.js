@@ -90,20 +90,16 @@ function GameFinalAction(clear_flg){//override to hack
     if(typeof(monaca) !== 'undefined') monaca_sound_release();
     const filename = "select.html";
 
-    var nextpath;
+    const params = new URLSearchParams();
+    params.append("_t", +new Date());
     if(clear_flg){
       this.endScene.image = this.assets[CLEAR_IMG];
-      const params = new URLSearchParams();
       params.append("triumphant", 1);
-      params.append("_t", +new Date());
-      nextpath = filename + '?' + params.toString();
     } else {
       this.endScene.image = this.assets[OVER_IMG];
-      const params = new URLSearchParams();
       params.append("failed", 1);
-      params.append("_t", +new Date());
-      nextpath = filename + '?' + params.toString();
     }
+    const nextpath = filename + '?' + params.toString();
 
     const submit = function(){
       window.location = nextpath;

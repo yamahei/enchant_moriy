@@ -29,19 +29,25 @@
         {no: 11, src: 'stage11.html', difficulty: 1, title: 'Epilogue', image: './siteimg/epimg_epilogue.png'},
       ];
 
-      function setUnlockIfCleared(data){
+      function getPageState(data){
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
-        if(params.get("triumphant") !== null){
+        const iscleared = params.get("triumphant") !== null;
+        const isfailed = params.get("failed") !== null;
+
+        if(iscleared){
           const unlock = data.unlock;
           const last = data.last;
           if(unlock < last){
             saveData({unlock: last});
           }
-          history.replaceState(null, null, window.location.pathname);
-          return true;
         }
-        return false;
+
+        if(iscleared || isfailed){
+          history.replaceState(null, null, window.location.pathname);
+        }
+
+        return {iscleared, isfailed};
       }
 
       function onClickEpisode(episode, index){
@@ -78,7 +84,7 @@
       window.onload = function(){
         if(!loadData()){saveData({});}
         const data = loadData();
-        const iscleared = setUnlockIfCleared(data);
+        const {iscleared, isfailed} = getPageState(data);
 
         const $episodes = document.getElementById("episodes");
         const $uppermargin = document.createElement("div");
@@ -130,6 +136,15 @@
         const $undermargin = document.createElement("div");
         $undermargin.setAttribute("class", "margin");
         $episodes.appendChild($undermargin);
+
+        let indexForScrolltarget;
+        if(iscleared){
+          indexForScrolltarget = data.last + 1;
+        } else if(isfailed){
+          indexForScrolltarget = data.last;
+        } else {
+          indexForScrolltarget = data.unlock;
+        }
 
         let indexForScrolltarget;
         if(iscleared){
