@@ -99,7 +99,10 @@ function GameFinalAction(clear_flg){//override to hack
       nextpath = filename + '?' + params.toString();
     } else {
       this.endScene.image = this.assets[OVER_IMG];
-      nextpath = filename;
+      const params = new URLSearchParams();
+      params.append("failed", 1);
+      params.append("_t", +new Date());
+      nextpath = filename + '?' + params.toString();
     }
 
     const submit = function(){

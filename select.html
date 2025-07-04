@@ -131,8 +131,16 @@
         $undermargin.setAttribute("class", "margin");
         $episodes.appendChild($undermargin);
 
-        const indexForScrolltarget = iscleared ? data.last + 1 : data.unlock;
-        console.debug({indexForScrolltarget, iscleared, last: data.last, unlock: data.unlock});
+        let indexForScrolltarget;
+        if(iscleared){
+          indexForScrolltarget = data.last + 1;
+        } else if(isfailed){
+          indexForScrolltarget = data.last;
+        } else {
+          indexForScrolltarget = data.unlock;
+        }
+
+        console.debug({indexForScrolltarget, iscleared, isfailed, last: data.last, unlock: data.unlock});
         scrollToLatestEpisode(indexForScrolltarget);
         document.getElementsByClassName("episode")[indexForScrolltarget]?.focus();
 
