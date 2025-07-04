@@ -38,6 +38,7 @@
           if(unlock < last){
             saveData({unlock: last});
           }
+          history.replaceState(null, null, window.location.pathname);
           return true;
         }
         return false;
