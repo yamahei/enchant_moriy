@@ -4,11 +4,16 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "pwa.html",
-    "description": "TODO",
+    "description": "A puzzle game that solves the mysteries of each stage and aims for the goal.",
     "short_name": "Moriy",
     "name": "Moriy - The Deep Fact",
     "orientation": "landscape",
     "icons": [
+        {
+            "src": "./promote/iconimage_moriy_192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
         {
             "src": "./promote/iconimage_moriy_512x512.png",
             "sizes": "512x512",
