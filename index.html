@@ -1,128 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>Moriy - the deep fact</title>
-    <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png"></link>
-    <style>img { max-width: 100%; }</style>
-    <script></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Moriy - The Deep Fact</title>
+    <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a; /* Dark background */
+            color: #f8f9fa; /* Light text */
+            font-family: 'Arial', sans-serif;
+        }
+        .hero-section {
+            background: url('promote/titleimage_moriy.png') no-repeat center center;
+            background-size: cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+        .section-title {
+            color: #007bff; /* Blue for titles */
+            margin-bottom: 1.5rem;
+        }
+        .container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        .btn-play {
+            font-size: 1.5rem;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+        }
+        footer {
+            background-color: #0d0d0d;
+            color: #adb5bd;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-<!-- https://markdowntohtml.com/
 
-初めてスマホ向けに作った「Moriy - the deep fact」をブラウザゲームとして復刻しました
-===================================================================================
+    <header class="hero-section">
+        <div class="text-center">
+            <h1>Moriy - The Deep Fact</h1>
+            <p class="lead">謎を解き明かし、真実へ辿り着け</p>
+            <a href="pwa.html" class="btn btn-primary btn-lg btn-play mt-4">今すぐプレイ</a>
+        </div>
+    </header>
 
-![image](promote/titleimage_moriy.png)
+    <main>
+        <section id="about" class="container">
+            <h2 class="section-title text-center">ゲーム紹介</h2>
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <p>初めてスマホ向けに作った「Moriy - the deep fact」をブラウザゲームとして復刻しました。</p>
+                    <p>ワタシにしては珍しく自動生成ではなくステージクリア型の謎解きゲームです。毎夜作っては会社の先輩にプレイしてもらってました。</p>
+                    <p>各ステージの謎を解き明かしてゴールを目指してください。クリア条件はステージごとに異なります。</p>
+                </div>
+            </div>
+        </section>
 
-ワタシにしては珍しく自動生成ではなくステージクリア型の謎解きゲームです。
-毎夜作っては会社の先輩にプレイしてもらってました。
-なお、スマホアプリ化には [monaca](https://ja.monaca.io/)  を利用しました。
+        <section id="screenshots" class="container bg-dark py-5">
+            <h2 class="section-title text-center">スクリーンショット</h2>
+            <div class="row">
+                <!-- Screenshots will be dynamically added here -->
+                <div class="col-md-4 mb-4">
+                    <img src="promote/screenshot_2013-01-06_1853.png" class="img-fluid rounded shadow" alt="Screenshot 1">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <img src="promote/screenshot_2013-01-06_1854.png" class="img-fluid rounded shadow" alt="Screenshot 2">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <img src="promote/screenshot_2013-01-06_2122.png" class="img-fluid rounded shadow" alt="Screenshot 3">
+                </div>
+            </div>
+        </section>
 
+        <section id="how-to-play" class="container">
+            <h2 class="section-title text-center">遊び方</h2>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <ul>
+                        <li>操作は左右と上（ジャンプ）のみです。</li>
+                        <li>スマートフォンの場合、タッチした位置に仮想パッドが現れますが、PCのカーソルキーの方がはるかに遊びやすいです。</li>
+                        <li>ゲーム中、音が重要なヒントになります。音が出せる環境でお楽しみください。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-遊び方
-------
+        <section id="credits" class="container bg-dark py-5">
+            <h2 class="section-title text-center">クレジット</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>ライブラリ、素材</h4>
+                    <ul>
+                        <li>画像素材: First Seed Material</li>
+                        <li>効果音素材: <a href="http://osabisi.sakura.ne.jp/m2/" target="_blank" class="text-info">ザ・マッチメイカァズ</a></li>
+                        <li>ロゴジェネレータ: <a href="https://supalogo.com/" target="_blank" class="text-info">Supalogo</a></li>
+                        <li>ゲームエンジン: <a href="https://github.com/wise9/enchant.js" target="_blank" class="text-info">enchant.js</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>開発</h4>
+                    <ul>
+                        <li>ソースコード: <a href="https://github.com/yamahei/enchant_moriy" target="_blank" class="text-info">yamahei/enchant_moriy | GitHub</a></li>
+                        <li>テキストエディタ: <a href="https://atom.io/" target="_blank" class="text-info">Atom</a></li>
+                        <li>画像編集: <a href="https://www.gimp.org/" target="_blank" class="text-info">GIMP</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
 
-⇒[Moriy - the deep fact で遊ぶ](pwa.html)
+    <footer class="text-center">
+        <p>&copy; 2025 Moriy - The Deep Fact. All rights reserved.</p>
+    </footer>
 
-各ステージの謎を解き明かしてゴールを目指してください。
-クリア条件はステージごとに異なります。
-
-操作は左右と上（ジャンプ）のみです。
-
-【注意】
-* スマートフォンの場合、タッチした位置に仮想パッドが現れますが、PCのカーソルキーの方がはるかに遊びやすいです
-* ゲーム中、音が重要なヒントになります。音が出せる環境でお楽しみください。
-* 復刻の動作確認が不十分です（気になる挙動がありますが、難しくて最後までプレイ確認できてないです）
-
-
-動作環境など
-------------
-Moriy - the deep fact はJavaScriptで開発しています。 PCやスマートフォンのブラウザで遊べます。
-
-TODO: PWA対応していますので、ホームに追加してオフラインで遊ぶこともできます。
-
-
-ライブラリ、素材
-----------------
-
-* 画像素材
-  * First Seed Material
-* 効果音素材
-  * [ザ・マッチメイカァズ](http://osabisi.sakura.ne.jp/m2/)
-* ロゴジェネレータ
-  * [Supalogo](https://supalogo.com/)
-* ゲームエンジン
-  * [enchant.js](https://github.com/wise9/enchant.js)
-
-開発
-----
-
-* ソースコード
-  * [yamahei/enchant_moriy \| GitHub](https://github.com/yamahei/enchant_moriy)
-* テキストエディタ
-  * [Atom](https://atom.io/)
-* 画像編集
-  * [GIMP](https://www.gimp.org/)
-
-
--->
-
-<h1 id="-moriy-the-deep-fact-">初めてスマホ向けに作った「Moriy - the deep fact」をブラウザゲームとして復刻しました</h1>
-<p><img src="promote/titleimage_moriy.png" alt="image"></p>
-<p>ワタシにしては珍しく自動生成ではなくステージクリア型の謎解きゲームです。
-毎夜作っては会社の先輩にプレイしてもらってました。
-なお、スマホアプリ化には <a href="https://ja.monaca.io/">monaca</a>  を利用しました。</p>
-<h2 id="-">遊び方</h2>
-<p>⇒<a href="pwa.html">Moriy - the deep fact で遊ぶ</a></p>
-<p>各ステージの謎を解き明かしてゴールを目指してください。
-クリア条件はステージごとに異なります。</p>
-<p>操作は左右と上（ジャンプ）のみです。</p>
-<p>【注意】</p>
-<ul>
-<li>スマートフォンの場合、タッチした位置に仮想パッドが現れますが、PCのカーソルキーの方がはるかに遊びやすいです</li>
-<li>ゲーム中、音が重要なヒントになります。音が出せる環境でお楽しみください。</li>
-<li>復刻の動作確認が不十分です（気になる挙動がありますが、難しくて最後までプレイ確認できてないです）</li>
-</ul>
-<h2 id="-">動作環境など</h2>
-<p>Moriy - the deep fact はJavaScriptで開発しています。 PCやスマートフォンのブラウザで遊べます。</p>
-<p>TODO: PWA対応していますので、ホームに追加してオフラインで遊ぶこともできます。</p>
-<h2 id="-">ライブラリ、素材</h2>
-<ul>
-<li>画像素材<ul>
-<li>First Seed Material</li>
-</ul>
-</li>
-<li>効果音素材<ul>
-<li><a href="http://osabisi.sakura.ne.jp/m2/">ザ・マッチメイカァズ</a></li>
-</ul>
-</li>
-<li>ロゴジェネレータ<ul>
-<li><a href="https://supalogo.com/">Supalogo</a></li>
-</ul>
-</li>
-<li>ゲームエンジン<ul>
-<li><a href="https://github.com/wise9/enchant.js">enchant.js</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="-">開発</h2>
-<ul>
-<li>ソースコード<ul>
-<li><a href="https://github.com/yamahei/enchant_moriy">yamahei/enchant_moriy | GitHub</a></li>
-</ul>
-</li>
-<li>テキストエディタ<ul>
-<li><a href="https://atom.io/">Atom</a></li>
-</ul>
-</li>
-<li>画像編集<ul>
-<li><a href="https://www.gimp.org/">GIMP</a></li>
-</ul>
-</li>
-</ul>
-
-
-
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
