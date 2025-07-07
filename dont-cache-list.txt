@@ -1,0 +1,7 @@
+.gitignore
+AdBlock.html
+LICENSE
+README.md
+change.log
+generate-cache-list.sh
+index.html
