@@ -1,128 +1,249 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>Moriy - the deep fact</title>
-    <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png"></link>
-    <style>img { max-width: 100%; }</style>
-    <script></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Moriy - The Deep Fact</title>
+    <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png">
+    <link href="./nes@2.3.0.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'NuMochi';
+            src: url(./assets/font/NuKinakoMochi-Reg.otf);
+        }
+
+        body {
+            font-family: 'NuMochi', 'Arial', sans-serif;
+            font-size: 1.5rem;
+            image-rendering: pixelated;
+            background-color: rgb( 2, 8,16);
+            color: #f8f9fa; /* Light text */
+            line-height: 2.5rem;
+            user-select: none;
+        }
+        section.inserted-message {
+            margin: 1rem auto;
+            padding: 1rem 2rem;
+        }
+        .hero-section {
+            background: url('promote/titleimage_moriy.png') no-repeat center center;
+            background-size: cover;
+            height: 55vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .hero-section a.nes-btn{
+            margin-top: 40vh;
+        }
+        .play-button {
+            text-align: center;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+        a.nes-btn.goto-game {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        h1 {
+            font-size: 1rem;
+            text-align: center;
+        }
+        h2.section-title {
+            color: #007bff; /* Blue for titles */
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        h3.section-subtitle {
+            color: #9fb6d2; /* Blue for titles */
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .container {
+            padding: 3rem 1.5rem;
+        }
+        .side-container{
+            overflow: auto;
+            scrollbar-color: rgb( 8,32,64) rgb( 2, 8,16);
+            scrollbar-width: thin;
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 2rem 1fr 1fr 1fr 2rem;
+        }
+        .side-container img {
+            margin: 0;
+            display: block;
+            border: solid 1px #5a5764;
+            width: 100vw;
+            min-width: 320px;
+            max-width: 640px;
+        }
+        dl > dt {
+            display: inline;
+            font-weight: bold;
+            color: #ffda7e;
+        }
+        dl > dt::after {
+            content: ' : ';
+        }
+        dl > dd {
+            display: inline;
+            margin-right: 1rem;
+        }
+        a {
+            word-break: break-all;
+        }
+        footer {
+            background-color: #0d0d0d;
+            color: #adb5bd;
+            padding: 2rem 0;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<!-- https://markdowntohtml.com/
 
-初めてスマホ向けに作った「Moriy - the deep fact」をブラウザゲームとして復刻しました
-===================================================================================
+    <section class="top">
+        <div>
+            <h1>
+                <span class="">Moriy - The Deep Fact</span>
+            </h1>
+        </div>
+    </section>
+    <header class="hero-section">
+        <div>
+            <a href="pwa.html" class="nes-btn is-primary goto-game">
+                <span>今すぐプレイ</span>
+            </a>
+        </div>
+    </header>
 
-![image](promote/titleimage_moriy.png)
+    <div id="about" class="container">
 
-ワタシにしては珍しく自動生成ではなくステージクリア型の謎解きゲームです。
-毎夜作っては会社の先輩にプレイしてもらってました。
-なお、スマホアプリ化には [monaca](https://ja.monaca.io/)  を利用しました。
+        <h2 class="section-title">ゲーム しょうかい</h2>
+        <div class="nes-container is-rounded is-dark">
+            <p>
+                <strong>Moriy</strong>は ブラウザ で あそべる ファンタジー アクション パズル ゲーム です。
+                しゅじんこう ヨシュナ と せかい の ひみつ を 解き明かそう。
+            </p>
+        </div>
 
+        <h3 class="section-subtitle">インストール と すいしょう かんきょう</h3>
+        <p>
+            ブラウザ だけで あそべます。
+            インストール すれば オフライン プレイ できます
+            （PC での プレイ を すいしょう）。
+            音が じゅうような ヒント です。
+            音が だせる ばしょ で おたのしみ ください。
+        </p>
 
-遊び方
-------
+        <h3 class="section-subtitle">スクリーン ショット</h3>
+        <div class="side-container">
+            <p></p>
+            <img src="promote/localhost_4567_stage01.html.png" alt="Screenshot 2" class="img-fluid">
+            <img src="promote/localhost_4567_stage03.html.png" alt="Screenshot 3" class="img-fluid">
+            <img src="promote/localhost_4567_stage05.html.png" alt="Screenshot 1" class="img-fluid">
+            <p></p>
+        </div>
 
-⇒[Moriy - the deep fact で遊ぶ](pwa.html)
+        <h3 class="section-subtitle">そうさ ほうほう</h3>
+        <dl>
+            <dt>キャラクター そうさ</dt>
+            <dd>左・右・上（ジャンプ）</dd>
+            <dt>エピソード せんたく</dt>
+            <dd>上・下・Enter</dd>
+            <dt>エピソード かいし しゅうりょう</dt>
+            <dd>クリック</dd>
+            <dt>ストーリー</dt>
+            <dd>クリック（早おくり）・ダブルクリック（スキップ）</dd>
+        </dl>
 
-各ステージの謎を解き明かしてゴールを目指してください。
-クリア条件はステージごとに異なります。
+    </div>
+    <div class="play-button">
+        <a href="pwa.html" class="nes-btn is-primary goto-game">
+            <span>今すぐプレイ</span>
+        </a>
+    </div>
 
-操作は左右と上（ジャンプ）のみです。
-
-【注意】
-* スマートフォンの場合、タッチした位置に仮想パッドが現れますが、PCのカーソルキーの方がはるかに遊びやすいです
-* ゲーム中、音が重要なヒントになります。音が出せる環境でお楽しみください。
-* 復刻の動作確認が不十分です（気になる挙動がありますが、難しくて最後までプレイ確認できてないです）
-
-
-動作環境など
-------------
-Moriy - the deep fact はJavaScriptで開発しています。 PCやスマートフォンのブラウザで遊べます。
-
-TODO: PWA対応していますので、ホームに追加してオフラインで遊ぶこともできます。
-
-
-ライブラリ、素材
-----------------
-
-* 画像素材
-  * First Seed Material
-* 効果音素材
-  * [ザ・マッチメイカァズ](http://osabisi.sakura.ne.jp/m2/)
-* ロゴジェネレータ
-  * [Supalogo](https://supalogo.com/)
-* ゲームエンジン
-  * [enchant.js](https://github.com/wise9/enchant.js)
-
-開発
-----
-
-* ソースコード
-  * [yamahei/enchant_moriy \| GitHub](https://github.com/yamahei/enchant_moriy)
-* テキストエディタ
-  * [Atom](https://atom.io/)
-* 画像編集
-  * [GIMP](https://www.gimp.org/)
-
-
--->
-
-<h1 id="-moriy-the-deep-fact-">初めてスマホ向けに作った「Moriy - the deep fact」をブラウザゲームとして復刻しました</h1>
-<p><img src="promote/titleimage_moriy.png" alt="image"></p>
-<p>ワタシにしては珍しく自動生成ではなくステージクリア型の謎解きゲームです。
-毎夜作っては会社の先輩にプレイしてもらってました。
-なお、スマホアプリ化には <a href="https://ja.monaca.io/">monaca</a>  を利用しました。</p>
-<h2 id="-">遊び方</h2>
-<p>⇒<a href="pwa.html">Moriy - the deep fact で遊ぶ</a></p>
-<p>各ステージの謎を解き明かしてゴールを目指してください。
-クリア条件はステージごとに異なります。</p>
-<p>操作は左右と上（ジャンプ）のみです。</p>
-<p>【注意】</p>
-<ul>
-<li>スマートフォンの場合、タッチした位置に仮想パッドが現れますが、PCのカーソルキーの方がはるかに遊びやすいです</li>
-<li>ゲーム中、音が重要なヒントになります。音が出せる環境でお楽しみください。</li>
-<li>復刻の動作確認が不十分です（気になる挙動がありますが、難しくて最後までプレイ確認できてないです）</li>
-</ul>
-<h2 id="-">動作環境など</h2>
-<p>Moriy - the deep fact はJavaScriptで開発しています。 PCやスマートフォンのブラウザで遊べます。</p>
-<p>TODO: PWA対応していますので、ホームに追加してオフラインで遊ぶこともできます。</p>
-<h2 id="-">ライブラリ、素材</h2>
-<ul>
-<li>画像素材<ul>
-<li>First Seed Material</li>
-</ul>
-</li>
-<li>効果音素材<ul>
-<li><a href="http://osabisi.sakura.ne.jp/m2/">ザ・マッチメイカァズ</a></li>
-</ul>
-</li>
-<li>ロゴジェネレータ<ul>
-<li><a href="https://supalogo.com/">Supalogo</a></li>
-</ul>
-</li>
-<li>ゲームエンジン<ul>
-<li><a href="https://github.com/wise9/enchant.js">enchant.js</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="-">開発</h2>
-<ul>
-<li>ソースコード<ul>
-<li><a href="https://github.com/yamahei/enchant_moriy">yamahei/enchant_moriy | GitHub</a></li>
-</ul>
-</li>
-<li>テキストエディタ<ul>
-<li><a href="https://atom.io/">Atom</a></li>
-</ul>
-</li>
-<li>画像編集<ul>
-<li><a href="https://www.gimp.org/">GIMP</a></li>
-</ul>
-</li>
-</ul>
+    <!-- <div id="story" class="container">
+        <h2 class="section-title">ストーリー</h2>
+        <div class="nes-container is-rounded is-dark">
+            <p>
+                ヨシュナ の しんえいたいちょう ばってき と 時を 同じくして
+                王国 に やくさい が はびこり はじめた。
+            </p>
+        </div>
+        <div class="nes-container is-rounded is-dark">
+            <p>
+                ひとびと は
+                光の めがみ ライラ の かげり
+                と
+                ヤミの 女王 アリル の ふっかつ
+                を
+                よかん した。
+            </p>
+        </div>
+        <div class="nes-container is-rounded is-dark">
+            <p>
+                ヨシュナ よ。<br/>
+                そなた も かんじて おる じゃろう。
+                この まがまがしく も きょうだい な ヤミを。
+            </p>
+        </div>
+    </div> -->
 
 
+    <div id="development" class="container">
+        <h2 class="section-title">かいはつ</h2>
+
+        <div class="nes-container is-rounded is-dark">
+            <p>
+                <strong>Moriy</strong>は ソース コード を こうかい してます。
+                みんな も ゲーム つくろうぜ。
+            </p>
+        </div>
+
+        <h3 class="section-subtitle">クレジット</h3>
+        <dl>
+            <dt>がぞう</dt>
+            <dd>First Seed Material</dd>
+            <dt>こうかおん</dt>
+            <dd>
+                <a href="http://osabisi.sakura.ne.jp/m2/" target="_blank">ザ・マッチメイカァズ</a>
+            </dd>
+            <dt>ロゴ</dt>
+            <dd>
+                <a href="https://supalogo.com/" target="_blank">Supalogo</a>
+            </dd>
+            <dt>フォント</dt>
+            <dd>
+                <a href="https://booth.pm/ja/items/1761323" target="_blank">Nu もち</a>
+            </dd>
+            <dt>エンジン</dt>
+            <dd>
+                <a href="https://github.com/wise9/enchant.js" target="_blank">enchant.js</a>
+            </dd>
+        </dl>
+
+        <h3 class="section-subtitle">ソースコード</h3>
+        <ul>
+            <li>
+                <a href="https://github.com/yamahei/enchant_moriy" target="_blank">
+                    <span>yamahei</span>/<span>enchant_moriy</span>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Moriy - The Deep Fact. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
