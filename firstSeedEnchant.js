@@ -111,7 +111,7 @@ function GameFinalAction(clear_flg){//override to hack
       document.removeEventListener('keydown', arguments.callee);
       if(e.key === 'Enter'){ submit(); }
     });
-    window.setTimeout(submit, 5000);
+    window.setTimeout(submit, 2000);
 }
 
 /* my pad - see enchant.ui.Pad */

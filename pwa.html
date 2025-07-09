@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <!-- <script src="plugins/plugin-loader.js"></script> -->
     <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png"></link>
+    <link rel="icon" href="promote/iconimage_moriy_512x512.png"></link>
     <!-- <meta http-equiv="refresh" content="3;URL='./select.html'" /> -->
 
     <!-- PWA -->
@@ -22,7 +23,14 @@
           document.addEventListener('keydown', (e)=>{
             if(e.key === 'Enter'){ next(); }
           });
-          setTimeout(next, 5000);
+
+          if(window.matchMedia('(display-mode: standalone)').matches){
+            console.log('PWA installed');
+            setTimeout(next, 2000);
+          }else{
+            console.log('PWA not installed');
+          }
+
         };
     </script>
     <title>Moriy - the deep fact</title>
@@ -47,22 +55,15 @@
             margin: 0 0; padding: 0 0;
             position: absolute;
             left: 50%; top: 50%;
+            text-align: center;
         }
         img#title {
+          display:block;
           margin: 0 0; padding: 0 0;
           margin-left: -120px;
           margin-top: -48px;
         }
 
-        /* div#AdBlock {
-            margin: 0 0; padding: 0 0;
-            position: absolute;
-            width: 100%; height: 50px;
-            left: 0px; bottom: 0px;
-            text-align: center;
-            z-index: 65536;
-            overflow: hidden;
-        } */
     </style>
   </head>
 
@@ -71,15 +72,6 @@
     <div id="TitleBlock">
       <img id="title" src="./siteimg/logo.png" />
     </div>
-
-    <!-- <div id="AdBlock"> -->
-<!-- nend -->
-<!-- <script type="text/javascript">
-var nend_params = {"media":5467,"site":20617,"spot":32351,"type":1,"oriented":3};
-</script>
-<script type="text/javascript" src="http://js1.nend.net/js/nendAdLoader.js"></script>                     -->
-<!-- nend -->
-    <!-- </div> -->
 
   </body>
 </html>

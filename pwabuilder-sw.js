@@ -1,6 +1,6 @@
 importScripts('cache-list.js');
 
-const CACHE_STORAGE_NAME = 'enchant_moriy_v5';
+const CACHE_STORAGE_NAME = 'enchant_moriy_v6';
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
