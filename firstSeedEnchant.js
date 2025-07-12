@@ -138,6 +138,7 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
             this._updateInput({ up: false, left: false, right: false });
         });
         object.addEventListener('touchmove', function(e) {
+          padImage._startPadFadeAction(e.x, e.y, 0.5);
           this._updateInput(this._detectInput(e.localX, e.localY));
         });
         object._detectInput = function(x, y) {
