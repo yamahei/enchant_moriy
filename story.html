@@ -28,6 +28,7 @@
         {no: 11, title: 'Epilogue'},
       ];
 
+      let filename = null;
       let timerId = null;
       let touching = false;
       const funcTouch = (e)=>{touching = true;};
@@ -45,8 +46,10 @@
       document.addEventListener("mouseup", funcUnTouch);
       document.addEventListener("touchend", funcUnTouch);
       document.addEventListener("dblclick", (e)=>{
-        document.removeEventListener('dblclick', arguments.callee);
-        gotoStage(filename);
+        if(filename){
+          document.removeEventListener('dblclick', arguments.callee);
+          gotoStage(filename);
+        }
       });
 
       window.onload = function(){
@@ -54,7 +57,7 @@
         const params = new URLSearchParams(url.search);
         const no = Number(params.get('no'));
         const index = Number(params.get('index'));
-        const filename = params.get('filename');
+        /* let */filename = params.get('filename');
         const episode = episodes[index];
         if(episode.no !== no){
           console.error({no, index, filename, episode});
