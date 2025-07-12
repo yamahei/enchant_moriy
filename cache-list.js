@@ -1,4 +1,5 @@
 const files_to_cache = [
+    './	.gitignore',
     './apad.png',
     './assets/font/NuKinakoMochi-Reg.otf',
     './assets/image/char_chiken_white.png',
@@ -35,6 +36,7 @@ const files_to_cache = [
     './assets/sound/SwitchC_at_11.mp3',
     './assets/sound/SwitchF00_at_11.mp3',
     './bitfont.css',
+    './cache-list.js',
     './dont-cache-list.txt',
     './effect0.gif',
     './enchant.js',
