@@ -100,13 +100,15 @@ function GameFinalAction(clear_flg){//override to hack
       params.append("failed", 1);
     }
 
+    const endScene = this.endScene;
     const submit = function(){
+      endScene.removeEventListener('touchend', arguments.callee);
       const nextpath = filename + '?' + params.toString();
       console.log({nextpath, clear_flg})
       window.location = nextpath;
     };
-    this.endScene.addEventListener('touchend', submit);
-    this.pushScene(this.endScene);
+    endScene.addEventListener('touchend', submit);
+    this.pushScene(endScene);
     document.addEventListener('keydown', (e)=>{
       document.removeEventListener('keydown', arguments.callee);
       if(e.key === 'Enter'){ submit(); }
@@ -138,7 +140,8 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
             this._updateInput({ up: false, left: false, right: false });
         });
         object.addEventListener('touchmove', function(e) {
-          this._updateInput(this._detectInput(e.localX, e.localY));
+            padImage._startPadFadeAction(e.x, e.y, 0.5);
+            this._updateInput(this._detectInput(e.localX, e.localY));
         });
         object._detectInput = function(x, y) {
             var width = this.width; var height = this.height;
