@@ -25,3 +25,13 @@ PWAのキャッシュ更新手順
 ```
 
 これにより、`cache-list.js`が生成され、Service Workerが新しいファイルリストを読み込むようになります。
+
+
+ブランチ
+---------
+
+[リモートブランチに存在しないのブランチをすべて削除する](https://e-penguiner.com/remove-local-branches-not-on-remote/)
+
+```sh
+git fetch -p && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+```
