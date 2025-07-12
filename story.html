@@ -28,6 +28,7 @@
         {no: 11, title: 'Epilogue'},
       ];
 
+      let $container = null;
       let filename = null;
       let timerId = null;
       let touching = false;
@@ -39,18 +40,25 @@
         document.removeEventListener("touchstart", funcTouch);
         document.removeEventListener("mouseup", funcUnTouch);
         document.removeEventListener("touchend", funcUnTouch);
+        document.removeEventListener('dblclick', funcDblClick);
+        $container && $container.removeEventListener('scroll', funcScroll);
         window.location = filename;
       }
       document.addEventListener("mousedown", funcTouch);
       document.addEventListener("touchstart", funcTouch);
       document.addEventListener("mouseup", funcUnTouch);
       document.addEventListener("touchend", funcUnTouch);
-      document.addEventListener("dblclick", (e)=>{
-        if(filename){
-          document.removeEventListener('dblclick', arguments.callee);
-          gotoStage(filename);
+      const funcDblClick = () => {
+        if(filename){ gotoStage(filename);}
+      }
+      document.addEventListener("dblclick", funcDblClick);
+      const funcScroll = function() {
+        if ($container) {
+          if ($container.scrollHeight - $container.scrollTop <= $container.clientHeight + 1) {
+            gotoStage(filename);
+          }
         }
-      });
+      };
 
       window.onload = function(){
         const url = new URL(window.location.href);
@@ -77,12 +85,7 @@
         $title.textContent = episode.title;
 
         $container = $story.parentElement;
-        $container.addEventListener('scroll', function() {
-          if ($container.scrollHeight - $container.scrollTop <= $container.clientHeight + 1) {
-            $container.removeEventListener('scroll', arguments.callee);
-            gotoStage(filename);
-          }
-        });
+        $container.addEventListener('scroll', funcScroll);
 
         const boostScroll = 15;
         const normalScroll = 1;
