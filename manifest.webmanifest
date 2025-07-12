@@ -1,6 +1,8 @@
 {
+    "id": "https://yamahei.github.io/enchant_moriy/pwa.html",
     "theme_color": "#0c2781",
-    "background_color": "#000000",
+    "background_color": "#020810",
+    "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
     "scope": "/",
     "start_url": "pwa.html",
