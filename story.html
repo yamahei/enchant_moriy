@@ -27,9 +27,26 @@
         {no: 11, title: 'Epilogue'},
       ];
 
+      let timerId = null;
+      let touching = false;
+      const funcTouch = (e)=>{touching = true;};
+      const funcUnTouch = (e)=>{touching = false;};
       function gotoStage(filename){
+        clearTimeout(timerId);
+        document.removeEventListener("mousedown", funcTouch);
+        document.removeEventListener("touchstart", funcTouch);
+        document.removeEventListener("mouseup", funcUnTouch);
+        document.removeEventListener("touchend", funcUnTouch);
         window.location = filename;
       }
+      document.addEventListener("mousedown", funcTouch);
+      document.addEventListener("touchstart", funcTouch);
+      document.addEventListener("mouseup", funcUnTouch);
+      document.addEventListener("touchend", funcUnTouch);
+      document.addEventListener("dblclick", (e)=>{
+        document.removeEventListener('dblclick', arguments.callee);
+        gotoStage(filename);
+      });
 
       window.onload = function(){
         const url = new URL(window.location.href);
@@ -55,16 +72,10 @@
         const $title = $story.querySelector("p.title span.name");
         $title.textContent = episode.title;
 
-        let touching = false;
-        document.addEventListener("mousedown", (e)=>{touching = true;});
-        document.addEventListener("touchstart", (e)=>{touching = true;});
-        document.addEventListener("mouseup", (e)=>{touching = false;});
-        document.addEventListener("touchend", (e)=>{touching = false;});
-        document.addEventListener("dblclick", (e)=>{ gotoStage(filename); });
-
         $container = $story.parentElement;
         $container.addEventListener('scroll', function() {
           if ($container.scrollHeight - $container.scrollTop <= $container.clientHeight + 1) {
+            $container.removeEventListener('scroll', arguments.callee);
             gotoStage(filename);
           }
         });
@@ -76,7 +87,7 @@
         const scroll = function(){
           const nextScrollTop = $container.scrollTop + (touching ? boostScroll : normalScroll);
           $container.scroll({top: nextScrollTop});
-          setTimeout(scroll, interval);
+          timerId = setTimeout(scroll, interval);
         };
         scroll();
       }
