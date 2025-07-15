@@ -120,93 +120,73 @@ function GameFinalAction(clear_flg){//override to hack
 MyPadLRU = enchant.Class.create(enchant.Group, {
     initialize: function() {
         enchant.Group.call(this);
-        var padImage = this._getPadImageObject();
-        var touchPanel = this._getTouchPanelObject(padImage);
-        this.addChild(padImage);
+        var touchPanel = this._getTouchPanelObject();
         this.addChild(touchPanel);
     },
-    _getTouchPanelObject: function(padImage){
+    _getTouchPanelObject: function(){
         var game = enchant.Game.instance;
-        var object = new enchant.Sprite(game.width, game.height);
-        object.x = 0; object.y = 0; object.visible = true;
+        var object = new Group();
+        var padWidth = game.width * 0.25;
 
-        object.input = { up: false, left: false, right: false };
-        object.addEventListener('touchstart', function(e) {
-            padImage._startPadFadeAction(e.x, e.y, 0.5);
-            this._updateInput(this._detectInput(e.localX, e.localY));
-        });
-        object.addEventListener('touchend', function(e) {
-            padImage._startPadFadeAction(e.x, e.y, 0.0);
-            this._updateInput({ up: false, left: false, right: false });
-        });
-        object.addEventListener('touchmove', function(e) {
-            padImage._startPadFadeAction(e.x, e.y, 0.5);
-            this._updateInput(this._detectInput(e.localX, e.localY));
-        });
-        object._detectInput = function(x, y) {
-            var width = this.width; var height = this.height;
+        var leftPad = new enchant.Sprite(padWidth, game.height);
+        var leftSurf = new enchant.Surface(padWidth, game.height);
+        leftSurf.context.beginPath();
+        leftSurf.context.fillStyle = 'rgba(255, 255, 255, 0.01)';
+        leftSurf.context.fillRect(0, 0, padWidth, game.height);
+        leftPad.image = leftSurf;
+        var isLeftPadOn = false;
+        leftPad.x = 0; leftPad.y = 0; leftPad.visible = true;
+        object.addChild(leftPad);
 
-            var cx = padImage.centerX; var cy = padImage.centerY;// center of pad
-            var px = this.x + x; var py = this.y + y;// pointed point
-            var vx = px - cx; var vy = py - cy;
-            var degree = (Math.floor(Math.atan2(vy, vx) * 180 / Math.PI) + 360) % 360;// bottom:0,
-            var dist = Math.sqrt( vx * vx + vy * vy);
+        var rightPad = new enchant.Sprite(padWidth, game.height);
+        var rightSurf = new enchant.Surface(padWidth, game.height);
+        rightSurf.context.beginPath();
+        rightSurf.context.fillStyle = 'rgba(255, 255, 255, 0.01)';
+        rightSurf.context.fillRect(0, 0, padWidth, game.height);
+        rightPad.image = rightSurf;
+        var isRightPadOn = false;
+        rightPad.x = game.width - padWidth; rightPad.y = 0; rightPad.visible = true;
+        object.addChild(rightPad);
 
-            var area = Math.floor(degree / 30);
-            if (dist <= 12) area = -1;
-            switch(area){
-                case 8: case 9:
-                    return { up: true,  left: false, right: false };
-                case 10:
-                    return { up: true,  left: false, right: true };
-                case 11: case 0: case 1:
-                    return { up: false, left: false, right: true };
-                case 4: case 5: case 6:
-                    return { up: false, left: true,  right: false };
-                case 7:
-                    return { up: true,  left: true,  right: false };
-                default:
-                    return { up: false, left: false, right: false };
-            }
+        var funcUpdateInput = function(up, left, right){
+          game.input.up = up;
+          game.input.left = left;
+          game.input.right = right;
         };
-        object._updateInput = function(input) {
-            var game = enchant.Game.instance;
-            ['up', 'left', 'right'].forEach(function(type) {
-                if (this.input[type] && !input[type] && game.input[type] !== 'undefined') {
-                  // game.dispatchEvent(new Event(type + 'buttonup'));
-                  game.input[type] = false;
-                }
-                if (!this.input[type] && input[type] && game.input[type] !== 'undefined') {
-                  // game.dispatchEvent(new Event(type + 'buttondown'));
-                  game.input[type] = true;
-                }
-            }, this);
-            this.input = input;
-        };
-        return object;
-    },
-    _getPadImageObject: function(){
-        var game = enchant.Game.instance;
-        var image = game.assets[PAD_IMG_LRU];
-        var object = new enchant.Sprite(image.width, image.height);
-        object.scaleX = 1.0; object.scaleY = 1.0; object.opacity = 0.0; object.opacityDirection = 0.0;
-        object.image = image; object.visible = false; object.x = game.width; object.centerX = -1; object.centerY = -1;
-        object.addEventListener('enterframe', function(e) {
-          if(this.visible){
-              this.opacity += (this.opacityDirection - this.opacity) * 0.3;
-              var _scale = 1.0 - this.opacity;
-              this.scaleX = _scale; this.scaleY = _scale;
-              this.x = this.centerX - (image.width / 2); //(image.width * _scale) / 2;
-              this.y = this.centerY - (image.height / 2); //(image.height * _scale) / 2;
-              if(Math.abs(this.opacity - this.opacityDirection) <= 0.02) this.opacity = this.opacityDirection;
-              if(this.opacity === 0) this.visible = false;
-          }
+        leftPad.addEventListener('touchstart', function(e) {
+          console.log("leftPad touchstart", e);
+          if(isRightPadOn){funcUpdateInput(true, false, true);}
+          else {funcUpdateInput(false, true, false);}
+          isLeftPadOn = true;
         });
-        object._startPadFadeAction = function(_centerX, _centerY, opacityTo){
-            if(!this.visible){ this.visible = true; this.centerX = _centerX; this.centerY = _centerY; }
-            this.opacityDirection = opacityTo;
-        };
-
+        leftPad.addEventListener('touchmove', function(e) {
+          console.log("leftPad touchmove", e);
+          if(isRightPadOn){funcUpdateInput(true, false, true);}
+          else {funcUpdateInput(false, true, false);}
+          isLeftPadOn = true;
+        });
+        leftPad.addEventListener('touchend', function(e) {
+          console.log("leftPad touchend", e);
+          funcUpdateInput(false, false, isRightPadOn);
+          isLeftPadOn = false;
+        });
+        rightPad.addEventListener('touchstart', function(e) {
+          console.log("rightPad touchstart", e);
+          if(isLeftPadOn){funcUpdateInput(true, true, false);}
+          else {funcUpdateInput(false, false, true);}
+          isRightPadOn = true;
+        });
+        rightPad.addEventListener('touchmove', function(e) {
+          console.log("rightPad touchmove", e);
+          if(isLeftPadOn){funcUpdateInput(true, true, false);}
+          else {funcUpdateInput(false, false, true);}
+          isRightPadOn = true;
+        });
+        rightPad.addEventListener('touchend', function(e) {
+          console.log("rightPad touchend", e);
+          funcUpdateInput(false, isLeftPadOn, false);
+          isRightPadOn = false;
+        });
         return object;
     },
     dummy: function(){}
