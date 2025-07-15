@@ -1,6 +1,6 @@
 importScripts('cache-list.js');
 
-const CACHE_STORAGE_NAME = 'enchant_moriy_v7';
+const CACHE_STORAGE_NAME = 'enchant_moriy_v8';//カウントアップする
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
