@@ -10,7 +10,7 @@ function onBackButtonDown(){
     //if(confirm('exit episode?')){
         monaca_sound_release();
         try{
-            monaca.popPage(); 
+            monaca.popPage();
         }catch(e){
             console.log(e.message);
         }
@@ -22,6 +22,7 @@ function showTextMessage(text){
     const $el = document.createElement("div");
     $el.setAttribute('id', ELEMENTID_FOR_TEXTMESSAGE);
     $el.setAttribute('class', CLASSNAME_FOR_TEXTMESSAGE);
+    $el.setAttribute('style', 'user-select: none;');
     $el.innerText=text;
     document.body.appendChild($el);
 }
