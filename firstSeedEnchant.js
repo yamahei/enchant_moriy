@@ -148,42 +148,43 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
         rightPad.x = game.width - padWidth; rightPad.y = 0; rightPad.visible = true;
         object.addChild(rightPad);
 
+        const HISTORY_LENGTH = Math.floor(game.fps / 5); // 1/5 sec
+        const history = this._inputHistory = { left: [], right: [] };
+        this.addEventListener('enterframe', function() {
+          history.left.push(isLeftPadOn);
+          if(history.left.length > HISTORY_LENGTH) history.left.shift();
+          history.right.push(isRightPadOn);
+          if(history.right.length > HISTORY_LENGTH) history.right.shift();
+        });
+        const isPadOn = function(direction){
+          return (history[direction].filter(e=>!!e).length) > (HISTORY_LENGTH / 2);
+        };
+
         var funcUpdateInput = function(up, left, right){
           game.input.up = up;
           game.input.left = left;
           game.input.right = right;
         };
+
         leftPad.addEventListener('touchstart', function(e) {
-          console.log("leftPad touchstart", e);
-          if(isRightPadOn){funcUpdateInput(true, false, true);}
-          else {funcUpdateInput(false, true, false);}
+          if (isRightPadOn){
+            if (isPadOn("right")) { funcUpdateInput(true, false, true); }
+            else { funcUpdateInput(true, false, false); }
+          } else { funcUpdateInput(false, true, false); }
           isLeftPadOn = true;
         });
-        // leftPad.addEventListener('touchmove', function(e) {
-        //   console.log("leftPad touchmove", e);
-        //   if(isRightPadOn){funcUpdateInput(true, false, true);}
-        //   else {funcUpdateInput(false, true, false);}
-        //   isLeftPadOn = true;
-        // });
         leftPad.addEventListener('touchend', function(e) {
-          console.log("leftPad touchend", e);
           funcUpdateInput(false, false, isRightPadOn);
           isLeftPadOn = false;
         });
         rightPad.addEventListener('touchstart', function(e) {
-          console.log("rightPad touchstart", e);
-          if(isLeftPadOn){funcUpdateInput(true, true, false);}
-          else {funcUpdateInput(false, false, true);}
+          if(isLeftPadOn){
+            if (isPadOn("left")) { funcUpdateInput(true, true, false); }
+            else { funcUpdateInput(true, false, false); }
+          } else { funcUpdateInput(false, false, true); }
           isRightPadOn = true;
         });
-        // rightPad.addEventListener('touchmove', function(e) {
-        //   console.log("rightPad touchmove", e);
-        //   if(isLeftPadOn){funcUpdateInput(true, true, false);}
-        //   else {funcUpdateInput(false, false, true);}
-        //   isRightPadOn = true;
-        // });
         rightPad.addEventListener('touchend', function(e) {
-          console.log("rightPad touchend", e);
           funcUpdateInput(false, isLeftPadOn, false);
           isRightPadOn = false;
         });
