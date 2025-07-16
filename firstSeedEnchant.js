@@ -159,12 +159,12 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
           else {funcUpdateInput(false, true, false);}
           isLeftPadOn = true;
         });
-        leftPad.addEventListener('touchmove', function(e) {
-          console.log("leftPad touchmove", e);
-          if(isRightPadOn){funcUpdateInput(true, false, true);}
-          else {funcUpdateInput(false, true, false);}
-          isLeftPadOn = true;
-        });
+        // leftPad.addEventListener('touchmove', function(e) {
+        //   console.log("leftPad touchmove", e);
+        //   if(isRightPadOn){funcUpdateInput(true, false, true);}
+        //   else {funcUpdateInput(false, true, false);}
+        //   isLeftPadOn = true;
+        // });
         leftPad.addEventListener('touchend', function(e) {
           console.log("leftPad touchend", e);
           funcUpdateInput(false, false, isRightPadOn);
@@ -176,12 +176,12 @@ MyPadLRU = enchant.Class.create(enchant.Group, {
           else {funcUpdateInput(false, false, true);}
           isRightPadOn = true;
         });
-        rightPad.addEventListener('touchmove', function(e) {
-          console.log("rightPad touchmove", e);
-          if(isLeftPadOn){funcUpdateInput(true, true, false);}
-          else {funcUpdateInput(false, false, true);}
-          isRightPadOn = true;
-        });
+        // rightPad.addEventListener('touchmove', function(e) {
+        //   console.log("rightPad touchmove", e);
+        //   if(isLeftPadOn){funcUpdateInput(true, true, false);}
+        //   else {funcUpdateInput(false, false, true);}
+        //   isRightPadOn = true;
+        // });
         rightPad.addEventListener('touchend', function(e) {
           console.log("rightPad touchend", e);
           funcUpdateInput(false, isLeftPadOn, false);
