@@ -80,7 +80,7 @@
       }
 
       window.onload = function(){
-        $install = document.getElementById("install");
+        const $install = document.getElementById("install");
         let installPromptEvent;
         window.addEventListener('beforeinstallprompt', (e) => {
           installPromptEvent = e;
@@ -94,6 +94,12 @@
               $install.style.display="none";
             });
         });
+
+        const $usage = document.getElementById("usage");
+        $usage.addEventListener("click", ()=>{
+          window.location = "./index.html#usage";
+        })
+
 
 
 
