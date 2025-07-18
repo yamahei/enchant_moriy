@@ -6,11 +6,11 @@
     <!-- <script src="plugins/plugin-loader.js"></script> -->
     <link rel="shortcut icon" href="promote/iconimage_moriy_512x512.png"></link>
     <link rel="icon" href="promote/iconimage_moriy_512x512.png"></link>
-    <!-- <meta http-equiv="refresh" content="3;URL='./select.html'" /> -->
+    <meta http-equiv="refresh" content="2;URL='./select.html'" />
 
     <!-- PWA -->
-    <link rel="manifest" href="manifest.webmanifest"></link>
-    <script type="text/javascript" src="./registpwa.js"></script>
+    <!-- <link rel="manifest" href="manifest.webmanifest"></link>
+    <script type="text/javascript" src="./registpwa.js"></script> -->
 
     <script type="text/javascript">
         const next = function(){
@@ -24,14 +24,6 @@
           document.addEventListener('keydown', (e)=>{
             if(e.key === 'Enter'){ next(); }
           });
-
-          if(window.matchMedia('(display-mode: standalone)').matches){
-            console.log('PWA installed');
-            setTimeout(next, 2000);
-          }else{
-            console.log('PWA not installed');
-          }
-
         };
     </script>
     <title>Moriy - the deep fact</title>
