@@ -80,6 +80,23 @@
       }
 
       window.onload = function(){
+        $install = document.getElementById("install");
+        let installPromptEvent;
+        window.addEventListener('beforeinstallprompt', (e) => {
+          installPromptEvent = e;
+          e.preventDefault();
+          $install.style.display="block";
+        });
+        $install.addEventListener("click", (e)=>{
+          installPromptEvent.prompt();
+          installPromptEvent.userChoice.then(() => {
+              installPromptEvent = null;
+              $install.style.display="none";
+            });
+        });
+
+
+
         if(!loadData()){saveData({});}
         const data = loadData();
         const {iscleared, isfailed} = getPageState(data);
@@ -221,6 +238,20 @@
           margin: auto;
           width: calc(var(--font-size) * 10);
         }
+        div.side.left #util {
+            font-size: small;
+            text-align: center;
+            margin-top: 0;
+        }
+        div.side.left #util span {
+            color: silver;
+            margin: 0 0.5rem;
+            cursor: pointer;
+        }
+        div.side.left #install {
+          display: none;
+        }
+
         div.side.right{
           overflow: auto;
           scrollbar-color: rgb( 8,32,64) rgb( 2, 8,16);
@@ -280,6 +311,10 @@
     <div class="top">
       <div class="side left">
         <img src="./assets/image/GameMsg_SelectEpisode.png"  />
+        <p id="util">
+          <span id="install" class="bitfont">インストール</span>
+          <span id="usage" class="bitfont">そうさ ほうほう</span>
+        </p>
       </div>
       <div class="side right">
 
