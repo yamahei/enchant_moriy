@@ -30,35 +30,20 @@
 
       let $container = null;
       let filename = null;
-      let timerId = null;
       let touching = false;
       const funcTouch = (e)=>{touching = true;};
       const funcUnTouch = (e)=>{touching = false;};
       function gotoStage(filename){
-        clearTimeout(timerId);
         document.removeEventListener("mousedown", funcTouch);
         document.removeEventListener("touchstart", funcTouch);
         document.removeEventListener("mouseup", funcUnTouch);
         document.removeEventListener("touchend", funcUnTouch);
-        document.removeEventListener('dblclick', funcDblClick);
-        $container && $container.removeEventListener('scroll', funcScroll);
         window.location = filename;
       }
       document.addEventListener("mousedown", funcTouch);
       document.addEventListener("touchstart", funcTouch);
       document.addEventListener("mouseup", funcUnTouch);
       document.addEventListener("touchend", funcUnTouch);
-      const funcDblClick = () => {
-        if(filename){ gotoStage(filename);}
-      }
-      document.addEventListener("dblclick", funcDblClick);
-      const funcScroll = function() {
-        if ($container) {
-          if ($container.scrollHeight - $container.scrollTop <= $container.clientHeight + 1) {
-            gotoStage(filename);
-          }
-        }
-      };
 
       window.onload = function(){
         const url = new URL(window.location.href);
@@ -85,16 +70,27 @@
         $title.textContent = episode.title;
 
         $container = $story.parentElement;
-        $container.addEventListener('scroll', funcScroll);
 
         const boostScroll = 15;
         const normalScroll = 1;
-        const interval = 1000 / 85; // FPS
-
+        const interval = 1000 / 60; // FPS
+        let timerId = null;
         const scroll = function(){
           const nextScrollTop = $container.scrollTop + (touching ? boostScroll : normalScroll);
-          $container.scroll({top: nextScrollTop});
-          timerId = setTimeout(scroll, interval);
+          const isEnd = !!($container.scrollHeight <= $container.scrollTop + $container.clientHeight + 3);
+            console.log({
+              isEnd,
+              scrollHeight: $container.scrollHeight,
+              scrollTop: $container.scrollTop,
+              clientHeight: $container.clientHeight
+            });
+
+          if(isEnd){
+            document.getElementById("next").addEventListener("click", ()=>{ gotoStage(filename) })
+          }else{
+            $container.scroll({top: nextScrollTop});
+            timerId = setTimeout(scroll, interval);
+          }
         };
         scroll();
       }
@@ -133,6 +129,19 @@
           scrollbar-width: thin;
         }
 
+        section.next {
+          display: block;
+          margin-bottom: calc(var(--body-height) / 2 - 3rem);
+          width: auto; height: 3rem;
+          font-size: calc(var(--font-size) * 1);
+          line-height: 2em;
+          text-align: center;
+        }
+        section.next a {
+          cursor:pointer;
+          text-decoration: underline;
+          color: #007bff;
+        }
         section.story {
           display: none;
           width: auto;
@@ -605,6 +614,10 @@
         くうかん の ゆがみ に のみこまれるで ないぞ。
       </p>
     </section>
+    <section id="next" class="next bitfont">
+      <a>Tap to next ></a>
+    </section>
+
     </div><!-- cotainer -->
   </body>
 </html>
