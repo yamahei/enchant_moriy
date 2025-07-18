@@ -85,7 +85,7 @@
         window.addEventListener('beforeinstallprompt', (e) => {
           installPromptEvent = e;
           e.preventDefault();
-          $install.style.display="block";
+          $install.style.display="inline-block";
         });
         $install.addEventListener("click", (e)=>{
           installPromptEvent.prompt();
