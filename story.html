@@ -26,6 +26,7 @@
         {no: 9, title: 'Core'},
         {no: 10, title: 'Lyra'},
         {no: 11, title: 'Epilogue'},
+        {no: 99, title: 'Ending'},
       ];
 
       let $container = null;
@@ -64,10 +65,10 @@
         }
         $story.style.display = "block";
 
-        const $episode = $story.querySelector("p.title span.index");
-        $episode.textContent = `Episode ${("00" + index).slice(-2)}`;
-        const $title = $story.querySelector("p.title span.name");
-        $title.textContent = episode.title;
+        // const $episode = $story.querySelector("p.title span.index");
+        // $episode.textContent = `Episode ${("00" + index).slice(-2)}`;
+        // const $title = $story.querySelector("p.title span.name");
+        // $title.textContent = episode.title;
 
         $container = $story.parentElement;
 
@@ -164,7 +165,7 @@
     <div class="container">
     <section id="stage00:Prolog" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 00</span><br/><span class="name">Prolog</span>
       </p>
       <p>
         どんより と ぶあつい くもり空 を 見上げながら ヨシュナ は 考えていた。
@@ -189,7 +190,7 @@
     </section>
     <section id="stage02:Banners" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 01</span><br/><span class="name">Banners</span>
       </p>
       <p>
         きょう は しんえいたい に とって とくべつ な くんれん の 日だ。
@@ -223,7 +224,7 @@
     </section>
     <section id="stage01:Brightness" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 02</span><br/><span class="name">Brightness</span>
       </p>
       <p>
         久しぶり に よく はれた ある日 の ごご。
@@ -262,7 +263,7 @@
     </section>
     <section id="stage07:Forecourt" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 03</span><br/><span class="name">Forecourt</span>
       </p>
       <p>
         ミハラクイ山 の ちゅうふく に ある いわ の せいどう に ヨシュナ は いた。
@@ -301,7 +302,7 @@
     </section>
     <section id="stage08:Mausoleum" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 04</span><br/><span class="name">Mausoleum</span>
       </p>
       <p>
         れいびょう の 中は ひんやり として おごそか な ふんいき が ただよって いた。
@@ -337,7 +338,7 @@
     </section>
     <section id="stage04:Passkey" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 05</span><br/><span class="name">Passkey</span>
       </p>
       <p>
         あたたかい しゅくふく の 光が ヨシュナ を つつんだ。
@@ -349,7 +350,7 @@
       </p>
       <p>
         ヨシュナ は かいだん の まえ で 立ち つくした。
-        自分 は 大きな なにか に まきこまれて いる。
+        自分 は 今 大きな なにか に まきこまれて いる。
         しかし それが なにか は わからない。
       </p>
       <p>
@@ -369,7 +370,7 @@
     </section>
     <section id="stage03:Maze" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 06</span><br/><span class="name">Maze</span>
       </p>
       <p>
         どれくらい あるいた だろう。
@@ -411,7 +412,7 @@
     </section>
     <section id="stage06:Loophole" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 07</span><br/><span class="name">Loophole</span>
       </p>
       <p>
         めいろ を ぬけた 先には くうかん が ひろがって いた。
@@ -449,7 +450,7 @@
     </section>
     <section id="stage05:Dungeon" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 08</span><br/><span class="name">Dungeon</span>
       </p>
       <p>
         くらい みち の おく に なにもの かの けはい を かんじる。
@@ -486,7 +487,7 @@
     </section>
     <section id="stage09:Core" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 09</span><br/><span class="name">Core</span>
       </p>
       <p>
         むせる ような あつさ。
@@ -510,19 +511,21 @@
       <p><br/></p>
       <p>
         大そうじょう さま。<br/>
-        それが まこと で あれば じいん は いつわり の きょうぎ を といて いるの ですか ?
+        それが まこと で あれば われら は いつわり の きょうぎ を しんじて いるの ですか ?
         やくさい は にんげん が ひきおこし て きた もの なの ですか ?
       </p>
       <p><br/></p>
       <p>
-        ヨシュナ よ。
-        ぎょうしゅく された ヤミ の しょうき に きを つけよ。
-        ライラ は けっして てき では ない が ゆだん すると ふきとばされて しまうぞ。
+        ... 。<br/>
+        ヨシュナ よ。<br/>
+        ライラ は けっして てき では ない。
+        しかし しょうき には きを つけよ。
+        ゆだん すると ふきとばされて しまうぞ。
       </p>
     </section>
     <section id="stage10:Lyra" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 10</span><br/><span class="name">Lyra</span>
       </p>
       <p>
         アリア と ライラ は まざりあい ひとつ に なった。
@@ -539,7 +542,7 @@
       <p>
         いそぎ このば を はなれよ。
         なに ワシ の こと は ほうって おけ。
-        けっして ふりかえるでは ないぞ ... !
+        けっして ふりかえるでは ないぞ。
       </p>
       <p><br/></p>
       <p>
@@ -548,21 +551,18 @@
         行くしか ない。
       </p>
       <p>
-        むがむちゅう で はしり ながら ヨシュナ の まぶた には おさなき ひび が うかんで いた。
+        ヨシュナ は それ に せを むけて ぜんそくりょく で はしり だした。
       </p>
+      <p><br/></p>
       <p>
-        のやま を かけまわって あそんだ ひび を。
-        せんれい を うけた あの 日を。
-        みち に まよい くらい どうくつ で ふるえて いた あの よる を。
-      </p>
-      <p>
-        なぜ 今まで わすれて いたの だろう。
-        あの日 よる の やみ が ヨシュナ を 見つめて いた ことを。
+        ヨシュナ は むがむちゅう で はしり ながらも ふしぎ と きょうふ は なかった。
+        せなか の ほう から うららかな 光 と ヤミの しじま を どうじ に かんじる。
+        ややもすると あしを とめて しまいそうだ。
       </p>
     </section>
     <section id="stage11:Epilogue" class="story bitfont">
       <p class="title">
-        <span class="index"></span><br/><span class="name"></span>
+        <span class="index">Episode 11</span><br/><span class="name">Epilogue</span>
       </p>
       <p>
         どれくらい はしった だろうか。
@@ -588,10 +588,12 @@
       </p>
       <p>
         ヨシュナ よ。
-        せかい に ちょうわ を もたらす もの。
+        せかい に ちょうわ を もたらした ゆうしゃ。
       </p>
       <p>
-        そなた は 光と ヤミに つつまれ だいち に はぐぐまれた ゆえに しんじつ を しる ものと なった。
+        そなた は 光と ヤミに つつまれ だいち に はぐぐまれた もの。
+        くつう なき せかい で おのれ を うしなわない こころ を もつ もの。
+        ゆえに しんじつ を しる ものと なった。
       </p>
       <p><br/></p>
       <p>
@@ -612,6 +614,55 @@
         はやく ゆけ。
         くうかん の ゆがみ を ぬって はしれ。
         くうかん の ゆがみ に のみこまれるで ないぞ。
+      </p>
+    </section>
+    <section id="stage99:Ending" class="story bitfont">
+      <p class="title">
+        <span class="index"></span><br/><span class="name">Ending</span>
+      </p>
+      <p>
+        かいだん を のぼり きった 先は れいびょう だった。
+        どうやら ちじょう に もどって これた ようだ。
+        れいびょう を ぬけ せいどう に はいると そこには 国王 へいか が 立って いた。
+      </p>
+      <p><br/></p>
+      <p>
+        ヨシュナ よ よくぞ もどった ... !<br/>
+        こたび の はたらき みごと で あった。
+        さぞ つかれた で あろう。
+        ゆるり と 休めよ。
+      </p>
+      <p><br/></p>
+      <p>
+        おそれながら もうしあげます ... !<br/>
+        大そうじょう さま が まだ もどられて おりませぬ。
+        大そうじょう さま は まだ くらい ヤミ の せかいに ... !
+      </p>
+      <p><br/></p>
+      <p>
+        あんずる こと は ない。<br/>
+        ちか の きけん は さって おる。
+        大そうじょう も ほどなく もどろう。
+      </p>
+      <p>
+        先ず は からだ を 休めよ。
+        これから そなた は ますます 国に つくさねば ならぬ。
+        いそがしく なるぞ。
+      </p>
+      <p><br/></p>
+      <p>
+        へいか も しって いたのだ。
+        光と ヤミの ことわり を。
+      </p>
+      <p>
+        国の とうち と じんしん の しょうあく それぞれ ことなる しくみ が ひつよう な ことを。
+        そう しくみ なのだ。
+        そして じぶん は それを しって しまった。
+      </p>
+      <p>
+        へいか の ことば に うそ は ない だろう。
+        しかし これから の じぶん を おもう と どこか そらおそろしい きもち を おぼえた。
+        たしかに いそがしく なりそうだ。
       </p>
     </section>
     <section id="next" class="next bitfont">

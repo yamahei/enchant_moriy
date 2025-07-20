@@ -28,6 +28,7 @@
         {no: 9, src: 'stage09.html', difficulty: 3, title: 'Core', image: './siteimg/epimg_core.png'},
         {no: 10, src: 'stage10.html', difficulty: 2, title: 'Lyra', image: './siteimg/epimg_lyra.png'},
         {no: 11, src: 'stage11.html', difficulty: 1, title: 'Epilogue', image: './siteimg/epimg_epilogue.png'},
+        // {no: 99, title: 'Ending'},
       ];
 
       function getPageState(data){
@@ -100,12 +101,16 @@
           window.location = "./index.html#usage";
         })
 
-
-
-
         if(!loadData()){saveData({});}
         const data = loadData();
+        const finalEpisodeIndex = episodes.length - 1;
         const {iscleared, isfailed} = getPageState(data);
+        if(iscleared && finalEpisodeIndex == data.last){
+          const episode = {no: 99, src: './select.html'};
+          const index = 12;
+          onClickEpisode(episode, index);
+        }
+
         const maxClickableIndex = data.unlock + 1;
         const scrollTargetIndex = isfailed ? data.last : (iscleared ? data.last + 1 : maxClickableIndex);
 
@@ -124,7 +129,7 @@
           $box.setAttribute("tabindex", clickable ? 0 : -1);
           if(clickable){
             $box.addEventListener("click", ()=>{
-              onClickEpisode(episode, index)
+              onClickEpisode(episode, index);
             });
           }
 
